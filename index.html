@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Sushido Nostalgia V1.1</title>
+<title>Sushido Nostalgia</title>
 <style>
   :root{
     --amber:#ffeaa7;
@@ -79,7 +79,6 @@
   }
   .mode-card{
     width:230px;
-    font:inherit; color:inherit;
     background:linear-gradient(160deg,#fffaf0,#ffe6b8);
     border:3px solid var(--mahogany);
     border-radius:16px;
@@ -125,7 +124,7 @@
     flex-direction:column;
     gap:10px;
   }
-  .panel-right{ flex:1; min-width:0; display:flex; justify-content:center; }
+  .panel-right{ flex:1; display:flex; justify-content:center; }
 
   .dash-box{
     background:#fffaf0;
@@ -160,7 +159,6 @@
 
   /* ===================== BOARD ===================== */
   .board-frame{
-    width:min(100%,500px);
     background:linear-gradient(160deg,#7a3a10,#4a2408);
     border-radius:14px;
     padding:10px;
@@ -171,9 +169,8 @@
     grid-template-columns:repeat(8, minmax(0,1fr));
     grid-template-rows:repeat(8, minmax(0,1fr));
     gap:4px;
-    width:100%;
-    aspect-ratio:1;
-    height:auto;
+    width:min(78vw, 480px);
+    height:min(78vw, 480px);
     max-width:480px; max-height:480px;
     touch-action:none;
   }
@@ -232,10 +229,8 @@
     100%{ box-shadow:0 0 0 26px rgba(44,28,16,0); }
   }
 
-  .board-shell{ position:relative; width:100%; overflow:hidden; }
+  .board-shell{ position:relative; }
   .board-shake{ animation:boardShake .35s ease; }
-  .customer-warning{animation:customerWarn .35s ease}
-  @keyframes customerWarn{0%,100%{transform:scale(1)}50%{transform:scale(1.08) rotate(-2deg)}}
   @keyframes boardShake{
     0%,100%{ transform:translate(0,0); }
     20%{ transform:translate(-6px,2px); }
@@ -338,14 +333,8 @@
     .panel-right{ justify-content:center; }
   }
   @media (max-width:480px){
-    .wood-frame{ padding:7px; border-radius:14px; margin:6px; }
-    #screen-game.inner-panel{padding:8px}
-    .board-frame{padding:6px;width:100%}
-    .board{width:100%;height:auto;gap:3px}
-    .panel-left{gap:6px;display:grid;grid-template-columns:1fr 1fr}
-    .panel-left .dash-box{padding:7px 8px;min-width:0}
-    .panel-left .dash-box:last-child{grid-column:1/-1}
-    .customer-face{font-size:38px}
+    .wood-frame{ padding:10px; border-radius:14px; margin:8px; }
+    .board{ width:92vw; height:92vw; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -353,8 +342,8 @@
     .tile.clearing{ animation:none; opacity:0; }
     .tile.pop-in{ animation:none; }
     .tile.shake-invalid{ animation:none; }
-    .float-text{ animation:none; opacity:1; }
-    .levelup-banner{ animation:none; opacity:1; }
+    .float-text{ animation:none; opacity:0; }
+    .levelup-banner{ animation:none; opacity:0; }
     .customer-face{ transition:none; }
   }
 
@@ -375,18 +364,18 @@
     <p class="title-sub">A cozy match-3 sushi bar, right in your browser.</p>
 
     <div class="mode-cards">
-      <button type="button" class="mode-card" id="cardArcade" aria-label="Start Arcade Mode">
+      <div class="mode-card" id="cardArcade" role="button" tabindex="0" aria-label="Start Arcade Mode">
         <div class="mc-emoji">⏱️</div>
         <h2>Arcade Mode</h2>
         <p>Beat the clock! Patience fades — satisfy every order before the customer walks out.</p>
         <div class="title-best" id="bestArcadeLabel">Best score: 0</div>
-      </button>
-      <button type="button" class="mode-card" id="cardZen" aria-label="Start Zen Mode">
+      </div>
+      <div class="mode-card" id="cardZen" role="button" tabindex="0" aria-label="Start Zen Mode">
         <div class="mc-emoji">🌿</div>
         <h2>Zen Mode</h2>
         <p>No timers, no pressure. Chase big cascades and combo records at your own pace.</p>
         <div class="title-best" id="bestZenLabel">Best score: 0</div>
-      </button>
+      </div>
     </div>
 
     <div class="title-buttons">
@@ -452,11 +441,11 @@
 
 <!-- ============ HOW TO PLAY MODAL ============ -->
 <div class="overlay-back hidden" id="howToOverlay">
-  <div class="overlay-card" role="dialog" aria-modal="true" aria-labelledby="howTitle">
-    <h2 id="howTitle">How to Play</h2>
+  <div class="overlay-card">
+    <h2>How to Play</h2>
     <div class="howto-list">
       <h3>Basics</h3>
-      <p>Tap a tile, then tap an orthogonally adjacent tile to swap. If the swap makes a line of 3+ identical sushi, it clears. Bad swaps just bounce back — no penalty.</p>
+      <p>Tap two adjacent tiles, or swipe a tile up, down, left, or right to swap. If the swap makes a line of 3+ identical sushi, it clears. Bad swaps just bounce back — no penalty.</p>
       <h3>Power-ups</h3>
       <p>🟢 Wasabi Bomb — match exactly 4 in a line. Clears a 3×3 blast when triggered.</p>
       <p>🧴 Soy Splash — match 5 or more in a line. Clears its whole row and column when triggered.</p>
@@ -474,9 +463,9 @@
 
 <!-- ============ ARCADE GAME OVER ============ -->
 <div class="overlay-back hidden" id="gameOverOverlay">
-  <div class="overlay-card" role="dialog" aria-modal="true" aria-labelledby="goTitle" aria-describedby="goDesc">
-    <h2 id="goTitle">⏰ Time's Up!</h2>
-    <p id="goDesc">Patience reached zero.</p>
+  <div class="overlay-card">
+    <h2>⏰ Time's Up!</h2>
+    <p>The customer has left the kitchen.</p>
     <div class="overlay-stats">
       <div class="stat-row"><span>Final score</span><b id="goScore">0</b></div>
       <div class="stat-row"><span>Level reached</span><b id="goLevel">1</b></div>
@@ -492,9 +481,9 @@
 
 <!-- ============ ZEN QUIT & SAVE ============ -->
 <div class="overlay-back hidden" id="zenSummaryOverlay">
-  <div class="overlay-card" role="dialog" aria-modal="true" aria-labelledby="zenSummaryTitle">
-    <h2 id="zenSummaryTitle">🌿 Zen Summary</h2>
-    <p>Records saved. Take a breath!</p>
+  <div class="overlay-card">
+    <h2>🌿 Zen Summary</h2>
+    <p>Progress saved. Take a breath!</p>
     <div class="overlay-stats">
       <div class="stat-row"><span>Score</span><b id="zsScore">0</b></div>
       <div class="stat-row"><span>Level</span><b id="zsLevel">1</b></div>
@@ -511,7 +500,7 @@
 <script>
 "use strict";
 /* =========================================================================
-   SUSHIDO NOSTALGIA V1.1 — stabilized single-file match-3 game
+   SUSHIDO NOSTALGIA — single-file match-3 game
    Organized into: Persistence, AudioEngine, BoardEngine (state+logic),
    Renderer (DOM), and GameController (glue + screens + input).
    ========================================================================= */
@@ -815,20 +804,12 @@ const GameController = (function(){
   let locked = false;
   let selected = null; // {r,c}
   let patience = 100;
-  let patienceDecayPerSec = 1.8; // base, arcade only
+  let patienceDecayPerSec = 2.2; // base, arcade only
   let rafId = null;
   let lastFrameTime = null;
   let paused = true;
   let resolveGuardCounter = 0;
-  let runToken = 0;
-  const pendingTimers = new Set();
   const RESOLVE_GUARD_MAX = 400; // safety against infinite cascade/power-up loops
-  function cancelPendingTasks(){ pendingTimers.forEach(clearTimeout); pendingTimers.clear(); }
-  function invalidateRun(){ runToken++; cancelPendingTasks(); if(rafId!==null){ cancelAnimationFrame(rafId); rafId=null; } }
-  function scheduleForRun(callback, ms, token=runToken){
-    const id=setTimeout(()=>{ pendingTimers.delete(id); if(token===runToken) callback(); }, ms);
-    pendingTimers.add(id); return id;
-  }
 
   // ---------- DOM refs ----------
   const el = (id)=>document.getElementById(id);
@@ -944,7 +925,7 @@ const GameController = (function(){
       if(newLevel>level){
         level = newLevel;
         if(mode==="arcade"){
-          patienceDecayPerSec = Math.min(4.2, 1.8 + (level-1)*0.3);
+          patienceDecayPerSec = Math.min(6.5, 2.2 + (level-1)*0.55);
         }
         showLevelUpBanner();
         AudioEngine.levelUp();
@@ -957,7 +938,7 @@ const GameController = (function(){
     b.className = "levelup-banner";
     b.textContent = "Level Up! Lv." + level;
     document.body.appendChild(b);
-    scheduleForRun(()=> b.remove(), 1600);
+    setTimeout(()=> b.remove(), 1600);
   }
 
   /* ---------- floating combo text ---------- */
@@ -972,14 +953,14 @@ const GameController = (function(){
     t.style.top = y + "px";
     t.style.transform = "translate(-50%,-50%)";
     floatLayer.appendChild(t);
-    scheduleForRun(()=> t.remove(), 1050);
+    setTimeout(()=> t.remove(), 1050);
   }
   function showBanner(text){
     const b = document.createElement("div");
     b.className = "banner";
     b.textContent = text;
     boardShell.appendChild(b);
-    scheduleForRun(()=> b.remove(), 1650);
+    setTimeout(()=> b.remove(), 1650);
   }
 
   /* ---------- scoring / stat updates ---------- */
@@ -1089,8 +1070,17 @@ const GameController = (function(){
         }
       }
 
-      // Action-only specials are not triggered by mere adjacency to a normal match.
-      // Chain reactions are processed only when an actual special effect reaches them.
+      // any power-up adjacent to a cell that's clearing this pass gets swept in
+      matchedSet.forEach((cc,key)=>{
+        if(claimed.has(key)) return;
+        for(let dr=-1;dr<=1;dr++){
+          for(let dc=-1;dc<=1;dc++){
+            if(dr===0&&dc===0) continue;
+            const nr=cc.r+dr, nc=cc.c+dc;
+            if(inBounds(nr,nc)) triggerPowerAt(nr,nc);
+          }
+        }
+      });
       // resolve chain reactions among power-ups caught by the blasts above
       let chainGuard=0;
       let grew=true;
@@ -1166,12 +1156,12 @@ const GameController = (function(){
       renderBoardDiff();
 
       // 9) gravity + refill, then loop for cascades after a short animation delay
-      scheduleForRun(()=>{
+      setTimeout(()=>{
         const spawned = board.applyGravityAndRefill();
         renderBoardFull();
         spawned.forEach(s=>{
           const cellEl = getCellEl(s.r,s.c);
-          if(cellEl){ cellEl.classList.add("pop-in"); scheduleForRun(()=>cellEl.classList.remove("pop-in"),240); }
+          if(cellEl){ cellEl.classList.add("pop-in"); setTimeout(()=>cellEl.classList.remove("pop-in"),240); }
         });
         tier++;
         setTimeout(step, 220);
@@ -1182,7 +1172,7 @@ const GameController = (function(){
   }
 
   function finishResolution(){
-    scheduleForRun(()=>{
+    setTimeout(()=>{
       if(!board.hasValidMove()){
         showBanner("No Moves — Shuffling!");
         board.reshuffleUntilPlayable();
@@ -1197,12 +1187,11 @@ const GameController = (function(){
     ordersCompleted++;
     el("ordersLabel").textContent = ordersCompleted;
     el("zenOrdersDone").textContent = ordersCompleted;
-    const orderBonus = 750 + level * 250;
-    addScore(orderBonus);
+    addScore(500);
     AudioEngine.orderComplete();
-    showBanner("Order Complete! +"+orderBonus+" 🎉");
+    showBanner("Order Complete! 🎉");
     if(mode==="arcade"){
-      patience = Math.min(100, patience + 28);
+      patience = Math.min(100, patience + 30);
       updatePatienceUI();
     }
     maybeLevelUp();
@@ -1265,12 +1254,12 @@ const GameController = (function(){
     triggered.forEach(key=>{ const [r,c]=key.split("_").map(Number); board.set(r,c,null); });
 
     renderBoardDiff();
-    scheduleForRun(()=>{
+    setTimeout(()=>{
       const spawned = board.applyGravityAndRefill();
       renderBoardFull();
       spawned.forEach(s=>{
         const cellEl = getCellEl(s.r,s.c);
-        if(cellEl){ cellEl.classList.add("pop-in"); scheduleForRun(()=>cellEl.classList.remove("pop-in"),240); }
+        if(cellEl){ cellEl.classList.add("pop-in"); setTimeout(()=>cellEl.classList.remove("pop-in"),240); }
       });
       resolveFromSwap(null); // continue into normal cascade detection
     }, 260);
@@ -1300,7 +1289,7 @@ const GameController = (function(){
         d.className = "tile";
         d.setAttribute("role","gridcell");
         d.dataset.r = r; d.dataset.c = c;
-        d.tabIndex = (r===0 && c===0) ? 0 : -1;
+        d.tabIndex = 0;
         boardEl.appendChild(d);
       }
     }
@@ -1317,7 +1306,7 @@ const GameController = (function(){
       }
     }
   }
-  function renderBoardDiff(){ /* Transient classes remain until the post-clear render. */ }
+  function renderBoardDiff(){ renderBoardFull(); }
 
   /* ---------- input ---------- */
   function onTileActivate(r,c){
@@ -1357,7 +1346,7 @@ const GameController = (function(){
       if(e1) e1.classList.add("shake-invalid");
       if(e2) e2.classList.add("shake-invalid");
       AudioEngine.invalidSwap();
-      scheduleForRun(()=>{
+      setTimeout(()=>{
         board.swap(r1,c1,r2,c2); // swap back
         renderBoardFull();
         locked = false;
@@ -1369,43 +1358,114 @@ const GameController = (function(){
     resolveGuardCounter = 0;
 
     if(p1special || p2special){
-      scheduleForRun(()=>{ handleDirectSwapPowerUps(r1,c1,r2,c2); }, 120);
+      setTimeout(()=>{ handleDirectSwapPowerUps(r1,c1,r2,c2); }, 120);
       return;
     }
 
-    scheduleForRun(()=>{ resolveFromSwap({r:r2,c:c2}); }, 120);
+    setTimeout(()=>{ resolveFromSwap({r:r2,c:c2}); }, 120);
   }
 
+  // Mobile gesture state. Touch input is handled directly so swipe does not
+  // depend on the browser generating a delayed synthetic click.
+  let touchGesture = null;
+  let suppressClickUntil = 0;
+
   boardEl.addEventListener("click", function(e){
+    if(performance.now() < suppressClickUntil) return;
     const cell = e.target.closest(".tile");
     if(!cell) return;
     onTileActivate(parseInt(cell.dataset.r,10), parseInt(cell.dataset.c,10));
   });
+
   boardEl.addEventListener("keydown", function(e){
-    const cell = e.target.closest(".tile");
-    if(!cell) return;
-    let r=parseInt(cell.dataset.r,10), c=parseInt(cell.dataset.c,10);
-    const moves={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]};
-    if(moves[e.key]){
+    if(e.key==="Enter" || e.key===" "){
+      const cell = e.target.closest(".tile");
+      if(!cell) return;
       e.preventDefault();
-      r=Math.max(0,Math.min(SIZE-1,r+moves[e.key][0]));
-      c=Math.max(0,Math.min(SIZE-1,c+moves[e.key][1]));
-      Array.from(boardEl.children).forEach(x=>x.tabIndex=-1);
-      const next=getCellEl(r,c); next.tabIndex=0; next.focus();
-    } else if(e.key==="Enter" || e.key===" "){
-      e.preventDefault(); onTileActivate(r,c);
+      onTileActivate(parseInt(cell.dataset.r,10), parseInt(cell.dataset.c,10));
     }
   });
+
   boardEl.addEventListener("touchstart", function(e){
-    // prevent page scroll while interacting with the board; tap handled by click
-    if(e.target.closest(".tile")) e.preventDefault();
+    const cell = e.target.closest(".tile");
+    if(!cell || locked || !mode || e.touches.length !== 1){
+      touchGesture = null;
+      return;
+    }
+    const touch = e.touches[0];
+    touchGesture = {
+      identifier: touch.identifier,
+      startX: touch.clientX,
+      startY: touch.clientY,
+      lastX: touch.clientX,
+      lastY: touch.clientY,
+      r: parseInt(cell.dataset.r,10),
+      c: parseInt(cell.dataset.c,10)
+    };
+    e.preventDefault();
   }, { passive:false });
+
+  boardEl.addEventListener("touchmove", function(e){
+    if(!touchGesture) return;
+    const touch = Array.from(e.touches).find(t=>t.identifier===touchGesture.identifier);
+    if(!touch) return;
+    touchGesture.lastX = touch.clientX;
+    touchGesture.lastY = touch.clientY;
+    e.preventDefault();
+  }, { passive:false });
+
+  boardEl.addEventListener("touchend", function(e){
+    if(!touchGesture) return;
+    const gesture = touchGesture;
+    touchGesture = null;
+    suppressClickUntil = performance.now() + 500;
+    e.preventDefault();
+
+    if(locked || !mode) return;
+    const endedTouch = Array.from(e.changedTouches).find(t=>t.identifier===gesture.identifier);
+    const endX = endedTouch ? endedTouch.clientX : gesture.lastX;
+    const endY = endedTouch ? endedTouch.clientY : gesture.lastY;
+    const dx = endX - gesture.startX;
+    const dy = endY - gesture.startY;
+    const distance = Math.hypot(dx,dy);
+    const tileSize = boardEl.clientWidth / SIZE;
+    const swipeThreshold = Math.max(16, tileSize * 0.28);
+
+    // A short gesture remains a normal tap, preserving tap-to-select play.
+    if(distance < swipeThreshold){
+      onTileActivate(gesture.r, gesture.c);
+      return;
+    }
+
+    let targetR = gesture.r;
+    let targetC = gesture.c;
+    if(Math.abs(dx) > Math.abs(dy)) targetC += dx > 0 ? 1 : -1;
+    else targetR += dy > 0 ? 1 : -1;
+
+    if(!inBounds(targetR,targetC)){
+      AudioEngine.invalidSwap();
+      const origin = getCellEl(gesture.r,gesture.c);
+      if(origin){
+        origin.classList.add("shake-invalid");
+        setTimeout(()=>origin.classList.remove("shake-invalid"),320);
+      }
+      return;
+    }
+
+    selected = null;
+    renderBoardFull();
+    attemptSwap(gesture.r, gesture.c, targetR, targetC);
+  }, { passive:false });
+
+  boardEl.addEventListener("touchcancel", function(){
+    touchGesture = null;
+  }, { passive:true });
 
   /* ---------- run lifecycle ---------- */
   function resetRunState(){
     score=0; level=1; ordersCompleted=0; bestComboRun=0;
     selected=null; locked=false; patience=100;
-    patienceDecayPerSec=1.8;
+    patienceDecayPerSec=2.2;
     lastOrderTypes=[];
     el("scoreLabel").textContent=0;
     el("levelLabel").textContent=1;
@@ -1416,7 +1476,6 @@ const GameController = (function(){
   }
 
   function startRun(selectedMode){
-    invalidateRun();
     mode = selectedMode;
     resetRunState();
     board.generateInitialBoard();
@@ -1438,9 +1497,6 @@ const GameController = (function(){
 
   function endArcadeRun(){
     pausePatienceLoop();
-    cancelPendingTasks();
-    el("goTitle").textContent = "⏰ Time's Up!";
-    el("goDesc").textContent = "Patience reached zero.";
     locked = true;
     AudioEngine.gameOver();
     if(score > (save.bestArcadeScore||0)) save.bestArcadeScore = score;
@@ -1466,7 +1522,6 @@ const GameController = (function(){
   }
 
   function returnToKitchen(){
-    invalidateRun();
     el("gameOverOverlay").classList.add("hidden");
     el("zenSummaryOverlay").classList.add("hidden");
     el("screen-game").classList.add("hidden");
@@ -1476,24 +1531,16 @@ const GameController = (function(){
     refreshTitleBests();
   }
 
-  /* ---------- accessible dialog helpers ---------- */
-  function openDialog(node, opener){
-    node.dataset.opener = opener && opener.id ? opener.id : "";
-    node.classList.remove("hidden"); node.setAttribute("aria-hidden","false");
-    const first=node.querySelector("button,[href],[tabindex]:not([tabindex='-1'])"); if(first) first.focus();
-  }
-  function closeDialog(node){
-    node.classList.add("hidden"); node.setAttribute("aria-hidden","true");
-    const opener=node.dataset.opener ? el(node.dataset.opener) : null; if(opener) opener.focus();
-  }
   /* ---------- wiring ---------- */
   function bindUI(){
     el("cardArcade").addEventListener("click", ()=> startRun("arcade"));
     el("cardZen").addEventListener("click", ()=> startRun("zen"));
+    el("cardArcade").addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); startRun("arcade"); }});
+    el("cardZen").addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); startRun("zen"); }});
 
-    el("btnHowTo").addEventListener("click", e=> openDialog(el("howToOverlay"), e.currentTarget));
-    el("btnHowToGame").addEventListener("click", e=> openDialog(el("howToOverlay"), e.currentTarget));
-    el("btnCloseHowTo").addEventListener("click", ()=> closeDialog(el("howToOverlay")));
+    el("btnHowTo").addEventListener("click", ()=> el("howToOverlay").classList.remove("hidden"));
+    el("btnHowToGame").addEventListener("click", ()=> el("howToOverlay").classList.remove("hidden"));
+    el("btnCloseHowTo").addEventListener("click", ()=> el("howToOverlay").classList.add("hidden"));
 
     function toggleSound(){
       AudioEngine.setEnabled(!AudioEngine.isEnabled());
@@ -1512,9 +1559,7 @@ const GameController = (function(){
       else openZenSummary();
     });
     function endArcadeRunManual(){
-      // Manual quit uses accurate shift-summary wording.
-      el("goTitle").textContent = "🍣 Shift Complete";
-      el("goDesc").textContent = "Your current kitchen records have been saved.";
+      // manual quit in arcade acts like a save/summary too, reusing the game-over flow
       pausePatienceLoop();
       if(score > (save.bestArcadeScore||0)) save.bestArcadeScore = score;
       if(bestComboRun > (save.bestComboArcade||0)) save.bestComboArcade = bestComboRun;
@@ -1546,16 +1591,6 @@ const GameController = (function(){
 
   function init(){
     bindUI();
-    document.querySelectorAll(".overlay-back").forEach(o=>o.setAttribute("aria-hidden",o.classList.contains("hidden")?"true":"false"));
-    document.addEventListener("keydown", e=>{
-      const active=document.querySelector(".overlay-back:not(.hidden)"); if(!active) return;
-      if(e.key==="Escape" && (active.id==="howToOverlay" || active.id==="zenSummaryOverlay")){ e.preventDefault(); closeDialog(active); return; }
-      if(e.key!=="Tab") return;
-      const items=Array.from(active.querySelectorAll("button,[href],[tabindex]:not([tabindex='-1'])")).filter(x=>!x.disabled);
-      if(!items.length) return; const first=items[0], last=items[items.length-1];
-      if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
-      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
-    });
     refreshTitleBests();
   }
 
