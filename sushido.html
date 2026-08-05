@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sushido Nostalgia</title>
+<style>
+  :root{
+    --amber:#ffeaa7;
+    --mahogany:#d35400;
+    --mahogany-dark:#8a3a0e;
+    --brown-deep:#5c2e0e;
+    --cream:#fff6e0;
+    --cream-2:#fdecc8;
+    --ink:#3a2410;
+    --neon-pink:#ff2fb0;
+    --neon-cyan:#20e8ff;
+    --neon-gold:#ffd23f;
+    --danger:#c0392b;
+    --focus:#2d7dd2;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{
+    margin:0; height:100%;
+    background:
+      radial-gradient(circle at 20% 10%, #fff3cf 0%, transparent 55%),
+      var(--amber);
+    font-family:"Trebuchet MS", "Segoe UI", ui-rounded, Verdana, sans-serif;
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  h1,h2,h3{ font-family:"Segoe UI Black","Trebuchet MS",ui-rounded,sans-serif; margin:0; }
+  button{ font-family:inherit; }
+  button:focus-visible, [tabindex]:focus-visible{
+    outline:3px solid var(--focus);
+    outline-offset:2px;
+  }
+  .hidden{ display:none !important; }
+
+  /* ===================== WOOD FRAME ===================== */
+  .wood-frame{
+    max-width:1180px;
+    margin:18px auto;
+    padding:18px;
+    border-radius:22px;
+    background:
+      repeating-linear-gradient(95deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 5px),
+      repeating-linear-gradient(95deg, rgba(0,0,0,0.10) 0px, rgba(0,0,0,0.10) 1px, transparent 1px, transparent 14px),
+      linear-gradient(160deg, var(--mahogany) 0%, var(--mahogany-dark) 55%, var(--brown-deep) 100%);
+    box-shadow:
+      0 18px 40px rgba(60,25,5,0.45),
+      inset 0 0 0 4px rgba(255,255,255,0.08),
+      inset 0 0 30px rgba(0,0,0,0.35);
+  }
+  .inner-panel{
+    background:linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+    border-radius:14px;
+    padding:16px;
+    box-shadow:inset 0 2px 10px rgba(90,45,10,0.18);
+    min-height:80px;
+  }
+
+  /* ===================== TITLE SCREEN ===================== */
+  #screen-title .inner-panel{
+    text-align:center;
+    padding:40px 20px 34px;
+  }
+  .title-emoji-row{ font-size:44px; letter-spacing:8px; margin-bottom:6px; }
+  #screen-title h1{
+    font-size:clamp(30px,6vw,54px);
+    color:var(--mahogany-dark);
+    text-shadow:2px 2px 0 #fff3cf, 4px 4px 0 rgba(90,45,10,0.25);
+    margin-bottom:4px;
+  }
+  .title-sub{ color:#8a5a25; font-size:15px; margin-bottom:26px; }
+  .mode-cards{
+    display:flex; gap:18px; justify-content:center; flex-wrap:wrap;
+    margin-bottom:22px;
+  }
+  .mode-card{
+    width:230px;
+    background:linear-gradient(160deg,#fffaf0,#ffe6b8);
+    border:3px solid var(--mahogany);
+    border-radius:16px;
+    padding:18px;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+    text-align:left;
+  }
+  .mode-card:hover, .mode-card:focus-visible{
+    transform:translateY(-4px);
+    box-shadow:0 10px 20px rgba(120,60,10,0.25);
+  }
+  .mode-card .mc-emoji{ font-size:34px; }
+  .mode-card h2{ font-size:19px; color:var(--mahogany-dark); margin:6px 0 4px; }
+  .mode-card p{ font-size:12.5px; color:#6b4520; line-height:1.4; margin:0; }
+  .title-best{ font-size:12px; color:#9c6a30; margin-top:4px; }
+  .title-buttons{ display:flex; gap:10px; justify-content:center; margin-top:6px; flex-wrap:wrap; }
+  .btn{
+    font-size:13px;
+    font-weight:bold;
+    padding:9px 16px;
+    border-radius:10px;
+    border:2px solid var(--mahogany-dark);
+    background:linear-gradient(180deg,#ffcf73,#f0a832);
+    color:var(--brown-deep);
+    cursor:pointer;
+    box-shadow:0 3px 0 var(--mahogany-dark);
+  }
+  .btn:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--mahogany-dark); }
+  .btn.secondary{ background:linear-gradient(180deg,#fff,#ffe9c4); }
+  .btn.small{ font-size:11px; padding:6px 10px; border-radius:8px; }
+
+  /* ===================== GAME LAYOUT ===================== */
+  .game-layout{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+  }
+  .panel-left{
+    width:260px;
+    flex:0 0 260px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .panel-right{ flex:1; display:flex; justify-content:center; }
+
+  .dash-box{
+    background:#fffaf0;
+    border:2px solid #e8c078;
+    border-radius:12px;
+    padding:10px 12px;
+  }
+  .dash-title{ font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:#a97a3a; margin-bottom:4px; font-weight:bold; }
+
+  .customer-face{
+    font-size:52px; text-align:center; line-height:1;
+    transition:transform .12s ease;
+  }
+  .customer-order{ text-align:center; font-size:13px; margin-top:4px; font-weight:bold; color:var(--mahogany-dark); }
+  .customer-progress{ text-align:center; font-size:12px; color:#7a5323; margin-top:2px; }
+
+  .meter-track{
+    height:16px; border-radius:8px; background:#eadcbc;
+    overflow:hidden; border:1px solid #cba25c; margin-top:4px;
+  }
+  .meter-fill{
+    height:100%; width:100%;
+    background:linear-gradient(90deg,#37c76b,#8fe673);
+    transition:width .25s linear, background .25s linear;
+  }
+  .meter-label{ font-size:11px; text-align:right; margin-top:2px; color:#7a5323; }
+
+  .stat-row{ display:flex; justify-content:space-between; font-size:13px; padding:2px 0; }
+  .stat-row b{ color:var(--mahogany-dark); }
+
+  .sound-row{ display:flex; align-items:center; justify-content:space-between; }
+
+  /* ===================== BOARD ===================== */
+  .board-frame{
+    background:linear-gradient(160deg,#7a3a10,#4a2408);
+    border-radius:14px;
+    padding:10px;
+    box-shadow:inset 0 0 18px rgba(0,0,0,0.5);
+  }
+  .board{
+    display:grid;
+    grid-template-columns:repeat(8, minmax(0,1fr));
+    grid-template-rows:repeat(8, minmax(0,1fr));
+    gap:4px;
+    width:min(78vw, 480px);
+    height:min(78vw, 480px);
+    max-width:480px; max-height:480px;
+    touch-action:none;
+  }
+  .tile{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    font-size:min(6vw, 30px);
+    background:linear-gradient(160deg,#fff6e0,#f3d69a);
+    border-radius:8px;
+    border:1px solid #d9ad5f;
+    cursor:pointer;
+    user-select:none;
+    box-shadow:0 2px 0 rgba(120,70,20,0.35), inset 0 1px 2px rgba(255,255,255,0.6);
+    transition:transform .12s ease;
+    will-change:transform;
+  }
+  .tile:hover{ filter:brightness(1.05); }
+  .tile.selected{
+    box-shadow:0 0 0 3px var(--neon-cyan), 0 0 14px var(--neon-cyan);
+    transform:scale(1.06);
+    z-index:2;
+  }
+  .tile.special-wasabi{
+    background:radial-gradient(circle at 35% 30%, #baff6b, #4c9a1e 75%);
+    border-color:#2e6b0f;
+  }
+  .tile.special-soy{
+    background:radial-gradient(circle at 35% 30%, #7c5a3a, #2c1c10 75%);
+    border-color:#1a0f08;
+  }
+  .tile.clearing{ animation:tileClear .28s ease forwards; }
+  @keyframes tileClear{
+    0%{ transform:scale(1); opacity:1; }
+    100%{ transform:scale(0.15) rotate(20deg); opacity:0; }
+  }
+  .tile.dropping{ animation:none; }
+  .tile.pop-in{ animation:tilePopIn .22s ease; }
+  @keyframes tilePopIn{
+    0%{ transform:translateY(-14px) scale(0.6); opacity:0; }
+    100%{ transform:translateY(0) scale(1); opacity:1; }
+  }
+  .tile.shake-invalid{ animation:shakeInvalid .3s ease; }
+  @keyframes shakeInvalid{
+    0%,100%{ transform:translateX(0); }
+    25%{ transform:translateX(-5px); }
+    75%{ transform:translateX(5px); }
+  }
+  .tile.bomb-flash{ animation:bombFlash .35s ease; }
+  @keyframes bombFlash{
+    0%{ box-shadow:0 0 0 0 rgba(76,154,30,0.9); }
+    100%{ box-shadow:0 0 0 26px rgba(76,154,30,0); }
+  }
+  .tile.splash-flash{ animation:splashFlash .4s ease; }
+  @keyframes splashFlash{
+    0%{ box-shadow:0 0 0 0 rgba(44,28,16,0.9); }
+    100%{ box-shadow:0 0 0 26px rgba(44,28,16,0); }
+  }
+
+  .board-shell{ position:relative; }
+  .board-shake{ animation:boardShake .35s ease; }
+  @keyframes boardShake{
+    0%,100%{ transform:translate(0,0); }
+    20%{ transform:translate(-6px,2px); }
+    40%{ transform:translate(6px,-2px); }
+    60%{ transform:translate(-4px,2px); }
+    80%{ transform:translate(4px,-1px); }
+  }
+
+  .floating-text-layer{
+    position:absolute; inset:0; pointer-events:none; overflow:visible;
+  }
+  .float-text{
+    position:absolute;
+    font-weight:900;
+    font-size:22px;
+    color:var(--neon-gold);
+    text-shadow:0 0 6px var(--neon-pink), 0 0 14px var(--neon-pink), 0 2px 0 #7a1a55;
+    animation:floatUp 1s ease forwards;
+    white-space:nowrap;
+  }
+  @keyframes floatUp{
+    0%{ transform:translateY(0) scale(0.8); opacity:0; }
+    15%{ opacity:1; transform:translateY(-6px) scale(1.05); }
+    100%{ transform:translateY(-58px) scale(1); opacity:0; }
+  }
+
+  .banner{
+    position:absolute; left:50%; top:8px; transform:translateX(-50%);
+    background:linear-gradient(180deg,#fff,#ffe6b0);
+    border:2px solid var(--mahogany);
+    border-radius:10px;
+    padding:8px 16px;
+    font-weight:bold;
+    font-size:13px;
+    color:var(--mahogany-dark);
+    box-shadow:0 6px 14px rgba(0,0,0,0.25);
+    animation:bannerPop 1.6s ease forwards;
+    z-index:5;
+    pointer-events:none;
+  }
+  @keyframes bannerPop{
+    0%{ opacity:0; transform:translate(-50%,-10px) scale(0.9); }
+    12%{ opacity:1; transform:translate(-50%,0) scale(1); }
+    82%{ opacity:1; }
+    100%{ opacity:0; transform:translate(-50%,-6px) scale(0.96); }
+  }
+  .levelup-banner{
+    position:fixed; left:50%; top:40%; transform:translate(-50%,-50%);
+    font-size:clamp(28px,6vw,46px);
+    font-weight:900;
+    color:var(--neon-gold);
+    text-shadow:0 0 10px var(--neon-pink), 0 0 24px var(--neon-pink);
+    z-index:60;
+    animation:levelPop 1.5s ease forwards;
+    pointer-events:none;
+  }
+  @keyframes levelPop{
+    0%{ opacity:0; transform:translate(-50%,-50%) scale(0.5) rotate(-4deg); }
+    18%{ opacity:1; transform:translate(-50%,-50%) scale(1.1) rotate(2deg); }
+    30%{ transform:translate(-50%,-50%) scale(1) rotate(0); }
+    82%{ opacity:1; }
+    100%{ opacity:0; transform:translate(-50%,-50%) scale(1) rotate(0); }
+  }
+
+  /* ===================== OVERLAYS / MODAL ===================== */
+  .overlay-back{
+    position:fixed; inset:0; background:rgba(30,15,5,0.62);
+    display:flex; align-items:center; justify-content:center;
+    z-index:80; padding:16px;
+  }
+  .overlay-card{
+    background:linear-gradient(180deg,#fffaf0,#ffe6b8);
+    border:3px solid var(--mahogany);
+    border-radius:16px;
+    padding:26px 28px;
+    max-width:380px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+  }
+  .overlay-card h2{ color:var(--mahogany-dark); font-size:22px; margin-bottom:10px; }
+  .overlay-stats{ text-align:left; margin:14px 0; font-size:14px; }
+  .overlay-stats .stat-row{ border-bottom:1px dashed #d9b878; padding:5px 0; }
+  .overlay-buttons{ display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
+
+  .howto-list{ text-align:left; font-size:12.5px; line-height:1.55; max-height:50vh; overflow:auto; }
+  .howto-list h3{ font-size:13px; color:var(--mahogany-dark); margin:10px 0 4px; }
+
+  .topbar{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:8px;
+  }
+  .topbar .btn{ font-size:11px; padding:6px 12px; }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width:820px){
+    .game-layout{ flex-direction:column; align-items:stretch; }
+    .panel-left{ width:100%; flex:1 1 auto; flex-direction:row; flex-wrap:wrap; }
+    .dash-box{ flex:1 1 150px; }
+    .panel-right{ justify-content:center; }
+  }
+  @media (max-width:480px){
+    .wood-frame{ padding:10px; border-radius:14px; margin:8px; }
+    .board{ width:92vw; height:92vw; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .board-shake{ animation:none; }
+    .tile.clearing{ animation:none; opacity:0; }
+    .tile.pop-in{ animation:none; }
+    .tile.shake-invalid{ animation:none; }
+    .float-text{ animation:none; opacity:0; }
+    .levelup-banner{ animation:none; opacity:0; }
+    .customer-face{ transition:none; }
+  }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+</style>
+</head>
+<body>
+
+<div class="wood-frame">
+
+  <!-- ============ TITLE / MODE SELECT ============ -->
+  <section id="screen-title" class="inner-panel">
+    <div class="title-emoji-row">🍣🍤🍙🥑🐟</div>
+    <h1>Sushido Nostalgia</h1>
+    <p class="title-sub">A cozy match-3 sushi bar, right in your browser.</p>
+
+    <div class="mode-cards">
+      <div class="mode-card" id="cardArcade" role="button" tabindex="0" aria-label="Start Arcade Mode">
+        <div class="mc-emoji">⏱️</div>
+        <h2>Arcade Mode</h2>
+        <p>Beat the clock! Patience fades — satisfy every order before the customer walks out.</p>
+        <div class="title-best" id="bestArcadeLabel">Best score: 0</div>
+      </div>
+      <div class="mode-card" id="cardZen" role="button" tabindex="0" aria-label="Start Zen Mode">
+        <div class="mc-emoji">🌿</div>
+        <h2>Zen Mode</h2>
+        <p>No timers, no pressure. Chase big cascades and combo records at your own pace.</p>
+        <div class="title-best" id="bestZenLabel">Best score: 0</div>
+      </div>
+    </div>
+
+    <div class="title-buttons">
+      <button class="btn secondary" id="btnHowTo">📖 How to Play</button>
+      <button class="btn secondary" id="btnSoundToggleTitle">🔊 Sound On</button>
+    </div>
+  </section>
+
+  <!-- ============ GAME SCREEN ============ -->
+  <section id="screen-game" class="inner-panel hidden">
+    <div class="topbar">
+      <button class="btn small secondary" id="btnHowToGame">📖 Help</button>
+      <button class="btn small secondary" id="btnSoundToggleGame">🔊</button>
+      <button class="btn small" id="btnQuitSave">💾 Quit &amp; Save</button>
+    </div>
+
+    <div class="game-layout">
+      <div class="panel-left">
+
+        <div class="dash-box">
+          <div class="dash-title">Customer</div>
+          <div class="customer-face" id="customerFace" aria-live="polite">👵</div>
+          <div class="customer-order" id="customerOrderText">Wants 4 🍣</div>
+          <div class="customer-progress" id="customerProgressText">0 / 4</div>
+        </div>
+
+        <div class="dash-box" id="patienceBox">
+          <div class="dash-title">Patience</div>
+          <div class="meter-track"><div class="meter-fill" id="patienceFill"></div></div>
+          <div class="meter-label" id="patienceLabel">100%</div>
+        </div>
+
+        <div class="dash-box hidden" id="zenBox">
+          <div class="dash-title">Zen Stats</div>
+          <div class="stat-row"><span>Best combo</span><b id="zenBestCombo">×0</b></div>
+          <div class="stat-row"><span>Orders done</span><b id="zenOrdersDone">0</b></div>
+        </div>
+
+        <div class="dash-box">
+          <div class="dash-title">Progress</div>
+          <div class="stat-row"><span>Score</span><b id="scoreLabel">0</b></div>
+          <div class="stat-row"><span>Level</span><b id="levelLabel">1</b></div>
+          <div class="stat-row"><span>Orders completed</span><b id="ordersLabel">0</b></div>
+          <div class="stat-row"><span>Best combo (run)</span><b id="comboLabel">×0</b></div>
+        </div>
+
+      </div>
+
+      <div class="panel-right">
+        <div class="board-frame">
+          <div class="board-shell" id="boardShell">
+            <div class="board" id="board" role="grid" aria-label="Sushi match 3 board, 8 by 8"></div>
+            <div class="floating-text-layer" id="floatLayer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="sr-only" id="liveRegion" aria-live="polite"></div>
+
+<!-- ============ HOW TO PLAY MODAL ============ -->
+<div class="overlay-back hidden" id="howToOverlay">
+  <div class="overlay-card">
+    <h2>How to Play</h2>
+    <div class="howto-list">
+      <h3>Basics</h3>
+      <p>Tap a tile, then tap an orthogonally adjacent tile to swap. If the swap makes a line of 3+ identical sushi, it clears. Bad swaps just bounce back — no penalty.</p>
+      <h3>Power-ups</h3>
+      <p>🟢 Wasabi Bomb — match exactly 4 in a line. Clears a 3×3 blast when triggered.</p>
+      <p>🧴 Soy Splash — match 5 or more in a line. Clears its whole row and column when triggered.</p>
+      <p>Swap a power-up with any neighbor to set it off, even without a normal match.</p>
+      <h3>Orders &amp; Combos</h3>
+      <p>Serve the customer's requested sushi to complete orders for a big score bonus. Chain automatic matches after a swap for rising combo multipliers.</p>
+      <h3>Modes</h3>
+      <p>Arcade: patience drains over time — finish orders to refill it. Zen: no timers, just score and combo chasing.</p>
+    </div>
+    <div class="overlay-buttons">
+      <button class="btn" id="btnCloseHowTo">Got it!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ARCADE GAME OVER ============ -->
+<div class="overlay-back hidden" id="gameOverOverlay">
+  <div class="overlay-card">
+    <h2>⏰ Time's Up!</h2>
+    <p>The customer has left the kitchen.</p>
+    <div class="overlay-stats">
+      <div class="stat-row"><span>Final score</span><b id="goScore">0</b></div>
+      <div class="stat-row"><span>Level reached</span><b id="goLevel">1</b></div>
+      <div class="stat-row"><span>Orders completed</span><b id="goOrders">0</b></div>
+      <div class="stat-row"><span>Best combo</span><b id="goCombo">×0</b></div>
+    </div>
+    <div class="overlay-buttons">
+      <button class="btn" id="btnPlayAgain">🔁 Play Again</button>
+      <button class="btn secondary" id="btnReturnKitchenGO">🏠 Return to Kitchen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ZEN QUIT & SAVE ============ -->
+<div class="overlay-back hidden" id="zenSummaryOverlay">
+  <div class="overlay-card">
+    <h2>🌿 Zen Summary</h2>
+    <p>Progress saved. Take a breath!</p>
+    <div class="overlay-stats">
+      <div class="stat-row"><span>Score</span><b id="zsScore">0</b></div>
+      <div class="stat-row"><span>Level</span><b id="zsLevel">1</b></div>
+      <div class="stat-row"><span>Orders completed</span><b id="zsOrders">0</b></div>
+      <div class="stat-row"><span>Best combo</span><b id="zsCombo">×0</b></div>
+    </div>
+    <div class="overlay-buttons">
+      <button class="btn" id="btnContinuePlaying">▶️ Continue Playing</button>
+      <button class="btn secondary" id="btnReturnKitchenZen">🏠 Return to Kitchen</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* =========================================================================
+   SUSHIDO NOSTALGIA — single-file match-3 game
+   Organized into: Persistence, AudioEngine, BoardEngine (state+logic),
+   Renderer (DOM), and GameController (glue + screens + input).
+   ========================================================================= */
+
+/* ============================== PERSISTENCE ============================== */
+const Persistence = (function(){
+  const KEY = "sushidoNostalgiaSave_v1";
+  let memoryFallback = {
+    bestArcadeScore:0, bestZenScore:0, bestComboArcade:0, bestComboZen:0, soundOn:true
+  };
+  let storageOK = true;
+  try{
+    const t = "__sushido_test__";
+    window.localStorage.setItem(t,"1");
+    window.localStorage.removeItem(t);
+  }catch(e){ storageOK = false; }
+
+  function load(){
+    if(!storageOK) return Object.assign({}, memoryFallback);
+    try{
+      const raw = window.localStorage.getItem(KEY);
+      if(!raw) return Object.assign({}, memoryFallback);
+      const parsed = JSON.parse(raw);
+      return Object.assign({}, memoryFallback, parsed);
+    }catch(e){ return Object.assign({}, memoryFallback); }
+  }
+  function save(data){
+    memoryFallback = Object.assign({}, memoryFallback, data);
+    if(!storageOK) return;
+    try{ window.localStorage.setItem(KEY, JSON.stringify(memoryFallback)); }catch(e){ /* ignore */ }
+  }
+  return { load, save };
+})();
+
+/* ============================== AUDIO ENGINE ============================== */
+const AudioEngine = (function(){
+  let ctx = null;
+  let enabled = true;
+  function ensure(){
+    if(ctx) return;
+    try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ ctx = null; }
+  }
+  document.addEventListener("pointerdown", function firstTouch(){
+    ensure();
+    if(ctx && ctx.state === "suspended") ctx.resume().catch(()=>{});
+    document.removeEventListener("pointerdown", firstTouch);
+  }, { once:true });
+
+  function setEnabled(v){ enabled = v; }
+  function isEnabled(){ return enabled; }
+
+  function tone(freq, t0offset, dur, type, vol){
+    if(!enabled || !ctx) return;
+    try{
+      type = type || "sine"; vol = vol==null?0.15:vol;
+      const t0 = ctx.currentTime + t0offset;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, t0);
+      gain.gain.setValueAtTime(0, t0);
+      gain.gain.linearRampToValueAtTime(vol, t0+0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(t0); osc.stop(t0+dur+0.02);
+    }catch(e){ /* audio failure must never break gameplay */ }
+  }
+
+  function sweep(f0, f1, t0offset, dur, type, vol){
+    if(!enabled || !ctx) return;
+    try{
+      const t0 = ctx.currentTime + t0offset;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type||"sine";
+      osc.frequency.setValueAtTime(f0, t0);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(20,f1), t0+dur);
+      gain.gain.setValueAtTime(0, t0);
+      gain.gain.linearRampToValueAtTime(vol==null?0.16:vol, t0+0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(t0); osc.stop(t0+dur+0.02);
+    }catch(e){}
+  }
+
+  function noiseBurst(t0offset, dur, filterFreq, vol){
+    if(!enabled || !ctx) return;
+    try{
+      const t0 = ctx.currentTime + t0offset;
+      const bufferSize = Math.floor(ctx.sampleRate * dur);
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for(let i=0;i<bufferSize;i++) data[i] = (Math.random()*2-1) * (1 - i/bufferSize);
+      const src = ctx.createBufferSource();
+      src.buffer = buffer;
+      const filter = ctx.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.value = filterFreq||1200;
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(vol==null?0.22:vol, t0);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+      src.connect(filter).connect(gain).connect(ctx.destination);
+      src.start(t0);
+    }catch(e){}
+  }
+
+  return {
+    setEnabled, isEnabled,
+    matchPop(tier){ tone(760 + Math.min(tier,8)*70, 0, 0.14, "square", 0.13); },
+    wasabiBomb(){ noiseBurst(0, 0.28, 900, 0.22); tone(90, 0.02, 0.22, "sine", 0.2); },
+    soySplash(){ sweep(300, 1400, 0, 0.35, "sine", 0.16); sweep(900,200,0.05,0.3,"triangle",0.1); },
+    orderComplete(){
+      [523.25,659.25,783.99,1046.5].forEach((f,i)=> tone(f, i*0.09, 0.22, "triangle", 0.15));
+    },
+    levelUp(){ [440,554,659,880].forEach((f,i)=> tone(f, i*0.07, 0.18, "square", 0.12)); },
+    gameOver(){ [392,330,262].forEach((f,i)=> tone(f, i*0.18, 0.3, "sine", 0.15)); },
+    invalidSwap(){ tone(160, 0, 0.12, "square", 0.08); }
+  };
+})();
+
+/* ============================== BOARD ENGINE ============================== */
+const SIZE = 8;
+const STANDARD_TYPES = ["sushi","shrimp","rice","avocado","fish"];
+const EMOJI = { sushi:"🍣", shrimp:"🍤", rice:"🍙", avocado:"🥑", fish:"🐟", wasabi:"🟢", soy:"🧴" };
+const LABEL = { sushi:"Sushi", shrimp:"Shrimp", rice:"Rice ball", avocado:"Avocado", fish:"Fish", wasabi:"Wasabi Bomb", soy:"Soy Splash" };
+
+function randType(){ return STANDARD_TYPES[Math.floor(Math.random()*STANDARD_TYPES.length)]; }
+function isStandard(type){ return STANDARD_TYPES.indexOf(type) !== -1; }
+function inBounds(r,c){ return r>=0 && r<SIZE && c>=0 && c<SIZE; }
+
+class BoardEngine{
+  constructor(){
+    this.cells = []; // {type, id}
+    this.idCounter = 1;
+    this.generateInitialBoard();
+  }
+
+  newTile(type){
+    return { type, id: this.idCounter++ };
+  }
+
+  generateInitialBoard(){
+    let attempt = 0;
+    do{
+      this.cells = [];
+      for(let r=0;r<SIZE;r++){
+        const row = [];
+        for(let c=0;c<SIZE;c++){
+          let t;
+          let tries = 0;
+          do{
+            t = randType();
+            tries++;
+          }while(this._wouldImmediatelyMatch(row, r, c, t) && tries < 30);
+          row.push(this.newTile(t));
+        }
+        this.cells.push(row);
+      }
+      attempt++;
+    } while(!this.hasValidMove() && attempt < 20);
+  }
+
+  _wouldImmediatelyMatch(currentRow, r, c, t){
+    // check left two in the row-in-progress
+    if(c>=2 && currentRow[c-1] && currentRow[c-2] &&
+       currentRow[c-1].type===t && currentRow[c-2].type===t) return true;
+    // check up two in the growing board
+    if(r>=2 && this.cells[r-1] && this.cells[r-2] &&
+       this.cells[r-1][c] && this.cells[r-2][c] &&
+       this.cells[r-1][c].type===t && this.cells[r-2][c].type===t) return true;
+    return false;
+  }
+
+  get(r,c){ return this.cells[r][c]; }
+  set(r,c,tile){ this.cells[r][c] = tile; }
+
+  clone2D(){
+    return this.cells.map(row => row.map(t => t ? {type:t.type, id:t.id} : null));
+  }
+
+  swap(r1,c1,r2,c2){
+    const tmp = this.cells[r1][c1];
+    this.cells[r1][c1] = this.cells[r2][c2];
+    this.cells[r2][c2] = tmp;
+  }
+
+  /* ---- match detection: returns array of lines {cells:[{r,c}...], type, orientation} ---- */
+  findLines(cellsGrid){
+    const grid = cellsGrid || this.cells;
+    const lines = [];
+    // horizontal
+    for(let r=0;r<SIZE;r++){
+      let c=0;
+      while(c<SIZE){
+        const t = grid[r][c] ? grid[r][c].type : null;
+        if(t && isStandard(t)){
+          let c2=c;
+          while(c2+1<SIZE && grid[r][c2+1] && grid[r][c2+1].type===t) c2++;
+          const len = c2-c+1;
+          if(len>=3){
+            const cellsArr = [];
+            for(let k=c;k<=c2;k++) cellsArr.push({r,c:k});
+            lines.push({cells:cellsArr, type:t, orientation:"h", length:len});
+          }
+          c = c2+1;
+        } else c++;
+      }
+    }
+    // vertical
+    for(let c=0;c<SIZE;c++){
+      let r=0;
+      while(r<SIZE){
+        const t = grid[r][c] ? grid[r][c].type : null;
+        if(t && isStandard(t)){
+          let r2=r;
+          while(r2+1<SIZE && grid[r2+1][c] && grid[r2+1][c].type===t) r2++;
+          const len = r2-r+1;
+          if(len>=3){
+            const cellsArr = [];
+            for(let k=r;k<=r2;k++) cellsArr.push({r:k,c});
+            lines.push({cells:cellsArr, type:t, orientation:"v", length:len});
+          }
+          r = r2+1;
+        } else r++;
+      }
+    }
+    return lines;
+  }
+
+  hasAnyMatch(cellsGrid){ return this.findLines(cellsGrid).length > 0; }
+
+  /* would swapping (r1,c1)<->(r2,c2) create a match? (does not mutate) */
+  swapCreatesMatch(r1,c1,r2,c2){
+    const g = this.clone2D();
+    const tmp = g[r1][c1]; g[r1][c1]=g[r2][c2]; g[r2][c2]=tmp;
+    return this.hasAnyMatch(g);
+  }
+
+  hasValidMove(){
+    for(let r=0;r<SIZE;r++){
+      for(let c=0;c<SIZE;c++){
+        if(c+1<SIZE && this.swapCreatesMatch(r,c,r,c+1)) return true;
+        if(r+1<SIZE && this.swapCreatesMatch(r,c,r+1,c)) return true;
+      }
+    }
+    return false;
+  }
+
+  reshuffleUntilPlayable(){
+    let attempt=0;
+    do{
+      // flatten, shuffle, refill avoiding immediate matches greedily
+      const flat = [];
+      for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) flat.push(this.cells[r][c].type);
+      for(let i=flat.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        const tmp = flat[i]; flat[i]=flat[j]; flat[j]=tmp;
+      }
+      let idx=0;
+      for(let r=0;r<SIZE;r++){
+        for(let c=0;c<SIZE;c++){
+          this.cells[r][c] = this.newTile(flat[idx++]);
+        }
+      }
+      attempt++;
+      if(attempt>60){ this.generateInitialBoard(); break; }
+    } while(this.hasAnyMatch(this.cells) || !this.hasValidMove());
+  }
+
+  applyGravityAndRefill(){
+    const spawned = []; // {r,c,tile}
+    for(let c=0;c<SIZE;c++){
+      let writeR = SIZE-1;
+      for(let r=SIZE-1;r>=0;r--){
+        if(this.cells[r][c]){
+          this.cells[writeR][c] = this.cells[r][c];
+          if(writeR!==r) this.cells[r][c] = null;
+          writeR--;
+        }
+      }
+      for(let r=writeR;r>=0;r--){
+        const tile = this.newTile(randType());
+        this.cells[r][c] = tile;
+        spawned.push({r,c,tile});
+      }
+    }
+    return spawned;
+  }
+}
+
+/* ============================== GAME CONTROLLER ============================== */
+const GameController = (function(){
+  const board = new BoardEngine();
+  const save = Persistence.load();
+  AudioEngine.setEnabled(save.soundOn !== false);
+
+  let mode = null; // 'arcade' | 'zen'
+  let score = 0, level = 1, ordersCompleted = 0, bestComboRun = 0;
+  let currentOrder = null; // {type, need, have}
+  let lastOrderTypes = [];
+  let locked = false;
+  let selected = null; // {r,c}
+  let patience = 100;
+  let patienceDecayPerSec = 2.2; // base, arcade only
+  let rafId = null;
+  let lastFrameTime = null;
+  let paused = true;
+  let resolveGuardCounter = 0;
+  const RESOLVE_GUARD_MAX = 400; // safety against infinite cascade/power-up loops
+
+  // ---------- DOM refs ----------
+  const el = (id)=>document.getElementById(id);
+  const boardEl = el("board");
+  const floatLayer = el("floatLayer");
+  const boardShell = el("boardShell");
+  const liveRegion = el("liveRegion");
+
+  function announce(msg){ liveRegion.textContent = msg; }
+
+  /* ---------- persistence helpers ---------- */
+  function persist(){
+    Persistence.save({
+      bestArcadeScore: save.bestArcadeScore,
+      bestZenScore: save.bestZenScore,
+      bestComboArcade: save.bestComboArcade,
+      bestComboZen: save.bestComboZen,
+      soundOn: AudioEngine.isEnabled()
+    });
+  }
+  function refreshTitleBests(){
+    el("bestArcadeLabel").textContent = "Best score: " + (save.bestArcadeScore||0);
+    el("bestZenLabel").textContent = "Best score: " + (save.bestZenScore||0);
+  }
+
+  /* ---------- order generation ---------- */
+  function pickOrderType(){
+    let candidate;
+    let guard=0;
+    do{
+      candidate = randType();
+      guard++;
+    } while(lastOrderTypes.length>=2 && lastOrderTypes[0]===candidate && lastOrderTypes[1]===candidate && guard<20);
+    lastOrderTypes.push(candidate);
+    if(lastOrderTypes.length>2) lastOrderTypes.shift();
+    return candidate;
+  }
+  function newOrder(){
+    const type = pickOrderType();
+    let need;
+    if(mode==="arcade"){
+      need = 4 + Math.floor(Math.random()*3); // 4-6
+    } else {
+      const growth = Math.min(level-1, 6);
+      need = 5 + Math.floor(Math.random()*3) + growth; // 5-7 growing slightly with level
+    }
+    currentOrder = { type, need, have:0 };
+    renderOrder();
+  }
+
+  function renderOrder(){
+    el("customerOrderText").textContent = "Wants " + currentOrder.need + " " + EMOJI[currentOrder.type];
+    el("customerProgressText").textContent = currentOrder.have + " / " + currentOrder.need;
+  }
+
+  /* ---------- customer face / patience ---------- */
+  function updateCustomerFace(){
+    const face = el("customerFace");
+    if(mode==="zen"){ face.textContent = "😊"; return; }
+    if(patience <= 20){ face.textContent = "🤬"; }
+    else if(patience <= 45){ face.textContent = "😠"; }
+    else { face.textContent = "👵"; }
+  }
+  function updatePatienceUI(){
+    const fill = el("patienceFill");
+    fill.style.width = Math.max(0,patience) + "%";
+    let color = "linear-gradient(90deg,#37c76b,#8fe673)";
+    if(patience<=45) color = "linear-gradient(90deg,#e0a52c,#f4cf6a)";
+    if(patience<=20) color = "linear-gradient(90deg,#c0392b,#e57368)";
+    fill.style.background = color;
+    el("patienceLabel").textContent = Math.max(0,Math.round(patience)) + "%";
+  }
+
+  function shakeBoard(intensity){
+    if(intensity<=0) return;
+    boardShell.classList.remove("board-shake");
+    void boardShell.offsetWidth;
+    boardShell.classList.add("board-shake");
+  }
+
+  /* ---------- patience loop (rAF, elapsed-time based) ---------- */
+  function tickPatience(ts){
+    if(mode!=="arcade" || paused){ rafId=null; return; }
+    if(document.hidden){ lastFrameTime=null; rafId=requestAnimationFrame(tickPatience); return; }
+    if(lastFrameTime==null) lastFrameTime = ts;
+    const dt = (ts-lastFrameTime)/1000;
+    lastFrameTime = ts;
+    patience -= patienceDecayPerSec*dt;
+    if(patience<=0){
+      patience=0;
+      updatePatienceUI(); updateCustomerFace();
+      endArcadeRun();
+      return;
+    }
+    updatePatienceUI(); updateCustomerFace();
+    rafId = requestAnimationFrame(tickPatience);
+  }
+  function startPatienceLoop(){
+    if(mode!=="arcade") return;
+    paused=false; lastFrameTime=null;
+    if(rafId==null) rafId = requestAnimationFrame(tickPatience);
+  }
+  function pausePatienceLoop(){ paused = true; }
+
+  document.addEventListener("visibilitychange", function(){
+    if(document.hidden) lastFrameTime=null;
+  });
+
+  /* ---------- level up ---------- */
+  function maybeLevelUp(){
+    if(ordersCompleted>0 && ordersCompleted % 3 === 0){
+      const newLevel = Math.floor(ordersCompleted/3) + 1;
+      if(newLevel>level){
+        level = newLevel;
+        if(mode==="arcade"){
+          patienceDecayPerSec = Math.min(6.5, 2.2 + (level-1)*0.55);
+        }
+        showLevelUpBanner();
+        AudioEngine.levelUp();
+      }
+    }
+    el("levelLabel").textContent = level;
+  }
+  function showLevelUpBanner(){
+    const b = document.createElement("div");
+    b.className = "levelup-banner";
+    b.textContent = "Level Up! Lv." + level;
+    document.body.appendChild(b);
+    setTimeout(()=> b.remove(), 1600);
+  }
+
+  /* ---------- floating combo text ---------- */
+  function showFloatText(text, r, c){
+    const cellSize = boardEl.clientWidth / SIZE;
+    const x = (c+0.5)*cellSize;
+    const y = (r+0.5)*cellSize;
+    const t = document.createElement("div");
+    t.className = "float-text";
+    t.textContent = text;
+    t.style.left = x + "px";
+    t.style.top = y + "px";
+    t.style.transform = "translate(-50%,-50%)";
+    floatLayer.appendChild(t);
+    setTimeout(()=> t.remove(), 1050);
+  }
+  function showBanner(text){
+    const b = document.createElement("div");
+    b.className = "banner";
+    b.textContent = text;
+    boardShell.appendChild(b);
+    setTimeout(()=> b.remove(), 1650);
+  }
+
+  /* ---------- scoring / stat updates ---------- */
+  function addScore(points){
+    score += points;
+    el("scoreLabel").textContent = score;
+  }
+  function updateComboLabel(tier){
+    if(tier>bestComboRun){ bestComboRun = tier; }
+    el("comboLabel").textContent = "×" + bestComboRun;
+    el("zenBestCombo").textContent = "×" + bestComboRun;
+  }
+
+  /* ---------- deterministic special placement ---------- */
+  function choosePlacementCell(line, preferredCell, claimedCells){
+    const key = (r,c)=> r+"_"+c;
+    if(preferredCell){
+      const pc = preferredCell;
+      const found = line.cells.find(cc=>cc.r===pc.r && cc.c===pc.c);
+      if(found && !claimedCells.has(key(found.r,found.c))) return found;
+    }
+    const centerIdx = Math.floor((line.cells.length-1)/2);
+    // try center outward for an unclaimed cell
+    const order = [centerIdx];
+    for(let d=1; d<line.cells.length; d++){
+      if(centerIdx-d>=0) order.push(centerIdx-d);
+      if(centerIdx+d<line.cells.length) order.push(centerIdx+d);
+    }
+    for(const idx of order){
+      const cc = line.cells[idx];
+      if(!claimedCells.has(key(cc.r,cc.c))) return cc;
+    }
+    return null; // all claimed — extremely rare edge case
+  }
+
+  /* ---------- core resolution: one full swap -> settle loop ---------- */
+  function resolveFromSwap(swapDestCell){
+    let tier = 1;
+    let anyResolutionHappened = false;
+    let preferredCell = swapDestCell;
+
+    function step(){
+      resolveGuardCounter++;
+      if(resolveGuardCounter > RESOLVE_GUARD_MAX){
+        finishResolution();
+        return;
+      }
+      const lines = board.findLines(board.cells);
+      if(lines.length===0){
+        finishResolution();
+        return;
+      }
+      anyResolutionHappened = true;
+
+      // 1) figure out which cells are claimed by specials this pass
+      const claimed = new Set();
+      const specialsToCreate = []; // {r,c,type}
+      lines.forEach(line=>{
+        if(line.length>=4){
+          const specialType = line.length>=5 ? "soy" : "wasabi";
+          const cell = choosePlacementCell(line, preferredCell, claimed);
+          if(cell){
+            claimed.add(cell.r+"_"+cell.c);
+            specialsToCreate.push({r:cell.r, c:cell.c, type:specialType});
+          }
+        }
+      });
+      preferredCell = null; // only the very first tier honors the swap-destination preference
+
+      // 2) union of all matched cells (these clear, except the special-designated ones)
+      const matchedSet = new Map(); // key -> {r,c}
+      lines.forEach(line=> line.cells.forEach(cc=> matchedSet.set(cc.r+"_"+cc.c, cc)));
+
+      // 3) tally standard clears (for order + score) — special cells are NOT cleared, so exclude them
+      let clearCount = 0;
+      const typeCounts = {};
+      matchedSet.forEach((cc,key)=>{
+        if(claimed.has(key)) return; // becomes a special, not cleared
+        const tile = board.get(cc.r,cc.c);
+        if(tile && isStandard(tile.type)){
+          clearCount++;
+          typeCounts[tile.type] = (typeCounts[tile.type]||0)+1;
+        }
+      });
+
+      // 4) power-up trigger detection: direct-swap triggers are handled by caller before step() loop begins.
+      //    Here we detect "adjacency to this clear" chain-reaction triggers.
+      const triggered = new Set(); // key of power-up cells triggered this pass
+      const extraCleared = new Map(); // additional cells cleared by power-up effects
+
+      function triggerPowerAt(r,c){
+        const key = r+"_"+c;
+        if(triggered.has(key)) return;
+        const tile = board.get(r,c);
+        if(!tile || (tile.type!=="wasabi" && tile.type!=="soy")) return;
+        triggered.add(key);
+        if(tile.type==="wasabi"){
+          for(let dr=-1;dr<=1;dr++){
+            for(let dc=-1;dc<=1;dc++){
+              const nr=r+dr, nc=c+dc;
+              if(inBounds(nr,nc)) extraCleared.set(nr+"_"+nc, {r:nr,c:nc});
+            }
+          }
+        } else if(tile.type==="soy"){
+          for(let cc=0;cc<SIZE;cc++) extraCleared.set(r+"_"+cc, {r,c:cc});
+          for(let rr=0;rr<SIZE;rr++) extraCleared.set(rr+"_"+c, {r:rr,c});
+        }
+      }
+
+      // any power-up adjacent to a cell that's clearing this pass gets swept in
+      matchedSet.forEach((cc,key)=>{
+        if(claimed.has(key)) return;
+        for(let dr=-1;dr<=1;dr++){
+          for(let dc=-1;dc<=1;dc++){
+            if(dr===0&&dc===0) continue;
+            const nr=cc.r+dr, nc=cc.c+dc;
+            if(inBounds(nr,nc)) triggerPowerAt(nr,nc);
+          }
+        }
+      });
+      // resolve chain reactions among power-ups caught by the blasts above
+      let chainGuard=0;
+      let grew=true;
+      while(grew && chainGuard<60){
+        grew=false; chainGuard++;
+        extraCleared.forEach((cc)=>{
+          const t = board.get(cc.r,cc.c);
+          if(t && (t.type==="wasabi"||t.type==="soy") && !triggered.has(cc.r+"_"+cc.c)){
+            triggerPowerAt(cc.r,cc.c);
+            grew=true;
+          }
+        });
+      }
+
+      // 5) tally extra standard clears caused by power-ups (not counted in matchedSet)
+      extraCleared.forEach((cc,key)=>{
+        if(matchedSet.has(key)) return; // already counted above
+        const tile = board.get(cc.r,cc.c);
+        if(tile && isStandard(tile.type)){
+          clearCount++;
+          typeCounts[tile.type] = (typeCounts[tile.type]||0)+1;
+        }
+      });
+
+      // 6) play fx classes on affected cells (visual only, non-blocking)
+      matchedSet.forEach((cc,key)=>{
+        if(claimed.has(key)) return;
+        markClearing(cc.r,cc.c);
+      });
+      extraCleared.forEach((cc)=> markClearing(cc.r,cc.c));
+      triggered.forEach((key)=>{
+        const [r,c] = key.split("_").map(Number);
+        flagPowerFx(r,c, board.get(r,c) ? board.get(r,c).type : null);
+      });
+
+      // 7) score + order progress
+      const points = clearCount * 100 * tier;
+      addScore(points);
+      if(currentOrder && typeCounts[currentOrder.type]){
+        const remaining = currentOrder.need - currentOrder.have;
+        currentOrder.have = Math.min(currentOrder.need, currentOrder.have + typeCounts[currentOrder.type]);
+        renderOrder();
+        if(currentOrder.have>=currentOrder.need){
+          completeOrder();
+        }
+      }
+      updateComboLabel(tier);
+      if(tier>1){
+        const anchor = lines[0].cells[0];
+        showFloatText("COMBO ×"+tier+"!", anchor.r, anchor.c);
+      }
+      AudioEngine.matchPop(tier);
+
+      // 8) apply clears to the model (specials survive at their designated cells)
+      matchedSet.forEach((cc,key)=>{
+        if(!claimed.has(key)) board.set(cc.r,cc.c,null);
+      });
+      extraCleared.forEach((cc)=>{
+        // don't clear a cell that is itself a not-yet-triggered special created this very pass
+        const key = cc.r+"_"+cc.c;
+        if(claimed.has(key)) return;
+        board.set(cc.r,cc.c,null);
+      });
+      specialsToCreate.forEach(s=>{
+        board.set(s.r,s.c, board.newTile(s.type));
+      });
+      // triggered power-ups themselves are consumed
+      triggered.forEach((key)=>{
+        const [r,c] = key.split("_").map(Number);
+        board.set(r,c,null);
+      });
+
+      renderBoardDiff();
+
+      // 9) gravity + refill, then loop for cascades after a short animation delay
+      setTimeout(()=>{
+        const spawned = board.applyGravityAndRefill();
+        renderBoardFull();
+        spawned.forEach(s=>{
+          const cellEl = getCellEl(s.r,s.c);
+          if(cellEl){ cellEl.classList.add("pop-in"); setTimeout(()=>cellEl.classList.remove("pop-in"),240); }
+        });
+        tier++;
+        setTimeout(step, 220);
+      }, 260);
+    }
+
+    step();
+  }
+
+  function finishResolution(){
+    setTimeout(()=>{
+      if(!board.hasValidMove()){
+        showBanner("No Moves — Shuffling!");
+        board.reshuffleUntilPlayable();
+        renderBoardFull();
+      }
+      locked = false;
+      resolveGuardCounter = 0;
+    }, 120);
+  }
+
+  function completeOrder(){
+    ordersCompleted++;
+    el("ordersLabel").textContent = ordersCompleted;
+    el("zenOrdersDone").textContent = ordersCompleted;
+    addScore(500);
+    AudioEngine.orderComplete();
+    showBanner("Order Complete! 🎉");
+    if(mode==="arcade"){
+      patience = Math.min(100, patience + 30);
+      updatePatienceUI();
+    }
+    maybeLevelUp();
+    newOrder();
+  }
+
+  /* ---------- direct-swap power-up trigger (before normal match resolution) ---------- */
+  function handleDirectSwapPowerUps(r1,c1,r2,c2){
+    const t1 = board.get(r1,c1), t2 = board.get(r2,c2);
+    const p1 = t1 && (t1.type==="wasabi"||t1.type==="soy");
+    const p2 = t2 && (t2.type==="wasabi"||t2.type==="soy");
+    if(!p1 && !p2) return false;
+
+    const extraCleared = new Map();
+    const triggered = new Set();
+    function trig(r,c){
+      const key=r+"_"+c;
+      if(triggered.has(key)) return;
+      const tile = board.get(r,c);
+      if(!tile || (tile.type!=="wasabi"&&tile.type!=="soy")) return;
+      triggered.add(key);
+      if(tile.type==="wasabi"){
+        for(let dr=-1;dr<=1;dr++) for(let dc=-1;dc<=1;dc++){
+          const nr=r+dr,nc=c+dc;
+          if(inBounds(nr,nc)) extraCleared.set(nr+"_"+nc,{r:nr,c:nc});
+        }
+      } else {
+        for(let cc=0;cc<SIZE;cc++) extraCleared.set(r+"_"+cc,{r,c:cc});
+        for(let rr=0;rr<SIZE;rr++) extraCleared.set(rr+"_"+c,{r:rr,c});
+      }
+    }
+    if(p1) trig(r1,c1);
+    if(p2) trig(r2,c2);
+    let grew=true, guard=0;
+    while(grew && guard<60){
+      grew=false; guard++;
+      extraCleared.forEach(cc=>{
+        const t=board.get(cc.r,cc.c);
+        if(t && (t.type==="wasabi"||t.type==="soy") && !triggered.has(cc.r+"_"+cc.c)){ trig(cc.r,cc.c); grew=true; }
+      });
+    }
+
+    let clearCount=0; const typeCounts={};
+    extraCleared.forEach(cc=>{
+      const tile = board.get(cc.r,cc.c);
+      if(tile && isStandard(tile.type)){ clearCount++; typeCounts[tile.type]=(typeCounts[tile.type]||0)+1; }
+    });
+
+    extraCleared.forEach(cc=> markClearing(cc.r,cc.c));
+    triggered.forEach(key=>{ const [r,c]=key.split("_").map(Number); flagPowerFx(r,c, board.get(r,c)?board.get(r,c).type:null); });
+
+    addScore(clearCount*100*1);
+    if(currentOrder && typeCounts[currentOrder.type]){
+      currentOrder.have = Math.min(currentOrder.need, currentOrder.have + typeCounts[currentOrder.type]);
+      renderOrder();
+      if(currentOrder.have>=currentOrder.need) completeOrder();
+    }
+
+    extraCleared.forEach(cc=> board.set(cc.r,cc.c,null));
+    triggered.forEach(key=>{ const [r,c]=key.split("_").map(Number); board.set(r,c,null); });
+
+    renderBoardDiff();
+    setTimeout(()=>{
+      const spawned = board.applyGravityAndRefill();
+      renderBoardFull();
+      spawned.forEach(s=>{
+        const cellEl = getCellEl(s.r,s.c);
+        if(cellEl){ cellEl.classList.add("pop-in"); setTimeout(()=>cellEl.classList.remove("pop-in"),240); }
+      });
+      resolveFromSwap(null); // continue into normal cascade detection
+    }, 260);
+    return true;
+  }
+
+  /* ---------- FX flag helpers (visual classes applied pre-removal) ---------- */
+  function markClearing(r,c){
+    const cellEl = getCellEl(r,c);
+    if(cellEl) cellEl.classList.add("clearing");
+  }
+  function flagPowerFx(r,c,type){
+    const cellEl = getCellEl(r,c);
+    if(!cellEl) return;
+    if(type==="wasabi"){ cellEl.classList.add("bomb-flash"); AudioEngine.wasabiBomb(); shakeBoard(1); }
+    else if(type==="soy"){ cellEl.classList.add("splash-flash"); AudioEngine.soySplash(); }
+  }
+
+  /* ---------- rendering ---------- */
+  function getCellEl(r,c){ return boardEl.children[r*SIZE+c]; }
+
+  function buildBoardDOM(){
+    boardEl.innerHTML = "";
+    for(let r=0;r<SIZE;r++){
+      for(let c=0;c<SIZE;c++){
+        const d = document.createElement("div");
+        d.className = "tile";
+        d.setAttribute("role","gridcell");
+        d.dataset.r = r; d.dataset.c = c;
+        d.tabIndex = 0;
+        boardEl.appendChild(d);
+      }
+    }
+  }
+  function renderBoardFull(){
+    for(let r=0;r<SIZE;r++){
+      for(let c=0;c<SIZE;c++){
+        const tile = board.get(r,c);
+        const cellEl = getCellEl(r,c);
+        cellEl.className = "tile" + (tile && (tile.type==="wasabi") ? " special-wasabi" : "") + (tile && tile.type==="soy" ? " special-soy" : "");
+        cellEl.textContent = tile ? EMOJI[tile.type] : "";
+        cellEl.setAttribute("aria-label", tile ? (LABEL[tile.type]+" at row "+(r+1)+" column "+(c+1)) : "empty");
+        if(selected && selected.r===r && selected.c===c) cellEl.classList.add("selected");
+      }
+    }
+  }
+  function renderBoardDiff(){ renderBoardFull(); }
+
+  /* ---------- input ---------- */
+  function onTileActivate(r,c){
+    if(locked || !mode) return;
+    if(!selected){
+      selected = {r,c};
+      renderBoardFull();
+      return;
+    }
+    if(selected.r===r && selected.c===c){
+      selected = null; renderBoardFull(); return;
+    }
+    const dr = Math.abs(selected.r-r), dc = Math.abs(selected.c-c);
+    const adjacent = (dr+dc===1);
+    if(!adjacent){
+      selected = {r,c};
+      renderBoardFull();
+      return;
+    }
+    attemptSwap(selected.r, selected.c, r, c);
+    selected = null;
+  }
+
+  function attemptSwap(r1,c1,r2,c2){
+    locked = true;
+    const t1 = board.get(r1,c1), t2 = board.get(r2,c2);
+    const p1special = t1.type==="wasabi"||t1.type==="soy";
+    const p2special = t2.type==="wasabi"||t2.type==="soy";
+
+    board.swap(r1,c1,r2,c2);
+    const createsMatch = board.hasAnyMatch(board.cells);
+
+    if(!createsMatch && !p1special && !p2special){
+      // invalid swap: animate there and back, no penalty
+      renderBoardFull();
+      const e1=getCellEl(r1,c1), e2=getCellEl(r2,c2);
+      if(e1) e1.classList.add("shake-invalid");
+      if(e2) e2.classList.add("shake-invalid");
+      AudioEngine.invalidSwap();
+      setTimeout(()=>{
+        board.swap(r1,c1,r2,c2); // swap back
+        renderBoardFull();
+        locked = false;
+      }, 300);
+      return;
+    }
+
+    renderBoardFull();
+    resolveGuardCounter = 0;
+
+    if(p1special || p2special){
+      setTimeout(()=>{ handleDirectSwapPowerUps(r1,c1,r2,c2); }, 120);
+      return;
+    }
+
+    setTimeout(()=>{ resolveFromSwap({r:r2,c:c2}); }, 120);
+  }
+
+  boardEl.addEventListener("click", function(e){
+    const cell = e.target.closest(".tile");
+    if(!cell) return;
+    onTileActivate(parseInt(cell.dataset.r,10), parseInt(cell.dataset.c,10));
+  });
+  boardEl.addEventListener("keydown", function(e){
+    if(e.key==="Enter" || e.key===" "){
+      const cell = e.target.closest(".tile");
+      if(!cell) return;
+      e.preventDefault();
+      onTileActivate(parseInt(cell.dataset.r,10), parseInt(cell.dataset.c,10));
+    }
+  });
+  boardEl.addEventListener("touchstart", function(e){
+    // prevent page scroll while interacting with the board; tap handled by click
+    if(e.target.closest(".tile")) e.preventDefault();
+  }, { passive:false });
+
+  /* ---------- run lifecycle ---------- */
+  function resetRunState(){
+    score=0; level=1; ordersCompleted=0; bestComboRun=0;
+    selected=null; locked=false; patience=100;
+    patienceDecayPerSec=2.2;
+    lastOrderTypes=[];
+    el("scoreLabel").textContent=0;
+    el("levelLabel").textContent=1;
+    el("ordersLabel").textContent=0;
+    el("comboLabel").textContent="×0";
+    el("zenBestCombo").textContent="×0";
+    el("zenOrdersDone").textContent=0;
+  }
+
+  function startRun(selectedMode){
+    mode = selectedMode;
+    resetRunState();
+    board.generateInitialBoard();
+    buildBoardDOM();
+    renderBoardFull();
+    newOrder();
+    updateCustomerFace();
+
+    el("patienceBox").classList.toggle("hidden", mode!=="arcade");
+    el("zenBox").classList.toggle("hidden", mode==="arcade");
+    updatePatienceUI();
+
+    el("screen-title").classList.add("hidden");
+    el("screen-game").classList.remove("hidden");
+
+    if(mode==="arcade") startPatienceLoop();
+    else pausePatienceLoop();
+  }
+
+  function endArcadeRun(){
+    pausePatienceLoop();
+    locked = true;
+    AudioEngine.gameOver();
+    if(score > (save.bestArcadeScore||0)) save.bestArcadeScore = score;
+    if(bestComboRun > (save.bestComboArcade||0)) save.bestComboArcade = bestComboRun;
+    persist();
+    el("goScore").textContent = score;
+    el("goLevel").textContent = level;
+    el("goOrders").textContent = ordersCompleted;
+    el("goCombo").textContent = "×"+bestComboRun;
+    el("gameOverOverlay").classList.remove("hidden");
+  }
+
+  function openZenSummary(){
+    pausePatienceLoop();
+    if(score > (save.bestZenScore||0)) save.bestZenScore = score;
+    if(bestComboRun > (save.bestComboZen||0)) save.bestComboZen = bestComboRun;
+    persist();
+    el("zsScore").textContent = score;
+    el("zsLevel").textContent = level;
+    el("zsOrders").textContent = ordersCompleted;
+    el("zsCombo").textContent = "×"+bestComboRun;
+    el("zenSummaryOverlay").classList.remove("hidden");
+  }
+
+  function returnToKitchen(){
+    el("gameOverOverlay").classList.add("hidden");
+    el("zenSummaryOverlay").classList.add("hidden");
+    el("screen-game").classList.add("hidden");
+    el("screen-title").classList.remove("hidden");
+    pausePatienceLoop();
+    mode = null;
+    refreshTitleBests();
+  }
+
+  /* ---------- wiring ---------- */
+  function bindUI(){
+    el("cardArcade").addEventListener("click", ()=> startRun("arcade"));
+    el("cardZen").addEventListener("click", ()=> startRun("zen"));
+    el("cardArcade").addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); startRun("arcade"); }});
+    el("cardZen").addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); startRun("zen"); }});
+
+    el("btnHowTo").addEventListener("click", ()=> el("howToOverlay").classList.remove("hidden"));
+    el("btnHowToGame").addEventListener("click", ()=> el("howToOverlay").classList.remove("hidden"));
+    el("btnCloseHowTo").addEventListener("click", ()=> el("howToOverlay").classList.add("hidden"));
+
+    function toggleSound(){
+      AudioEngine.setEnabled(!AudioEngine.isEnabled());
+      const label = AudioEngine.isEnabled() ? "🔊 Sound On" : "🔇 Sound Off";
+      el("btnSoundToggleTitle").textContent = label;
+      el("btnSoundToggleGame").textContent = AudioEngine.isEnabled() ? "🔊" : "🔇";
+      persist();
+    }
+    el("btnSoundToggleTitle").addEventListener("click", toggleSound);
+    el("btnSoundToggleGame").addEventListener("click", toggleSound);
+    el("btnSoundToggleTitle").textContent = AudioEngine.isEnabled() ? "🔊 Sound On" : "🔇 Sound Off";
+    el("btnSoundToggleGame").textContent = AudioEngine.isEnabled() ? "🔊" : "🔇";
+
+    el("btnQuitSave").addEventListener("click", ()=>{
+      if(mode==="arcade") endArcadeRunManual();
+      else openZenSummary();
+    });
+    function endArcadeRunManual(){
+      // manual quit in arcade acts like a save/summary too, reusing the game-over flow
+      pausePatienceLoop();
+      if(score > (save.bestArcadeScore||0)) save.bestArcadeScore = score;
+      if(bestComboRun > (save.bestComboArcade||0)) save.bestComboArcade = bestComboRun;
+      persist();
+      el("goScore").textContent = score;
+      el("goLevel").textContent = level;
+      el("goOrders").textContent = ordersCompleted;
+      el("goCombo").textContent = "×"+bestComboRun;
+      el("gameOverOverlay").classList.remove("hidden");
+    }
+
+    el("btnPlayAgain").addEventListener("click", ()=>{
+      el("gameOverOverlay").classList.add("hidden");
+      startRun("arcade");
+    });
+    el("btnReturnKitchenGO").addEventListener("click", ()=>{
+      el("gameOverOverlay").classList.add("hidden");
+      returnToKitchen();
+    });
+    el("btnContinuePlaying").addEventListener("click", ()=>{
+      el("zenSummaryOverlay").classList.add("hidden");
+      paused = false;
+    });
+    el("btnReturnKitchenZen").addEventListener("click", ()=>{
+      el("zenSummaryOverlay").classList.add("hidden");
+      returnToKitchen();
+    });
+  }
+
+  function init(){
+    bindUI();
+    refreshTitleBests();
+  }
+
+  return { init };
+})();
+
+GameController.init();
+</script>
+</body>
+</html>
