@@ -6,7 +6,6 @@
 <title>Sushido Nostalgia</title>
 <style>
   :root{
-    /* Default Theme */
     --amber:#ffeaa7;
     --mahogany:#d35400;
     --mahogany-dark:#8a3a0e;
@@ -26,7 +25,6 @@
     --tile-bg-2: #f3d69a;
   }
   
-  /* Theme Overrides */
   body.skin-sakura {
     --amber: #ffd1dc; --mahogany: #ff69b4; --mahogany-dark: #c71585; --brown-deep: #4a0e2e;
     --bg-grad-1: #fff0f5; --board-bg-1: #db7093; --board-bg-2: #8b0a50;
@@ -52,12 +50,10 @@
   h1,h2,h3{ font-family:"Segoe UI Black","Trebuchet MS",ui-rounded,sans-serif; margin:0; }
   button{ font-family:inherit; }
   
-  /* Focus styling */
   button:focus-visible, [tabindex]:focus-visible{ outline:3px solid var(--focus); outline-offset:2px; }
   .tile:focus-visible { outline: 3px solid var(--neon-cyan); outline-offset: 2px; z-index: 10; }
   .hidden{ display:none !important; }
 
-  /* ===================== WOOD FRAME ===================== */
   .wood-frame{
     max-width:1180px; margin:18px auto; padding:18px; border-radius:22px;
     background:
@@ -74,7 +70,6 @@
     transition: background 0.5s ease;
   }
 
-  /* ===================== TITLE SCREEN ===================== */
   #screen-title .inner-panel{ text-align:center; padding:40px 20px 34px; }
   .title-emoji-row{ font-size:44px; letter-spacing:8px; margin-bottom:6px; }
   #screen-title h1{
@@ -111,7 +106,6 @@
   .btn.small{ font-size:11px; padding:6px 10px; border-radius:8px; }
   .btn:disabled{ filter: grayscale(1); opacity: 0.6; cursor: not-allowed; box-shadow:0 1px 0 var(--mahogany-dark); transform:translateY(2px); }
 
-  /* ===================== GAME LAYOUT ===================== */
   .game-layout{ display:flex; gap:16px; align-items:flex-start; }
   .panel-left{ width:260px; flex:0 0 260px; display:flex; flex-direction:column; gap:10px; }
   .panel-right{ flex:1; display:flex; flex-direction: column; justify-content:center; gap: 10px;}
@@ -119,10 +113,12 @@
   .dash-box{ background:var(--cream); border:2px solid var(--amber); border-radius:12px; padding:10px 12px; }
   .dash-title{ font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--mahogany-dark); margin-bottom:4px; font-weight:bold; }
 
-  .customer-face{ font-size:52px; text-align:center; line-height:1; transition:transform .12s ease; margin-bottom: 2px;}
-  .customer-name { text-align: center; font-size: 11px; font-weight: bold; color: var(--mahogany); margin-bottom: 4px;}
-  .customer-order{ text-align:center; font-size:13px; font-weight:bold; color:var(--mahogany-dark); }
-  .customer-progress{ text-align:center; font-size:12px; color:var(--mahogany); margin-top:2px; }
+  .customer-face{ font-size:46px; text-align:center; line-height:1; transition:transform .12s ease; margin-bottom: 2px;}
+  .customer-name { text-align: center; font-size: 12px; font-weight: bold; color: var(--mahogany-dark); margin-bottom: 2px;}
+  .customer-desc { text-align: center; font-size: 10px; color: var(--ink); opacity: 0.85; margin-bottom: 6px; font-style: italic; line-height: 1.2; }
+  .customer-meta-row { display: flex; justify-content: space-between; font-size: 10px; font-weight: bold; color: var(--mahogany); margin-bottom: 6px; border-bottom: 1px dashed var(--amber); padding-bottom: 4px; }
+  .customer-order{ text-align:center; font-size:12.5px; font-weight:bold; color:var(--mahogany-dark); }
+  .customer-progress{ text-align:center; font-size:11.5px; color:var(--mahogany); margin-top:2px; }
 
   .meter-track{ height:16px; border-radius:8px; background:var(--cream-2); overflow:hidden; border:1px solid var(--amber); margin-top:4px; }
   .meter-fill{ height:100%; width:100%; background:linear-gradient(90deg,#37c76b,#8fe673); transition:width .25s linear, background .25s linear; }
@@ -131,7 +127,6 @@
   .stat-row{ display:flex; justify-content:space-between; font-size:13px; padding:2px 0; }
   .stat-row b{ color:var(--mahogany-dark); }
 
-  /* ===================== COMBO REWARD METER ===================== */
   .combo-bar-container { background: var(--cream); padding: 8px; border-radius: 10px; border: 2px solid var(--amber); display: flex; align-items: center; gap: 10px; }
   .combo-bar-title { font-size: 11px; font-weight: bold; color: var(--mahogany-dark); text-transform: uppercase;}
   .combo-steps { display: flex; flex: 1; justify-content: space-between; position: relative; }
@@ -139,7 +134,6 @@
   .combo-step { width: 24px; height: 24px; border-radius: 50%; background: var(--cream-2); border: 2px solid var(--amber); z-index: 2; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: 0.3s; }
   .combo-step.active { background: var(--neon-gold); border-color: var(--mahogany); box-shadow: 0 0 8px var(--neon-gold); transform: scale(1.15); }
 
-  /* ===================== BOARD ===================== */
   .board-frame{
     background:linear-gradient(160deg, var(--board-bg-1), var(--board-bg-2));
     border-radius:14px; padding:10px; box-shadow:inset 0 0 18px rgba(0,0,0,0.5);
@@ -162,14 +156,12 @@
   .tile:hover{ filter:brightness(1.05); }
   .tile.selected{ box-shadow:0 0 0 3px var(--neon-cyan), 0 0 14px var(--neon-cyan); transform:scale(1.06); z-index:2; }
   
-  /* Powerup specific styles */
   .tile.special-wasabi{ background:radial-gradient(circle at 35% 30%, #baff6b, #4c9a1e 75%); border-color:#2e6b0f; }
   .tile.special-soy{ background:radial-gradient(circle at 35% 30%, #7c5a3a, #2c1c10 75%); border-color:#1a0f08; }
   .tile.special-rainbow{ background:radial-gradient(circle at 35% 30%, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); border-color:#ff2fb0; box-shadow:0 0 10px var(--neon-pink); }
   .tile.special-rocket{ background:radial-gradient(circle at 35% 30%, #ffecd2 0%, #fcb69f 100%); border-color:#d35400; }
   .tile.special-tempura{ background:radial-gradient(circle at 35% 30%, #f6d365 0%, #fda085 100%); border-color:#c0392b; }
 
-  /* Animations */
   .tile.clearing{ animation:tileClear .28s ease forwards; z-index: 3; }
   @keyframes tileClear{ 0%{ transform:scale(1); opacity:1; } 100%{ transform:scale(0.15) rotate(20deg); opacity:0; } }
   
@@ -206,7 +198,6 @@
   }
   @keyframes bannerPop{ 0%{ opacity:0; transform:translate(-50%,-10px) scale(0.9); } 12%{ opacity:1; transform:translate(-50%,0) scale(1); } 82%{ opacity:1; } 100%{ opacity:0; transform:translate(-50%,-6px) scale(0.96); } }
 
-  /* ===================== OVERLAYS / MODAL ===================== */
   .overlay-back{ position:fixed; inset:0; background:rgba(30,15,5,0.75); display:flex; align-items:center; justify-content:center; z-index:80; padding:16px; }
   .overlay-card{ background:linear-gradient(180deg,#fffaf0,#ffe6b8); border:3px solid var(--mahogany); border-radius:16px; padding:26px 28px; max-width:420px; width:100%; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.4); outline:none; max-height: 90vh; overflow-y: auto;}
   .overlay-card h2{ color:var(--mahogany-dark); font-size:22px; margin-bottom:10px; }
@@ -215,7 +206,6 @@
   .overlay-stats .stat-row{ border-bottom:1px dashed #d9b878; padding:5px 0; }
   .overlay-buttons{ display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
 
-  /* Achievements & Skins Lists */
   .list-grid { display: grid; grid-template-columns: 1fr; gap: 10px; text-align: left; margin-bottom: 15px;}
   .list-item { background: var(--cream); border: 2px solid var(--amber); border-radius: 8px; padding: 10px; display: flex; align-items: center; gap: 12px; }
   .list-item.locked { opacity: 0.6; filter: grayscale(0.8); }
@@ -224,7 +214,6 @@
   .item-details h4 { margin: 0 0 2px 0; font-size: 14px; color: var(--mahogany-dark); }
   .item-details p { margin: 0; font-size: 11px; }
 
-  /* Toast Notification */
   #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
   .toast { background: linear-gradient(180deg,#fff,#ffe6b0); border: 2px solid var(--mahogany); border-radius: 10px; padding: 10px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 10px; animation: slideUp 0.3s ease-out forwards, fadeOut 0.5s ease-in 3.5s forwards; font-weight: bold; color: var(--mahogany-dark);}
   @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -250,7 +239,6 @@
 
 <div class="wood-frame">
 
-  <!-- ============ TITLE / MODE SELECT ============ -->
   <section id="screen-title" class="inner-panel">
     <div class="title-emoji-row">🍣🍤🍙🥑🐟</div>
     <h1>Sushido Nostalgia</h1>
@@ -290,7 +278,6 @@
     </div>
   </section>
 
-  <!-- ============ GAME SCREEN ============ -->
   <section id="screen-game" class="inner-panel hidden">
     <div class="topbar">
       <button class="btn small secondary" id="btnHowToGame" type="button">📖 Help</button>
@@ -301,9 +288,14 @@
     <div class="game-layout">
       <div class="panel-left">
         <div class="dash-box">
-          <div class="dash-title">Customer</div>
-          <div class="customer-face" id="customerFace" aria-hidden="true">👵</div>
-          <div class="customer-name" id="customerName">Regular Ryu</div>
+          <div class="dash-title">Customer Profile</div>
+          <div class="customer-face" id="customerFace" aria-hidden="true">🧑‍🍳</div>
+          <div class="customer-name" id="customerName">Apprentice Chef</div>
+          <div class="customer-desc" id="customerDesc">Patient beginner with simple tastes.</div>
+          <div class="customer-meta-row">
+            <span id="customerDiff">Diff: ⭐</span>
+            <span id="customerBonus">Bonus: +0%</span>
+          </div>
           <div class="customer-order" id="customerOrderText" aria-live="polite">Wants 4 🍣</div>
           <div class="customer-progress" id="customerProgressText">0 / 4</div>
         </div>
@@ -348,23 +340,20 @@
 <div class="sr-only" id="liveRegion" aria-live="polite"></div>
 <div id="toast-container"></div>
 
-<!-- ============ MODALS ============ -->
-<!-- How To Play -->
 <div class="overlay-back hidden" id="howToOverlay" role="dialog" aria-modal="true">
   <div class="overlay-card" tabindex="-1" id="howToCard">
     <h2>How to Play</h2>
     <div class="list-grid" style="font-size:12px; max-height:40vh;">
       <p><b>Basics:</b> Match 3+ identical sushi. Idle for 5 seconds for a hint.</p>
+      <p><b>Customer System:</b> Each patron brings unique challenges! Check their personality traits, difficulty rating, and reward bonuses before fulfilling advanced orders.</p>
       <p><b>Power-ups (Standard):</b><br>🟢 Wasabi Bomb (Match 4): 3x3 blast.<br>🧴 Soy Splash (Match 5): Clears Row + Col.</p>
       <p><b>Combo Drops (Chain cascades!):</b><br>🥢 Rocket (x3): Clears 1 random row & col.<br>💥 Tempura (x5): Massive 5x5 blast.<br>🌈 Rainbow (x7): Clears all of one random type.</p>
       <p><b>Combos:</b> Swap ANY two power-ups for huge custom board clears!</p>
-      <p><b>Customers:</b> Look at the customer name! Some drain patience fast, some order huge amounts, but they reward differently.</p>
     </div>
     <div class="overlay-buttons"><button class="btn" id="btnCloseHowTo">Got it!</button></div>
   </div>
 </div>
 
-<!-- Skins -->
 <div class="overlay-back hidden" id="skinsOverlay" role="dialog" aria-modal="true">
   <div class="overlay-card" tabindex="-1" id="skinsCard">
     <h2>Shop & Skins</h2>
@@ -374,7 +363,6 @@
   </div>
 </div>
 
-<!-- Achievements -->
 <div class="overlay-back hidden" id="achievementsOverlay" role="dialog" aria-modal="true">
   <div class="overlay-card" tabindex="-1" id="achievementsCard">
     <h2>Trophies</h2>
@@ -383,7 +371,6 @@
   </div>
 </div>
 
-<!-- Game Over -->
 <div class="overlay-back hidden" id="gameOverOverlay" role="dialog" aria-modal="true">
   <div class="overlay-card" tabindex="-1" id="goCard">
     <h2 id="goTitle">⏰ Time's Up!</h2>
@@ -394,6 +381,8 @@
       <div class="stat-row"><span>Level reached</span><b id="goLevel">1</b></div>
       <div class="stat-row"><span>Orders done</span><b id="goOrders">0</b></div>
       <div class="stat-row"><span>Best combo</span><b id="goCombo">×0</b></div>
+      <div class="stat-row"><span>Powerups Triggered</span><b id="goPowerups">0</b></div>
+      <div class="stat-row"><span>Max Cascade Tier</span><b id="goMaxCascade">×0</b></div>
     </div>
     <div class="overlay-buttons">
       <button class="btn" id="btnPlayAgain">🔁 Restart</button>
@@ -405,9 +394,8 @@
 <script>
 "use strict";
 
-/* ============================== PERSISTENCE ============================== */
 const Persistence = (function(){
-  const KEY = "sushidoNostalgiaSave_v3";
+  const KEY = "sushidoNostalgiaSave_v4";
   let memoryFallback = {
     bestArcadeScore:0, bestZenScore:0, bestDailyScore:0,
     bestComboArcade:0, bestComboZen:0, soundOn:true,
@@ -434,7 +422,6 @@ const Persistence = (function(){
   return { load, save, get:()=>memoryFallback };
 })();
 
-/* ============================== AUDIO ENGINE ============================== */
 const AudioEngine = (function(){
   let ctx = null, enabled = true;
   function ensure(){ if(!ctx) try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ ctx=null; } }
@@ -473,7 +460,6 @@ const AudioEngine = (function(){
   };
 })();
 
-/* ============================== META (Achievements & Skins) ============================== */
 const MetaSystem = (function(){
   const SKINS = [
     { id: 'classic', name: 'Classic Wood', cost: 0, icon: '🪵', desc: 'The nostalgic sushi bar.' },
@@ -519,11 +505,12 @@ const MetaSystem = (function(){
 
   function updateMetaUI() {
     const save = Persistence.get();
-    document.getElementById('metaCoins').textContent = save.coins;
+    const metaCoinsEl = document.getElementById('metaCoins');
+    if(metaCoinsEl) metaCoinsEl.textContent = save.coins;
     const unlockedCount = Object.keys(save.achievements).length;
-    document.getElementById('metaTrophies').textContent = `${unlockedCount}/${ACHIEVEMENTS.length}`;
+    const metaTrophiesEl = document.getElementById('metaTrophies');
+    if(metaTrophiesEl) metaTrophiesEl.textContent = `${unlockedCount}/${ACHIEVEMENTS.length}`;
     
-    // Render Achievements
     const achList = document.getElementById('achievementsList');
     if(achList) {
       achList.innerHTML = ACHIEVEMENTS.map(ach => `
@@ -534,7 +521,6 @@ const MetaSystem = (function(){
       `).join('');
     }
 
-    // Render Skins
     const skinsList = document.getElementById('skinsList');
     if(skinsList) {
       skinsList.innerHTML = SKINS.map(s => {
@@ -569,10 +555,8 @@ const MetaSystem = (function(){
   };
 })();
 
-/* ============================== BOARD ENGINE ============================== */
 const SIZE = 8;
 const BASE_TYPES = ["sushi","shrimp","rice","avocado","fish"];
-const EXTRA_TYPES = ["dumpling", "tea"]; 
 const EMOJI = { sushi:"🍣", shrimp:"🍤", rice:"🍙", avocado:"🥑", fish:"🐟", dumpling:"🥟", tea:"🍵", wasabi:"🟢", soy:"🧴", rocket:"🥢", tempura:"💥", rainbow:"🌈" };
 const LABEL = { sushi:"Sushi", shrimp:"Shrimp", rice:"Rice", avocado:"Avocado", fish:"Fish", dumpling:"Dumpling", tea:"Tea", wasabi:"Wasabi", soy:"Soy Splash", rocket:"Rocket", tempura:"Tempura Bomb", rainbow:"Rainbow" };
 
@@ -615,8 +599,6 @@ class BoardEngine {
     if(r>=2 && grid[r-1][c] && grid[r-2][c] && grid[r-1][c].type===t && grid[r-2][c].type===t) return true;
     return false;
   }
-
-  clone2D(){ return this.cells.map(row => row.map(t => t ? {type:t.type, id:t.id} : null)); }
 
   swap(r1,c1,r2,c2){ const tmp = this.cells[r1][c1]; this.cells[r1][c1] = this.cells[r2][c2]; this.cells[r2][c2] = tmp; }
 
@@ -702,27 +684,194 @@ const FLIP = {
       }
     }
     if(active.length === 0) return Promise.resolve();
-    container.offsetHeight; // force layout
+    container.offsetHeight;
     for (const child of active) { child.style.transition = `transform ${duration}ms ease`; child.style.transform = 'translate(0, 0)'; }
     return new Promise(resolve => setTimeout(resolve, duration));
   }
 };
 
+/* ============================== MODULE: CustomerSystem ============================== */
+const CustomerSystem = (function(){
+  const ARCHETYPES = [
+    { id: 'apprentice', name: 'Apprentice Chef', emoji: '🧑‍🍳', desc: 'Patient beginner with simple tastes.', diff: '⭐', patienceMod: 1.5, countMod: 0.8, ptsMod: 0.9, minLevel: 1, weight: 30 },
+    { id: 'regular', name: 'Regular Ryu', emoji: '👨', desc: 'Loyal customer looking for standard fare.', diff: '⭐⭐', patienceMod: 1.0, countMod: 1.0, ptsMod: 1.0, minLevel: 1, weight: 25 },
+    { id: 'child', name: 'Little Kenji', emoji: '👦', desc: 'Smaller orders, loves sweet treats.', diff: '⭐', patienceMod: 1.3, countMod: 0.7, ptsMod: 0.8, minLevel: 1, weight: 20 },
+    { id: 'tourist', name: 'Snapshot Sarah', emoji: '📸', desc: 'Wants colorful mixed platters.', diff: '⭐⭐', patienceMod: 1.1, countMod: 1.2, ptsMod: 1.2, minLevel: 2, weight: 15 },
+    { id: 'salaryman', name: 'Tired Salaryman', emoji: '🧑‍💼', desc: 'Patience drains fast, high tips.', diff: '⭐⭐⭐', patienceMod: 0.6, countMod: 1.1, ptsMod: 1.4, minLevel: 2, weight: 15 },
+    { id: 'healthnut', name: 'Health Nut Hana', emoji: '🥗', desc: 'Prefers greens and lighter dishes.', diff: '⭐⭐⭐', patienceMod: 0.9, countMod: 1.3, ptsMod: 1.3, minLevel: 3, weight: 12 },
+    { id: 'critic', name: 'Food Critic Ken', emoji: '🧐', desc: 'Demands combo mastery for high praise.', diff: '⭐⭐⭐⭐', patienceMod: 0.8, countMod: 1.4, ptsMod: 1.8, minLevel: 4, weight: 10 },
+    { id: 'teen', name: 'Impulsive Yuto', emoji: '🧑', desc: 'Impatient and unpredictable orders.', diff: '⭐⭐⭐', patienceMod: 0.7, countMod: 1.2, ptsMod: 1.5, minLevel: 4, weight: 10 },
+    { id: 'master', name: 'Sushi Master Shifu', emoji: '🥋', desc: 'Strict standards requiring power-ups.', diff: '⭐⭐⭐⭐⭐', patienceMod: 0.5, countMod: 1.5, ptsMod: 2.2, minLevel: 6, weight: 6 },
+    { id: 'vip', name: 'VIP Ambassador', emoji: '🤵', desc: 'Massive multi-objective luxury orders.', diff: '⭐⭐⭐⭐⭐', patienceMod: 0.6, countMod: 1.8, ptsMod: 2.5, minLevel: 7, weight: 4 }
+  ];
+
+  let activeCustomer = null;
+  let lastCustomerId = null;
+  let lastFace = "";
+
+  const el = (id)=>document.getElementById(id);
+
+  function selectCustomer(level) {
+    const available = ARCHETYPES.filter(c => level >= c.minLevel && c.id !== lastCustomerId);
+    const totalWeight = available.reduce((sum, c) => sum + c.weight, 0);
+    let rnd = Math.random() * totalWeight;
+    let chosen = available[0];
+    for(const c of available) {
+      if(rnd < c.weight) { chosen = c; break; }
+      rnd -= c.weight;
+    }
+    lastCustomerId = chosen.id;
+    activeCustomer = chosen;
+
+    el("customerName").textContent = activeCustomer.name;
+    el("customerDesc").textContent = activeCustomer.desc;
+    el("customerDiff").textContent = "Diff: " + activeCustomer.diff;
+    el("customerBonus").textContent = `Bonus: +${Math.round((activeCustomer.ptsMod - 1)*100)}%`;
+    setFace(activeCustomer.emoji);
+    return activeCustomer;
+  }
+
+  function setFace(f) {
+    if(lastFace !== f) {
+      el("customerFace").textContent = f;
+      lastFace = f;
+    }
+  }
+
+  function react(eventType, patience, mode, shakeCallback) {
+    if (mode === "zen" || mode === "daily") return;
+    if (el("customerFace").textContent === "😍") return;
+    
+    if (eventType === 'bigCombo') {
+      setFace("🤩");
+      setTimeout(() => { if(activeCustomer) setFace(activeCustomer.emoji); }, 1200);
+    } else if (eventType === 'mistake') {
+      setFace("😔");
+      setTimeout(() => { if(activeCustomer) setFace(activeCustomer.emoji); }, 1000);
+    } else if (eventType === 'powerup') {
+      setFace("😆");
+      setTimeout(() => { if(activeCustomer) setFace(activeCustomer.emoji); }, 1000);
+    } else {
+      if (patience <= 15) { setFace("🤬"); if(shakeCallback) shakeCallback(0.3); }
+      else if (patience <= 35) { setFace("😠"); if(shakeCallback) shakeCallback(0.2); }
+      else if (patience <= 60) setFace("😟"); 
+      else if (activeCustomer) setFace(activeCustomer.emoji);
+    }
+  }
+
+  return { selectCustomer, setFace, react, getActive: () => activeCustomer };
+})();
+
+/* ============================== MODULE: OrderSystem ============================== */
+const OrderSystem = (function(){
+  let currentOrder = null;
+  let lastOrderTypes = [];
+
+  const el = (id)=>document.getElementById(id);
+
+  function pickOrderType(boardActiveTypes){
+    let candidate, guard=0;
+    do{ candidate = boardActiveTypes[Math.floor(Math.random()*boardActiveTypes.length)]; guard++; } 
+    while(lastOrderTypes.length>=2 && lastOrderTypes[0]===candidate && lastOrderTypes[1]===candidate && guard<20);
+    lastOrderTypes.push(candidate); if(lastOrderTypes.length>2) lastOrderTypes.shift();
+    return candidate;
+  }
+
+  function generateOrder(level, customer, boardActiveTypes){
+    const categories = ['basic'];
+    if(level >= 3) categories.push('mixed');
+    if(level >= 5) categories.push('combo');
+    if(level >= 7) categories.push('powerup');
+    if(level >= 8) categories.push('speed');
+    if(level >= 9) categories.push('vip');
+
+    // Customer specific bias
+    let cat = categories[Math.floor(Math.random() * categories.length)];
+    if(customer.id === 'critic') cat = Math.random() < 0.7 ? 'combo' : (Math.random() < 0.9 ? 'mixed' : 'basic');
+    if(customer.id === 'healthnut') cat = 'basic'; // Avocado-heavy preference handled below
+    if(customer.id === 'tourist') cat = 'mixed';
+    if(customer.id === 'master') cat = 'powerup';
+    if(customer.id === 'vip') cat = 'vip';
+
+    const growth = Math.min(level-1, 6);
+
+    if(cat === 'basic') {
+      let type = pickOrderType(boardActiveTypes);
+      if(customer.id === 'healthnut' && boardActiveTypes.includes('avocado')) type = 'avocado';
+      let need = Math.max(2, Math.floor((4 + Math.floor(Math.random()*3) + growth) * customer.countMod));
+      currentOrder = { category: 'basic', type, need, have:0, desc: `Wants ${need} ${EMOJI[type]}` };
+    } 
+    else if(cat === 'mixed') {
+      const t1 = pickOrderType(boardActiveTypes);
+      let t2; do{ t2 = pickOrderType(boardActiveTypes); } while(t2 === t1);
+      const need1 = Math.max(2, Math.floor((3 + Math.floor(Math.random()*2)) * customer.countMod));
+      const need2 = Math.max(2, Math.floor((3 + Math.floor(Math.random()*2)) * customer.countMod));
+      currentOrder = { category: 'mixed', type: t1, secondaryType: t2, need: need1, secondaryNeed: need2, have: 0, secondaryHave: 0, desc: `${need1} ${EMOJI[t1]} & ${need2} ${EMOJI[t2]}` };
+    }
+    else if(cat === 'combo') {
+      const targetCombo = Math.min(6, 3 + Math.floor(Math.random() * 2));
+      currentOrder = { category: 'combo', targetCombo, have: 0, need: targetCombo, desc: `Reach Combo ×${targetCombo}` };
+    }
+    else if(cat === 'powerup') {
+      const pTypes = ['wasabi', 'soy', 'rocket'];
+      const pt = pTypes[Math.floor(Math.random() * pTypes.length)];
+      const count = 1 + (level > 6 ? 1 : 0);
+      currentOrder = { category: 'powerup', powerupType: pt, need: count, have: 0, desc: `Trigger ${count} ${EMOJI[pt] || '⚡'} Powerup${count>1?'s':''}` };
+    }
+    else if(cat === 'speed') {
+      const type = pickOrderType(boardActiveTypes);
+      const need = 4;
+      currentOrder = { category: 'speed', type, need, have: 0, timeLeft: 35, desc: `Fast! ${need} ${EMOJI[type]} in 35s` };
+    }
+    else {
+      const t1 = pickOrderType(boardActiveTypes);
+      const need1 = 4;
+      currentOrder = { category: 'vip', type: t1, need: need1, have: 0, targetCombo: 4, comboAchieved: false, desc: `VIP: ${need1} ${EMOJI[t1]} + Combo ×4` };
+    }
+
+    el("customerOrderText").textContent = currentOrder.desc;
+    el("customerProgressText").textContent = currentOrder.category === 'mixed' ? `0/${currentOrder.need} | 0/${currentOrder.secondaryNeed}` : `0 / ${currentOrder.need}`;
+    return currentOrder;
+  }
+
+  return { generateOrder, getOrder: () => currentOrder };
+})();
+
+/* ============================== MODULE: ProgressionSystem ============================== */
+const ProgressionSystem = (function(){
+  let level = 1;
+  let ordersDone = 0;
+
+  function reset() {
+    level = 1;
+    ordersDone = 0;
+  }
+
+  function registerOrderCompletion(mode) {
+    ordersDone++;
+    const save = Persistence.get();
+    save.stats.totalOrders++;
+    Persistence.save(save);
+
+    let leveledUp = false;
+    if (ordersDone > 0 && ordersDone % (3 + Math.floor(level/2)) === 0) {
+      level++;
+      save.stats.maxLevel = Math.max(save.stats.maxLevel, level);
+      Persistence.save(save);
+      leveledUp = true;
+    }
+    return { level, ordersDone, leveledUp };
+  }
+
+  return { reset, registerOrderCompletion, getLevel: () => level, getOrdersDone: () => ordersDone };
+})();
+
 /* ============================== GAME CONTROLLER ============================== */
 const GameController = (function(){
   const board = new BoardEngine();
-  
-  const CUSTOMERS = [
-    { name: "Regular Ryu", face: "👨", patienceMod: 1.0, countMod: 1.0, pts: 1.0 },
-    { name: "Grumpy Gramps", face: "👴", patienceMod: 1.8, countMod: 0.8, pts: 1.5 },
-    { name: "Hungry Hana", face: "👧", patienceMod: 0.6, countMod: 1.5, pts: 1.2 },
-    { name: "Critic Ken", face: "🧐", patienceMod: 1.4, countMod: 1.0, pts: 2.0 },
-    { name: "Chill Cat", face: "🐱", patienceMod: 0.3, countMod: 2.0, pts: 1.0 }
-  ];
-
   let mode = null; 
-  let score = 0, level = 1, ordersDone = 0, bestComboRun = 0, coinsEarned = 0;
-  let currentOrder = null, activeCustomer = null, lastOrderTypes = [];
+  let score = 0, bestComboRun = 0, coinsEarned = 0;
+  let totalPowerupsThisRun = 0, maxCascadeTierThisRun = 0;
   let locked = false, selected = null, patience = 100, patienceDecayPerSec = 1.8;
   let lastFrameTime = null, paused = true, activeSessionToken = 0, idleTime = 0, dailyTimeLeft = 180;
   
@@ -733,72 +882,57 @@ const GameController = (function(){
   function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
   function announce(msg){ el("liveRegion").textContent = ""; setTimeout(() => el("liveRegion").textContent = msg, 50); }
 
-  /* ---------- Initialization ---------- */
   function init() {
     MetaSystem.applySkin(Persistence.get().equippedSkin);
     MetaSystem.updateMetaUI();
   }
 
-  /* ---------- Orders & Progression ---------- */
-  function nextCustomer() {
-    activeCustomer = CUSTOMERS[Math.floor(Math.random() * CUSTOMERS.length)];
-    el("customerName").textContent = activeCustomer.name;
-    setCustomerFace(activeCustomer.face);
-  }
-
-  function pickOrderType(){
-    let candidate, guard=0;
-    do{ candidate = board.activeTypes[Math.floor(Math.random()*board.activeTypes.length)]; guard++; } 
-    while(lastOrderTypes.length>=2 && lastOrderTypes[0]===candidate && lastOrderTypes[1]===candidate && guard<20);
-    lastOrderTypes.push(candidate); if(lastOrderTypes.length>2) lastOrderTypes.shift();
-    return candidate;
-  }
-
-  function newOrder(){
-    if(!activeCustomer) nextCustomer();
-    const type = pickOrderType();
-    const growth = Math.min(level-1, 6);
-    let need = mode === "zen" ? (5 + Math.floor(Math.random()*3) + growth) : (4 + Math.floor(Math.random()*3));
-    need = Math.max(2, Math.floor(need * activeCustomer.countMod));
-    
-    currentOrder = { type, need, have:0 };
-    el("customerOrderText").textContent = "Wants " + currentOrder.need + " " + EMOJI[currentOrder.type];
-    el("customerProgressText").textContent = currentOrder.have + " / " + currentOrder.need;
+  function nextCustomerAndOrder() {
+    CustomerSystem.selectCustomer(ProgressionSystem.getLevel());
+    OrderSystem.generateOrder(ProgressionSystem.getLevel(), CustomerSystem.getActive(), board.activeTypes);
   }
 
   function completeOrder(){
-    ordersDone++; el("ordersLabel").textContent = ordersDone;
-    const save = Persistence.get(); save.stats.totalOrders++; Persistence.save(save);
+    const prog = ProgressionSystem.registerOrderCompletion(mode);
+    el("ordersLabel").textContent = prog.ordersDone;
     
-    const bonus = Math.floor((750 + level * 250) * activeCustomer.pts);
+    CustomerSystem.setFace("😍");
+    setTimeout(() => { const c = CustomerSystem.getActive(); if(c) CustomerSystem.setFace(c.emoji); }, 1500);
+
+    const activeCust = CustomerSystem.getActive();
+    const bonus = Math.floor((750 + prog.level * 250) * activeCust.ptsMod);
     addScore(bonus); AudioEngine.orderComplete(); showFloatText(`+${bonus}`, 4, 4);
     
     if(mode==="arcade"){
-      patience = Math.min(100, patience + (35 / activeCustomer.patienceMod));
-      updatePatienceUI(); setCustomerFace("😍"); setTimeout(updateCustomerFace, 1500);
+      patience = Math.min(100, patience + (35 / activeCust.patienceMod));
+      updatePatienceUI();
     }
     
-    if(ordersDone > 0 && ordersDone % (3 + Math.floor(level/2)) === 0){
-      level++; save.stats.maxLevel = Math.max(save.stats.maxLevel, level); Persistence.save(save);
-      board.updateActiveTypes(level);
-      if(mode==="arcade") patienceDecayPerSec = Math.min(5.0, 1.8 + (level-1)*0.35);
-      const b = document.createElement("div"); b.className = "levelup-banner"; b.textContent = "Level Up! Lv." + level;
+    if(prog.leveledUp){
+      board.updateActiveTypes(prog.level);
+      if(mode==="arcade") patienceDecayPerSec = Math.min(5.0, 1.8 + (prog.level-1)*0.35);
+      const b = document.createElement("div"); b.className = "levelup-banner"; b.textContent = "Level Up! Lv." + prog.level;
       document.body.appendChild(b); setTimeout(()=> b.remove(), 1600); AudioEngine.levelUp();
     }
-    el("levelLabel").textContent = level;
+    el("levelLabel").textContent = prog.level;
     
-    nextCustomer(); newOrder();
+    nextCustomerAndOrder();
   }
 
-  /* ---------- Patience & Timer ---------- */
-  let lastFace = "";
-  function setCustomerFace(f){ if(lastFace!==f){ el("customerFace").textContent=f; lastFace=f; if(f==="🤬") shakeBoard(0.5); } }
-  function updateCustomerFace(){
-    if (mode==="zen" || mode==="daily") return;
-    if (el("customerFace").textContent === "😍") return;
-    if (patience <= 15) setCustomerFace("🤬"); else if (patience <= 35) setCustomerFace("😠"); else if (patience <= 60) setCustomerFace("😟"); else setCustomerFace(activeCustomer.face);
+  function shakeBoard(intensity){ if(intensity<=0) return; boardShell.classList.remove("board-shake"); void boardShell.offsetWidth; boardShell.classList.add("board-shake"); }
+  function showFloatText(text, r, c){
+    const sz = boardEl.clientWidth / SIZE, x = (c+0.5)*sz, y = (r+0.5)*sz;
+    const t = document.createElement("div"); t.className = "float-text"; t.textContent = text;
+    t.style.left = x + "px"; t.style.top = y + "px"; t.style.transform = "translate(-50%,-50%)";
+    floatLayer.appendChild(t); setTimeout(()=> t.remove(), 1050);
   }
+  function addScore(points){ score += points; el("scoreLabel").textContent = score; }
   
+  function updateComboUI(tier){
+    el("comboLabel").textContent = "×" + Math.max(bestComboRun, tier);
+    [3, 5, 7].forEach(t => el(`combo-step-${t}`).classList.toggle('active', tier >= t));
+  }
+
   function updatePatienceUI(){
     const fill = el("patienceFill");
     if (mode === "daily") {
@@ -821,10 +955,9 @@ const GameController = (function(){
     if(lastFrameTime==null) lastFrameTime = ts;
     const dt = (ts-lastFrameTime)/1000; lastFrameTime = ts;
     
-    // Idle Hint System
     idleTime += dt;
     if(idleTime > 5.0 && !locked) {
-      idleTime = -999; // trigger once
+      idleTime = -999;
       const move = board.getValidMove();
       if(move) {
         getTileEl(move[0].r, move[0].c)?.classList.add("hint-pulse");
@@ -833,9 +966,15 @@ const GameController = (function(){
     }
 
     if(mode==="arcade"){
-      patience -= (patienceDecayPerSec * activeCustomer.patienceMod) * dt;
-      if(patience<=0){ patience=0; updatePatienceUI(); updateCustomerFace(); endRun(true); return; }
-      updatePatienceUI(); if(Math.random()<0.05) updateCustomerFace(); 
+      const activeCust = CustomerSystem.getActive();
+      patience -= (patienceDecayPerSec * activeCust.patienceMod) * dt;
+      const currentOrd = OrderSystem.getOrder();
+      if(currentOrd && currentOrd.category === 'speed') {
+        currentOrd.timeLeft -= dt;
+        if(currentOrd.timeLeft <= 0) { patience = 0; }
+      }
+      if(patience<=0){ patience=0; updatePatienceUI(); CustomerSystem.react('fail', patience, mode, shakeBoard); endRun(true); return; }
+      updatePatienceUI(); CustomerSystem.react('tick', patience, mode, shakeBoard);
     } else if(mode==="daily"){
       dailyTimeLeft -= dt;
       if(dailyTimeLeft<=0){ dailyTimeLeft=0; updatePatienceUI(); endRun(true); return; }
@@ -844,22 +983,6 @@ const GameController = (function(){
     requestAnimationFrame(tickGameLoop);
   }
 
-  /* ---------- Visual Helpers ---------- */
-  function shakeBoard(intensity){ if(intensity<=0) return; boardShell.classList.remove("board-shake"); void boardShell.offsetWidth; boardShell.classList.add("board-shake"); }
-  function showFloatText(text, r, c){
-    const sz = boardEl.clientWidth / SIZE, x = (c+0.5)*sz, y = (r+0.5)*sz;
-    const t = document.createElement("div"); t.className = "float-text"; t.textContent = text;
-    t.style.left = x + "px"; t.style.top = y + "px"; t.style.transform = "translate(-50%,-50%)";
-    floatLayer.appendChild(t); setTimeout(()=> t.remove(), 1050);
-  }
-  function addScore(points){ score += points; el("scoreLabel").textContent = score; }
-  
-  function updateComboUI(tier){
-    el("comboLabel").textContent = "×" + Math.max(bestComboRun, tier);
-    [3, 5, 7].forEach(t => el(`combo-step-${t}`).classList.toggle('active', tier >= t));
-  }
-
-  /* ---------- Board Rendering ---------- */
   function renderBoardState() {
     for(let r=0; r<SIZE; r++) {
       for(let c=0; c<SIZE; c++) {
@@ -885,7 +1008,6 @@ const GameController = (function(){
   function getTileEl(r, c) { const t = board.get(r, c); return t ? document.getElementById("tile-"+t.id) : null; }
   function clearHints() { document.querySelectorAll('.hint-pulse').forEach(e => e.classList.remove('hint-pulse')); idleTime = 0; }
 
-  /* ---------- Move Resolution Pipeline ---------- */
   async function submitSwap(r1, c1, r2, c2) {
     if (locked || !mode) return;
     clearHints(); locked = true; selected = null; el("btnQuitSave").disabled = true;
@@ -901,6 +1023,7 @@ const GameController = (function(){
     
     if (!createsMatch && !isDirectPowerSwap && !hasOnePowerup) {
       AudioEngine.invalidSwap();
+      CustomerSystem.react('mistake', patience, mode);
       const e1 = getTileEl(r1, c1), e2 = getTileEl(r2, c2);
       if(e1) e1.classList.add("shake-invalid"); if(e2) e2.classList.add("shake-invalid");
       await wait(300); if (token !== activeSessionToken) return;
@@ -915,26 +1038,24 @@ const GameController = (function(){
   async function resolveBoard(token, tier, swapAction = null) {
     if (token !== activeSessionToken) return;
     updateComboUI(tier);
+    maxCascadeTierThisRun = Math.max(maxCascadeTierThisRun, tier);
     const save = Persistence.get();
     
     const lines = board.findLines();
     let directTriggers = [];
     let powerComboArea = [];
     
-    // Direct swaps
     if (swapAction && tier === 1) {
       const {r1, c1, r2, c2} = swapAction;
       const t1 = board.get(r1,c1), t2 = board.get(r2,c2);
       if (t1 && t2 && board.isPowerUp(r1, c1) && board.isPowerUp(r2, c2)) {
-        // Powerup Combination Magic
         const combined = [t1.type, t2.type].sort().join('+');
         let clears = [];
         if(combined.includes('rainbow')) {
-          // Rainbow + Anything: clears all of most common standard type
           const counts = {}; board.cells.flat().forEach(c => { if(c && board.isStandard(c.type)) counts[c.type] = (counts[c.type]||0)+1; });
           const target = Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0];
           if(target) board.cells.flat().forEach(c => { if(c && c.type===target) clears.push({r: board.cells.findIndex(row=>row.includes(c)), c: board.cells.find(row=>row.includes(c)).indexOf(c)}); });
-          directTriggers.push({r:r1,c:c1}, {r:r2,c:c2}); // also pop the initial ones
+          directTriggers.push({r:r1,c:c1}, {r:r2,c:c2});
         } else if (combined === 'soy+soy' || combined === 'rocket+soy') {
            for(let i=0;i<SIZE;i++){ clears.push({r:r1,c:i}, {r:r2,c:i}, {r:i,c:c1}, {r:i,c:c2}); }
         } else if (combined === 'wasabi+wasabi' || combined === 'tempura+wasabi') {
@@ -982,7 +1103,6 @@ const GameController = (function(){
       }
     });
     
-    // Spawn Combo Rewards!
     if(tier === 3 || tier === 5 || tier === 7) {
       const rw = tier===3 ? 'rocket' : tier===5 ? 'tempura' : 'rainbow';
       let empties = [];
@@ -1036,7 +1156,15 @@ const GameController = (function(){
       }
     }
     
-    if(pCount>0) { save.stats.totalPowerups += pCount; Persistence.save(save); }
+    if(pCount>0) { 
+      totalPowerupsThisRun += pCount;
+      save.stats.totalPowerups += pCount; Persistence.save(save); 
+      CustomerSystem.react('powerup', patience, mode);
+      const currentOrd = OrderSystem.getOrder();
+      if (currentOrd && currentOrd.category === 'powerup') {
+        currentOrd.have = Math.min(currentOrd.need, currentOrd.have + pCount);
+      }
+    }
 
     let clearCount = 0; const typeCounts = {};
     clearSet.forEach(({r, c}) => {
@@ -1046,10 +1174,52 @@ const GameController = (function(){
     
     if (clearCount > 0) addScore(clearCount * 100 * tier);
     
-    if (currentOrder && typeCounts[currentOrder.type]) {
-      currentOrder.have = Math.min(currentOrder.need, currentOrder.have + typeCounts[currentOrder.type]);
-      el("customerProgressText").textContent = currentOrder.have + " / " + currentOrder.need;
-      if (currentOrder.have >= currentOrder.need) completeOrder();
+    if(tier >= 3) {
+      CustomerSystem.react('bigCombo', patience, mode);
+      const currentOrd = OrderSystem.getOrder();
+      if (currentOrd && currentOrd.category === 'combo' && tier >= currentOrd.targetCombo) {
+        currentOrd.have = currentOrd.need;
+      }
+      if (currentOrd && currentOrd.category === 'vip' && tier >= currentOrd.targetCombo) {
+        currentOrd.comboAchieved = true;
+      }
+    }
+
+    const currentOrd = OrderSystem.getOrder();
+    if (currentOrd) {
+      if (currentOrd.category === 'basic') {
+        if (typeCounts[currentOrd.type]) {
+          currentOrd.have = Math.min(currentOrd.need, currentOrd.have + typeCounts[currentOrd.type]);
+        }
+      } else if (currentOrd.category === 'mixed') {
+        if (typeCounts[currentOrd.type]) currentOrd.have = Math.min(currentOrd.need, currentOrd.have + typeCounts[currentOrd.type]);
+        if (typeCounts[currentOrd.secondaryType]) currentOrd.secondaryHave = Math.min(currentOrd.secondaryNeed, currentOrd.secondaryHave + typeCounts[currentOrd.secondaryType]);
+      } else if (currentOrd.category === 'speed') {
+        if (typeCounts[currentOrd.type]) {
+          currentOrd.have = Math.min(currentOrd.need, currentOrd.have + typeCounts[currentOrd.type]);
+        }
+      } else if (currentOrd.category === 'vip') {
+        if (typeCounts[currentOrd.type]) {
+          currentOrd.have = Math.min(currentOrd.need, currentOrd.have + typeCounts[currentOrd.type]);
+        }
+      }
+
+      if (currentOrd.category === 'mixed') {
+        el("customerProgressText").textContent = `${currentOrd.have}/${currentOrd.need} | ${currentOrd.secondaryHave}/${currentOrd.secondaryNeed}`;
+        if (currentOrd.have >= currentOrd.need && currentOrd.secondaryHave >= currentOrd.secondaryNeed) {
+          completeOrder();
+        }
+      } else if (currentOrd.category === 'vip') {
+        el("customerProgressText").textContent = `${currentOrd.have}/${currentOrd.need} | Combo: ${currentOrd.comboAchieved?'✓':'×4'}`;
+        if (currentOrd.have >= currentOrd.need && currentOrd.comboAchieved) {
+          completeOrder();
+        }
+      } else {
+        el("customerProgressText").textContent = `${currentOrd.have} / ${currentOrd.need}`;
+        if (currentOrd.have >= currentOrd.need) {
+          completeOrder();
+        }
+      }
     }
     
     if (clearSet.size > 0 || triggeredPowerUps.size > 0) {
@@ -1088,7 +1258,6 @@ const GameController = (function(){
     await resolveBoard(token, tier + 1);
   }
 
-  /* ---------- Inputs ---------- */
   function onTileActivate(r, c) {
     if (locked || !mode) return;
     clearHints();
@@ -1115,7 +1284,7 @@ const GameController = (function(){
     else {
       let tr = r, tc = c;
       if (Math.abs(dx) > Math.abs(dy)) tc += dx > 0 ? 1 : -1; else tr += dy > 0 ? 1 : -1;
-      if (!board.inBounds(tr, tc)) { AudioEngine.invalidSwap(); const el = getTileEl(r, c); if(el) { el.classList.add("shake-invalid"); setTimeout(() => el.classList.remove("shake-invalid"), 320); } return; }
+      if (!board.inBounds(tr, tc)) { AudioEngine.invalidSwap(); CustomerSystem.react('mistake', patience, mode); const el = getTileEl(r, c); if(el) { el.classList.add("shake-invalid"); setTimeout(() => el.classList.remove("shake-invalid"), 320); } return; }
       selected = null; submitSwap(r, c, tr, tc);
     }
   });
@@ -1133,14 +1302,15 @@ const GameController = (function(){
     }
   });
 
-  /* ---------- Flow Control ---------- */
   function startRun(selectedMode){
     AudioEngine.ensure();
     mode = selectedMode; activeSessionToken++;
     
-    score=0; level=1; ordersDone=0; bestComboRun=0; coinsEarned=0;
+    score=0; bestComboRun=0; coinsEarned=0;
+    totalPowerupsThisRun=0; maxCascadeTierThisRun=0;
+    ProgressionSystem.reset();
     selected=null; locked=false; patience=100; dailyTimeLeft=180; idleTime=0;
-    patienceDecayPerSec=1.8; lastOrderTypes=[]; keyboardFocus={r: 3, c: 3};
+    patienceDecayPerSec=1.8; keyboardFocus={r: 3, c: 3};
     
     el("scoreLabel").textContent=0; el("levelLabel").textContent=1; el("ordersLabel").textContent=0; el("comboLabel").textContent="×0";
     board.updateActiveTypes(1); board.generateInitialBoard();
@@ -1149,7 +1319,7 @@ const GameController = (function(){
     el("patienceBox").classList.toggle("hidden", mode==="zen");
     el("patienceTitle").textContent = mode==="daily" ? "Time Left" : "Patience";
     
-    nextCustomer(); newOrder(); updatePatienceUI(); updateComboUI(0);
+    nextCustomerAndOrder(); updatePatienceUI(); updateComboUI(0);
 
     el("screen-title").classList.add("hidden"); el("screen-game").classList.remove("hidden");
     paused=false; lastFrameTime=null; requestAnimationFrame(tickGameLoop);
@@ -1168,7 +1338,9 @@ const GameController = (function(){
     Persistence.save(save); MetaSystem.checkAchievements();
     
     el("goScore").textContent = score; el("goCoins").textContent = "+" + coinsEarned;
-    el("goLevel").textContent = level; el("goOrders").textContent = ordersDone; el("goCombo").textContent = "×"+bestComboRun;
+    el("goLevel").textContent = ProgressionSystem.getLevel(); el("goOrders").textContent = ProgressionSystem.getOrdersDone(); el("goCombo").textContent = "×"+bestComboRun;
+    el("goPowerups").textContent = totalPowerupsThisRun;
+    el("goMaxCascade").textContent = "×" + maxCascadeTierThisRun;
     
     if (isTimeout) {
       AudioEngine.gameOver();
@@ -1211,7 +1383,6 @@ const GameController = (function(){
       el("bestDailyLabel").textContent = "Best score: " + Persistence.get().bestDailyScore;
     });
     
-    // Close modals on Esc
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") { document.querySelectorAll('.overlay-back').forEach(o => o.classList.add('hidden')); }
     });
@@ -1220,7 +1391,6 @@ const GameController = (function(){
   return { init, bindUI };
 })();
 
-// Bootstrap
 Persistence.load();
 GameController.init();
 GameController.bindUI();
