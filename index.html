@@ -2,14 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Sushido Nostalgia</title>
 <style>
   :root{
-    --amber:#ffeaa7; --mahogany:#d35400; --mahogany-dark:#8a3a0e; --brown-deep:#5c2e0e;
-    --cream:#fff6e0; --cream-2:#fdecc8; --ink:#3a2410; --neon-pink:#ff2fb0; --neon-cyan:#20e8ff;
-    --neon-gold:#ffd23f; --danger:#c0392b; --focus:#2d7dd2; --bg-grad-1: #fff3cf;
-    --board-bg-1: #7a3a10; --board-bg-2: #4a2408; --tile-bg-1: #fff6e0; --tile-bg-2: #f3d69a;
+    --amber:#ffeaa7;
+    --mahogany:#d35400;
+    --mahogany-dark:#8a3a0e;
+    --brown-deep:#5c2e0e;
+    --cream:#fff6e0;
+    --cream-2:#fdecc8;
+    --ink:#3a2410;
+    --neon-pink:#ff2fb0;
+    --neon-cyan:#20e8ff;
+    --neon-gold:#ffd23f;
+    --danger:#c0392b;
+    --focus:#2d7dd2;
+    --bg-grad-1: #fff3cf;
+    --board-bg-1: #7a3a10;
+    --board-bg-2: #4a2408;
+    --tile-bg-1: #fff6e0;
+    --tile-bg-2: #f3d69a;
   }
   
   body.skin-sakura {
@@ -27,26 +40,22 @@
   }
 
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  
-  html, body {
-    margin:0; height:100%; overflow: hidden; /* Lock viewport for app-feel */
+  html,body{
+    margin:0; height:100%;
     background: radial-gradient(circle at 20% 10%, var(--bg-grad-1) 0%, transparent 55%), var(--amber);
     font-family:"Trebuchet MS", "Segoe UI", ui-rounded, Verdana, sans-serif;
-    color:var(--ink); 
+    color:var(--ink); overflow-x:hidden;
     transition: background 0.5s ease, color 0.5s ease;
   }
-  
-  body { display: flex; flex-direction: column; padding: 18px; }
-
   h1,h2,h3{ font-family:"Segoe UI Black","Trebuchet MS",ui-rounded,sans-serif; margin:0; }
   button{ font-family:inherit; }
+  
   button:focus-visible, [tabindex]:focus-visible{ outline:3px solid var(--focus); outline-offset:2px; }
+  .tile:focus-visible { outline: 3px solid var(--neon-cyan); outline-offset: 2px; z-index: 10; }
   .hidden{ display:none !important; }
 
-  /* --- APP FRAME --- */
   .wood-frame{
-    width: 100%; max-width:1180px; margin: 0 auto; padding:18px; border-radius:22px;
-    flex: 1; display: flex; flex-direction: column; min-height: 0;
+    max-width:1180px; margin:18px auto; padding:18px; border-radius:22px;
     background:
       repeating-linear-gradient(95deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 5px),
       repeating-linear-gradient(95deg, rgba(0,0,0,0.10) 0px, rgba(0,0,0,0.10) 1px, transparent 1px, transparent 14px),
@@ -54,30 +63,27 @@
     box-shadow: 0 18px 40px rgba(60,25,5,0.45), inset 0 0 0 4px rgba(255,255,255,0.08), inset 0 0 30px rgba(0,0,0,0.35);
     transition: background 0.5s ease;
   }
-  
   .inner-panel{
     background:linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
-    border-radius:14px; padding:16px; box-shadow:inset 0 2px 10px rgba(90,45,10,0.18);
-    flex: 1; display: flex; flex-direction: column; min-height: 0;
+    border-radius:14px; padding:16px;
+    box-shadow:inset 0 2px 10px rgba(90,45,10,0.18); min-height:80px;
     transition: background 0.5s ease;
   }
 
-  #screen-title { overflow-y: auto; align-items: center; padding: 40px 20px 34px; }
-  #screen-game { overflow-y: hidden; } /* Strict lock for gameplay */
-
-  /* --- TITLE SCREEN --- */
-  .title-emoji-row{ font-size:44px; letter-spacing:8px; margin-bottom:6px; text-align: center; }
+  #screen-title .inner-panel{ text-align:center; padding:40px 20px 34px; }
+  .title-emoji-row{ font-size:44px; letter-spacing:8px; margin-bottom:6px; }
   #screen-title h1{
-    font-size:clamp(30px,6vw,54px); color:var(--mahogany-dark); text-align: center;
+    font-size:clamp(30px,6vw,54px); color:var(--mahogany-dark);
     text-shadow:2px 2px 0 var(--bg-grad-1), 4px 4px 0 rgba(90,45,10,0.25); margin-bottom:4px;
   }
-  .title-sub{ color:var(--mahogany-dark); opacity: 0.8; font-size:15px; margin-bottom:26px; text-align: center; }
+  .title-sub{ color:var(--mahogany-dark); opacity: 0.8; font-size:15px; margin-bottom:26px; }
   
-  .mode-cards{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin-bottom:22px; width: 100%; max-width: 800px;}
+  .mode-cards{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; margin-bottom:22px; }
   .mode-card{
-    flex: 1 1 230px; background:linear-gradient(160deg,#fffaf0,#ffe6b8);
+    width:230px; background:linear-gradient(160deg,#fffaf0,#ffe6b8);
     border:3px solid var(--mahogany); border-radius:16px; padding:18px;
-    cursor:pointer; transition:transform .15s ease, box-shadow .15s ease; text-align:left; color: #5c2e0e;
+    cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;
+    text-align:left; display: block; color: #5c2e0e;
   }
   .mode-card:hover, .mode-card:focus-visible{ transform:translateY(-4px); box-shadow:0 10px 20px rgba(120,60,10,0.25); }
   .mode-card .mc-emoji{ font-size:34px; margin-bottom:4px; display:block; }
@@ -85,11 +91,10 @@
   .mode-card p{ font-size:12.5px; opacity:0.9; line-height:1.4; margin:0; }
   .title-best{ font-size:12px; font-weight:bold; color:var(--mahogany-dark); margin-top:6px; display:block; }
   
-  .meta-stats { margin-top: 20px; font-weight: bold; color: var(--mahogany-dark); font-size: 14px; text-align: center;}
-  .meta-stats span { margin: 0 10px; }
   .title-buttons{ display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:wrap; }
+  .meta-stats { margin-top: 20px; font-weight: bold; color: var(--mahogany-dark); font-size: 14px; }
+  .meta-stats span { margin: 0 10px; }
 
-  /* --- BUTTONS --- */
   .btn{
     font-size:13px; font-weight:bold; padding:9px 16px; border-radius:10px;
     border:2px solid var(--mahogany-dark); background:linear-gradient(180deg,#ffcf73,#f0a832);
@@ -100,77 +105,55 @@
   .btn.secondary{ background:linear-gradient(180deg,#fff,#ffe9c4); }
   .btn.small{ font-size:11px; padding:6px 10px; border-radius:8px; }
   .btn:disabled{ filter: grayscale(1); opacity: 0.6; cursor: not-allowed; box-shadow:0 1px 0 var(--mahogany-dark); transform:translateY(2px); }
-  
-  .topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex: 0 0 auto; }
 
-  /* --- GAME LAYOUT --- */
-  .game-layout{ flex: 1; display:flex; gap:16px; align-items:stretch; min-height: 0; }
-  
-  .panel-left{ width:260px; flex:0 0 260px; display:flex; flex-direction:column; gap:10px; overflow-y: auto; padding-right: 4px; }
-  .panel-right{ flex:1; display:flex; flex-direction: column; gap: 10px; min-height: 0; }
+  .game-layout{ display:flex; gap:16px; align-items:flex-start; }
+  .panel-left{ width:260px; flex:0 0 260px; display:flex; flex-direction:column; gap:10px; }
+  .panel-right{ flex:1; display:flex; flex-direction: column; justify-content:center; gap: 10px;}
 
-  .dash-box{ background:var(--cream); border:2px solid var(--amber); border-radius:12px; padding:12px; }
-  .dash-title{ font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--mahogany-dark); margin-bottom:6px; font-weight:bold; opacity: 0.9; }
+  .dash-box{ background:var(--cream); border:2px solid var(--amber); border-radius:12px; padding:10px 12px; }
+  .dash-title{ font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--mahogany-dark); margin-bottom:4px; font-weight:bold; }
 
-  /* 1. Active Order Box (Priority UX) */
-  .active-order-box { border-color: var(--neon-gold); box-shadow: 0 0 10px rgba(255,210,63,0.25); background: linear-gradient(180deg, var(--cream) 0%, #fffde7 100%); display: flex; flex-direction: column;}
-  .order-focus-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-  .customer-order{ font-size:15px; font-weight:900; color:var(--mahogany-dark); margin: 0; }
-  .customer-progress{ font-size:14px; font-weight:bold; color:var(--mahogany); margin: 0; }
-  
-  .patience-wrapper { border-top: 1px dashed var(--amber); margin-top: 8px; padding-top: 8px; }
-  .meter-track{ height:14px; border-radius:7px; background:var(--cream-2); overflow:hidden; border:1px solid var(--amber); }
+  .customer-face{ font-size:46px; text-align:center; line-height:1; transition:transform .12s ease; margin-bottom: 2px;}
+  .customer-name { text-align: center; font-size: 12px; font-weight: bold; color: var(--mahogany-dark); margin-bottom: 2px;}
+  .customer-desc { text-align: center; font-size: 10px; color: var(--ink); opacity: 0.85; margin-bottom: 6px; font-style: italic; line-height: 1.2; }
+  .customer-meta-row { display: flex; justify-content: space-between; font-size: 10px; font-weight: bold; color: var(--mahogany); margin-bottom: 6px; border-bottom: 1px dashed var(--amber); padding-bottom: 4px; }
+  .customer-order{ text-align:center; font-size:12.5px; font-weight:bold; color:var(--mahogany-dark); }
+  .customer-progress{ text-align:center; font-size:11.5px; color:var(--mahogany); margin-top:2px; }
+
+  .meter-track{ height:16px; border-radius:8px; background:var(--cream-2); overflow:hidden; border:1px solid var(--amber); margin-top:4px; }
   .meter-fill{ height:100%; width:100%; background:linear-gradient(90deg,#37c76b,#8fe673); transition:width .25s linear, background .25s linear; }
-  .meter-label{ font-size:11px; text-align:right; margin-top:4px; font-weight: bold; color:var(--mahogany-dark); }
+  .meter-label{ font-size:11px; text-align:right; margin-top:2px; color:var(--mahogany-dark); }
 
-  /* 2. Customer ID Box */
-  .customer-id-box { text-align: center; }
-  .customer-face{ font-size:46px; line-height:1; transition:transform .12s ease; margin-bottom: 4px;}
-  .customer-name { font-size: 13px; font-weight: bold; color: var(--mahogany-dark); margin-bottom: 2px;}
-  .customer-desc { font-size: 11px; color: var(--ink); opacity: 0.85; margin-bottom: 8px; font-style: italic; line-height: 1.2; }
-  .customer-meta-row { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; color: var(--mahogany); border-top: 1px dashed var(--amber); padding-top: 8px; }
-
-  /* 3. Stats Box */
-  .stat-row{ display:flex; justify-content:space-between; font-size:13px; padding:3px 0; }
+  .stat-row{ display:flex; justify-content:space-between; font-size:13px; padding:2px 0; }
   .stat-row b{ color:var(--mahogany-dark); }
 
-  /* --- RIGHT PANEL & BOARD --- */
-  .combo-bar-container { background: var(--cream); padding: 8px 12px; border-radius: 12px; border: 2px solid var(--amber); display: flex; align-items: center; gap: 12px; flex: 0 0 auto;}
+  .combo-bar-container { background: var(--cream); padding: 8px; border-radius: 10px; border: 2px solid var(--amber); display: flex; align-items: center; gap: 10px; }
   .combo-bar-title { font-size: 11px; font-weight: bold; color: var(--mahogany-dark); text-transform: uppercase;}
   .combo-steps { display: flex; flex: 1; justify-content: space-between; position: relative; }
   .combo-steps::before { content:''; position:absolute; top:50%; left:0; right:0; height:2px; background: var(--amber); z-index: 1; transform:translateY(-50%); }
-  .combo-step { width: 26px; height: 26px; border-radius: 50%; background: var(--cream-2); border: 2px solid var(--amber); z-index: 2; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: 0.3s; }
+  .combo-step { width: 24px; height: 24px; border-radius: 50%; background: var(--cream-2); border: 2px solid var(--amber); z-index: 2; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: 0.3s; }
   .combo-step.active { background: var(--neon-gold); border-color: var(--mahogany); box-shadow: 0 0 8px var(--neon-gold); transform: scale(1.15); }
 
-  /* CSS Container Queries for Absolute Board Maximization */
   .board-frame{
     background:linear-gradient(160deg, var(--board-bg-1), var(--board-bg-2));
     border-radius:14px; padding:10px; box-shadow:inset 0 0 18px rgba(0,0,0,0.5);
-    flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;
-    container-type: size; /* Crucial for dynamic square scaling */
+    width: 100%; display: flex; justify-content: center;
     transition: background 0.5s ease;
   }
-  
-  .board-shell{ 
-    position:relative; 
-    width: 100cqmin; height: 100cqmin; /* Maximize square within container limits */
-    max-width: 600px; max-height: 600px; /* Safe cap for ultra-wide desktop monitors */
-  }
-  
+  .board-shell{ position:relative; width: 100%; max-width: 480px; }
   .board{
-    display:grid; grid-template-columns:repeat(8, 1fr); grid-template-rows:repeat(8, 1fr); gap: clamp(2px, 1cqmin, 6px);
-    width: 100%; height: 100%; touch-action:none; position: relative; container-type: size;
+    display:grid; grid-template-columns:repeat(8, 1fr); grid-template-rows:repeat(8, 1fr); gap:4px;
+    width: 100%; aspect-ratio: 1; touch-action:none; position: relative;
   }
   
   .tile{
-    display:flex; align-items:center; justify-content:center; 
-    font-size: 7.5cqmin; /* Fluid proportional emoji scaling */
+    display:flex; align-items:center; justify-content:center; font-size:min(6vw, 30px);
     background:linear-gradient(160deg, var(--tile-bg-1), var(--tile-bg-2));
     border-radius:8px; border:1px solid rgba(0,0,0,0.1); cursor:pointer; user-select:none;
-    box-shadow:0 3px 0 rgba(0,0,0,0.15), inset 0 2px 4px rgba(255,255,255,0.7);
-    will-change:transform, background; width: 100%; height: 100%; transition: background 0.5s ease, filter 0.1s;
+    box-shadow:0 2px 0 rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.6);
+    will-change:transform, background; width: 100%; height: 100%; transition: background 0.5s ease;
   }
-  .tile:hover{ filter:brightness(1.08); }
+  .tile:hover{ filter:brightness(1.05); }
   .tile.selected{ box-shadow:0 0 0 3px var(--neon-cyan), 0 0 14px var(--neon-cyan); transform:scale(1.06); z-index:2; }
   
   .tile.special-wasabi{ background:radial-gradient(circle at 35% 30%, #baff6b, #4c9a1e 75%); border-color:#2e6b0f; }
@@ -179,610 +162,1279 @@
   .tile.special-rocket{ background:radial-gradient(circle at 35% 30%, #ffecd2 0%, #fcb69f 100%); border-color:#d35400; }
   .tile.special-tempura{ background:radial-gradient(circle at 35% 30%, #f6d365 0%, #fda085 100%); border-color:#c0392b; }
 
-  /* Animations */
   .tile.clearing{ animation:tileClear .28s ease forwards; z-index: 3; }
   @keyframes tileClear{ 0%{ transform:scale(1); opacity:1; } 100%{ transform:scale(0.15) rotate(20deg); opacity:0; } }
+  
   .tile.pop-in{ animation:tilePopIn .22s ease; }
   @keyframes tilePopIn{ 0%{ transform:scale(0.6); opacity:0; } 100%{ transform:scale(1); opacity:1; } }
+  
   .tile.shake-invalid{ animation:shakeInvalid .3s ease; z-index: 4; }
   @keyframes shakeInvalid{ 0%,100%{ transform:translateX(0); } 25%{ transform:translateX(-5px); } 75%{ transform:translateX(5px); } }
+  
   .tile.bomb-flash{ animation:bombFlash .35s ease; z-index: 5; }
   @keyframes bombFlash{ 0%{ box-shadow:0 0 0 0 rgba(76,154,30,0.9); } 100%{ box-shadow:0 0 0 26px rgba(76,154,30,0); } }
-  .tile.splash-flash{ animation:splashFlash .4s ease; z-index: 5; }
-  @keyframes splashFlash{ 0%{ box-shadow:0 0 0 0 rgba(44,28,16,0.9); } 100%{ box-shadow:0 0 0 35px rgba(44,28,16,0); } }
-
-  .float-text{
-    position:absolute; font-weight:900; font-size:16px; color:#fff;
-    text-shadow:1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 3px 6px rgba(0,0,0,0.6);
-    pointer-events:none; z-index:10; animation:floatUp 0.8s ease-out forwards;
-  }
-  @keyframes floatUp{ 0%{ transform:translateY(0) scale(1); opacity:1; } 100%{ transform:translateY(-35px) scale(1.3); opacity:0; } }
-
-  /* OVERLAYS */
-  .overlay{ position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(40,15,5,0.7); display:flex; align-items:center; justify-content:center; z-index:100; backdrop-filter:blur(3px); }
-  .dialog{ background:linear-gradient(180deg, var(--cream) 0%, #fff 100%); padding:24px; border-radius:18px; border:3px solid var(--mahogany); box-shadow:0 12px 30px rgba(0,0,0,0.5); text-align:center; max-width:90%; width:340px; }
-  .dialog h2{ font-size:26px; color:var(--mahogany-dark); margin:0 0 10px; }
-  .dialog p{ font-size:15px; margin:0 0 20px; line-height:1.4; }
-
-  .customer-face.happy{ transform:scale(1.15); filter:drop-shadow(0 0 8px #ffcf73); }
-  .customer-face.angry{ transform:scale(0.9) rotate(-3deg); filter:grayscale(0.4); }
   
-  /* =========================================================================
-     MOBILE RESPONSIVE TWEAKS (Board-First Experience)
-     ========================================================================= */
-  @media (max-width: 820px) {
-    body { padding: 0; }
-    .wood-frame { padding: 6px; border-radius: 0; box-shadow: none; border: none; height: 100%; }
-    .inner-panel { padding: 6px; border-radius: 12px; }
-    #screen-game.inner-panel { padding: 8px; }
-    
-    .game-layout { flex-direction: column; gap: 6px; }
-    
-    /* Highly Compressed Mobile Dashboard */
-    .panel-left { width: 100%; flex: 0 0 auto; display: flex; flex-direction: row; flex-wrap: wrap; gap: 6px; padding-right: 0; overflow: visible; }
-    .dash-box { padding: 8px 10px; margin: 0; flex: 1 1 calc(50% - 6px); }
-    
-    /* Reorder: Active Order top, ID/Stats bottom */
-    .active-order-box { order: 1; flex: 1 1 100%; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; }
-    .order-focus-row { flex: 1; margin: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 2px;}
-    .customer-order { font-size: 14px; }
-    .customer-progress { font-size: 13px; }
-    .patience-wrapper { flex: 1.5; margin: 0; border: none; padding: 0; border-left: 1px dashed var(--amber); padding-left: 12px; }
-    #patienceTitle { display: none; } /* Hide word to save space */
-    .meter-label { margin-top: 2px; font-size: 10px; }
+  .tile.splash-flash{ animation:splashFlash .4s ease; z-index: 5; }
+  @keyframes splashFlash{ 0%{ box-shadow:0 0 0 0 rgba(44,28,16,0.9); } 100%{ box-shadow:0 0 0 26px rgba(44,28,16,0); } }
+  
+  .tile.hint-pulse{ animation:hintPulse 1s infinite alternate; z-index: 3; }
+  @keyframes hintPulse { 0% { transform: scale(1); box-shadow: 0 0 0px var(--neon-gold); } 100% { transform: scale(1.08); box-shadow: 0 0 15px var(--neon-gold); border-color: var(--neon-gold); } }
 
-    .customer-id-box { order: 2; display: flex; align-items: center; gap: 8px; padding: 6px 10px; text-align: left; }
-    .customer-face { font-size: 26px; margin: 0; }
-    .customer-info-right { display: flex; flex-direction: column; flex: 1;}
-    .customer-name { font-size: 12px; margin: 0; }
-    .customer-desc { display: none; } /* Reclaim vertical space */
-    .customer-meta-row { border: none; padding: 0; margin-top: 2px; font-size: 10px; justify-content: flex-start; gap: 6px;}
+  .board-shake{ animation:boardShake .35s ease; }
+  @keyframes boardShake{ 0%,100%{ transform:translate(0,0); } 20%{ transform:translate(-6px,2px); } 40%{ transform:translate(6px,-2px); } 60%{ transform:translate(-4px,2px); } 80%{ transform:translate(4px,-1px); } }
 
-    .stats-box { order: 3; display: flex; flex-direction: column; justify-content: center; }
-    .stat-row { padding: 0; font-size: 11px; }
-
-    /* Push Board to bottom (thumb reach) */
-    .panel-right { flex: 1 1 0; justify-content: flex-end; gap: 6px; }
-    .combo-bar-container { padding: 6px 10px; border-radius: 8px; }
-    .combo-step { width: 22px; height: 22px; font-size: 10px; }
-    
-    .board-frame { border-radius: 10px; padding: 6px; }
-    .topbar { margin-bottom: 6px; }
+  .floating-text-layer{ position:absolute; inset:0; pointer-events:none; overflow:visible; z-index: 10; }
+  .float-text{
+    position:absolute; font-weight:900; font-size:22px; color:var(--neon-gold);
+    text-shadow:0 0 6px var(--neon-pink), 0 0 14px var(--neon-pink), 0 2px 0 #7a1a55;
+    animation:floatUp 1s ease forwards; white-space:nowrap;
   }
+  @keyframes floatUp{ 0%{ transform:translateY(0) scale(0.8); opacity:0; } 15%{ opacity:1; transform:translateY(-6px) scale(1.05); } 100%{ transform:translateY(-58px) scale(1); opacity:0; } }
 
-  /* Ultra-small phones */
-  @media (max-width: 380px) {
-    .customer-id-box { flex: 1 1 100%; }
-    .stats-box { display: none; } /* Completely hide stats to prioritize board */
+  .banner{
+    position:absolute; left:50%; top:8px; transform:translateX(-50%); background:linear-gradient(180deg,#fff,#ffe6b0);
+    border:2px solid var(--mahogany); border-radius:10px; padding:8px 16px; font-weight:bold; font-size:13px; color:var(--mahogany-dark);
+    box-shadow:0 6px 14px rgba(0,0,0,0.25); animation:bannerPop 1.6s ease forwards; z-index:15; pointer-events:none;
   }
+  @keyframes bannerPop{ 0%{ opacity:0; transform:translate(-50%,-10px) scale(0.9); } 12%{ opacity:1; transform:translate(-50%,0) scale(1); } 82%{ opacity:1; } 100%{ opacity:0; transform:translate(-50%,-6px) scale(0.96); } }
 
+  .overlay-back{ position:fixed; inset:0; background:rgba(30,15,5,0.75); display:flex; align-items:center; justify-content:center; z-index:80; padding:16px; }
+  .overlay-card{ background:linear-gradient(180deg,#fffaf0,#ffe6b8); border:3px solid var(--mahogany); border-radius:16px; padding:26px 28px; max-width:420px; width:100%; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.4); outline:none; max-height: 90vh; overflow-y: auto;}
+  .overlay-card h2{ color:var(--mahogany-dark); font-size:22px; margin-bottom:10px; }
+  .overlay-card p{ font-size: 14px; margin: 0 0 14px 0; color: #5c2e0e; }
+  .overlay-stats{ text-align:left; margin:14px 0; font-size:14px; background: rgba(255,255,255,0.5); padding: 10px; border-radius: 10px;}
+  .overlay-stats .stat-row{ border-bottom:1px dashed #d9b878; padding:5px 0; }
+  .overlay-buttons{ display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
+
+  .list-grid { display: grid; grid-template-columns: 1fr; gap: 10px; text-align: left; margin-bottom: 15px;}
+  .list-item { background: var(--cream); border: 2px solid var(--amber); border-radius: 8px; padding: 10px; display: flex; align-items: center; gap: 12px; }
+  .list-item.locked { opacity: 0.6; filter: grayscale(0.8); }
+  .list-item.active { border-color: var(--neon-gold); box-shadow: 0 0 10px var(--neon-gold); }
+  .item-icon { font-size: 28px; }
+  .item-details h4 { margin: 0 0 2px 0; font-size: 14px; color: var(--mahogany-dark); }
+  .item-details p { margin: 0; font-size: 11px; }
+
+  #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
+  .toast { background: linear-gradient(180deg,#fff,#ffe6b0); border: 2px solid var(--mahogany); border-radius: 10px; padding: 10px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 10px; animation: slideUp 0.3s ease-out forwards, fadeOut 0.5s ease-in 3.5s forwards; font-weight: bold; color: var(--mahogany-dark);}
+  @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
+
+  .topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .topbar .btn{ font-size:11px; padding:6px 12px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .board-shake, .tile.clearing, .tile.pop-in, .tile.shake-invalid, .float-text, .levelup-banner, .hint-pulse { animation:none !important; }
+    .tile.clearing { opacity:0; transition: opacity 0.2s; } .float-text { opacity:1; top: 0 !important; }
+  }
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+  /* BOARD-FIRST MOBILE UX OPTIMIZATIONS (PHASE 2A) */
+  @media (max-width:820px){
+    body { padding: 4px; }
+    .wood-frame { margin: 0; padding: 8px; width: 100%; border-radius: 12px; }
+    .game-layout{ flex-direction:column; align-items:stretch; gap: 8px; }
+    
+    /* Horizontal & compressed dashboard footprint */
+    .panel-left{ width:100%; flex:0 0 auto; flex-direction:row; flex-wrap:wrap; gap: 6px; }
+    .dash-box{ flex:1 1 calc(50% - 4px); min-width:130px; padding: 6px 8px; margin: 0; }
+    
+    /* Compact customer layout to minimize vertical push */
+    .customer-face{ font-size: 28px; float: left; margin-right: 8px; margin-bottom: 0; }
+    .customer-name { text-align: left; font-size: 11px; }
+    .customer-desc { display: none; } /* Hide descriptive text block to save space */
+    .customer-meta-row { margin-bottom: 2px; padding-bottom: 2px; font-size: 9px; }
+    .customer-order{ text-align: left; font-size: 11px; }
+    .customer-progress{ text-align: left; font-size: 10px; margin-top: 0; }
+
+    /* Meter adjustments */
+    .meter-track{ height: 10px; margin-top: 2px; }
+    .meter-label{ font-size: 9px; margin-top: 1px; }
+
+    /* Stats compact layout */
+    .stat-row{ font-size: 11px; padding: 1px 0; }
+
+    /* Board priority positioning */
+    .panel-right{ width:100%; flex:1 1 auto; align-items: stretch; gap: 6px; }
+    .board-shell { max-width: 100%; width: 100%; }
+    .board-frame { padding: 6px; }
+    .combo-bar-container { padding: 6px 8px; }
+  }
+  
+  @media (max-width:480px){ 
+    html, body { height: 100%; overflow-x: hidden; }
+    .dash-box{ flex:1 1 calc(50% - 4px); padding: 5px 6px; }
+    .customer-face{ font-size: 24px; }
+    .topbar { margin-bottom: 4px; }
+  }
 </style>
 </head>
 <body>
 
 <div class="wood-frame">
-  
-  <!-- TITLE SCREEN -->
-  <div id="screen-title" class="inner-panel">
-    <div class="title-emoji-row" aria-hidden="true">🍣🦑🍤</div>
-    <h1>Sushido Nostalgia</h1>
-    <div class="title-sub">A Neo-Retro Puzzle Challenge</div>
-    
-    <div class="mode-cards">
-      <div class="mode-card" tabindex="0" onclick="startGame('shift')">
-        <span class="mc-emoji" aria-hidden="true">🍱</span>
-        <h2>Shift Mode</h2>
-        <p>Race against customer patience. Fulfill orders before they leave angry!</p>
-        <span class="title-best" id="bestShift">Best Score: 0</span>
-      </div>
-      <div class="mode-card" tabindex="0" onclick="startGame('zen')">
-        <span class="mc-emoji" aria-hidden="true">🍵</span>
-        <h2>Zen Mode</h2>
-        <p>No timers, no angry customers. Endless chill matching.</p>
-        <span class="title-best" id="bestZen">Best Score: 0</span>
-      </div>
-    </div>
-    
-    <div class="meta-stats">
-      <span>Total Earnings: <span id="metaCoins">0</span> 💰</span>
-    </div>
-    
-    <div class="title-buttons">
-      <button class="btn secondary" onclick="alert('Tutorial coming soon!')">How to Play</button>
-      <button class="btn secondary" onclick="alert('Shop coming soon!')">Shop</button>
-    </div>
-  </div>
 
-  <!-- GAME SCREEN -->
-  <div id="screen-game" class="inner-panel hidden">
-    
+  <section id="screen-title" class="inner-panel">
+    <div class="title-emoji-row">🍣🍤🍙🥑🐟</div>
+    <h1>Sushido Nostalgia</h1>
+    <p class="title-sub">A cozy match-3 sushi bar, right in your browser.</p>
+
+    <div class="mode-cards">
+      <button class="mode-card" id="cardArcade" type="button">
+        <span class="mc-emoji">⏱️</span>
+        <h2>Arcade Mode</h2>
+        <p>Beat the clock! Patience fades — satisfy every order.</p>
+        <span class="title-best" id="bestArcadeLabel">Best score: 0</span>
+      </button>
+      <button class="mode-card" id="cardZen" type="button">
+        <span class="mc-emoji">🌿</span>
+        <h2>Zen Mode</h2>
+        <p>No timers, no pressure. Chase huge combos.</p>
+        <span class="title-best" id="bestZenLabel">Best score: 0</span>
+      </button>
+      <button class="mode-card" id="cardDaily" type="button">
+        <span class="mc-emoji">📅</span>
+        <h2>Daily Rush</h2>
+        <p>A fixed 3-minute challenge! Compete against the clock.</p>
+        <span class="title-best" id="bestDailyLabel">Best score: 0</span>
+      </button>
+    </div>
+
+    <div class="meta-stats">
+      <span>🪙 Coins: <span id="metaCoins">0</span></span>
+      <span>🏆 Trophies: <span id="metaTrophies">0/5</span></span>
+    </div>
+
+    <div class="title-buttons">
+      <button class="btn secondary" id="btnHowTo" type="button">📖 How to Play</button>
+      <button class="btn secondary" id="btnSkins" type="button">🎨 Shop & Skins</button>
+      <button class="btn secondary" id="btnAchievements" type="button">🏆 Trophies</button>
+      <button class="btn secondary" id="btnSoundToggleTitle" type="button">🔊 Sound On</button>
+    </div>
+  </section>
+
+  <section id="screen-game" class="inner-panel hidden">
     <div class="topbar">
-      <button class="btn small secondary" onclick="endGame()">⬅ Quit</button>
-      <button class="btn small secondary" onclick="toggleTheme()">🎨 Theme</button>
+      <button class="btn small secondary" id="btnHowToGame" type="button">📖 Help</button>
+      <button class="btn small secondary" id="btnSoundToggleGame" type="button">🔊</button>
+      <button class="btn small" id="btnQuitSave" type="button">💾 Quit &amp; Save</button>
     </div>
 
     <div class="game-layout">
-      <!-- DASHBOARD (Left panel on desktop, compact grid on mobile) -->
       <div class="panel-left">
-        
-        <!-- 1. Active Objective (Highest Priority) -->
-        <div class="dash-box active-order-box">
-          <div class="order-focus-row">
-            <div class="customer-order" id="customerOrderText" aria-live="polite">Wants 4 🍣</div>
-            <div class="customer-progress" id="customerProgressText">0 / 4</div>
-          </div>
-          <div class="patience-wrapper" id="patienceBox">
-             <div class="dash-title" id="patienceTitle">Patience</div>
-             <div class="meter-track"><div class="meter-fill" id="patienceFill"></div></div>
-             <div class="meter-label" id="patienceLabel">100%</div>
-          </div>
-        </div>
-
-        <!-- 2. Customer ID -->
-        <div class="dash-box customer-id-box">
+        <div class="dash-box">
+          <div class="dash-title">Customer Profile</div>
           <div class="customer-face" id="customerFace" aria-hidden="true">🧑‍🍳</div>
-          <div class="customer-info-right">
-             <div class="customer-name" id="customerName">Apprentice Chef</div>
-             <div class="customer-desc" id="customerDesc">Patient beginner with simple tastes.</div>
-             <div class="customer-meta-row">
-               <span id="customerDiff">Diff: ⭐</span>
-               <span id="customerBonus">Bonus: +0%</span>
-             </div>
+          <div class="customer-name" id="customerName">Apprentice Chef</div>
+          <div class="customer-desc" id="customerDesc">Patient beginner with simple tastes.</div>
+          <div class="customer-meta-row">
+            <span id="customerDiff">Diff: ⭐</span>
+            <span id="customerBonus">Bonus: +0%</span>
           </div>
+          <div class="customer-order" id="customerOrderText" aria-live="polite">Wants 4 🍣</div>
+          <div class="customer-progress" id="customerProgressText">0 / 4</div>
         </div>
 
-        <!-- 3. Stats -->
-        <div class="dash-box stats-box">
-          <div class="dash-title">Shift Stats</div>
+        <div class="dash-box" id="patienceBox">
+          <div class="dash-title" id="patienceTitle">Patience</div>
+          <div class="meter-track"><div class="meter-fill" id="patienceFill"></div></div>
+          <div class="meter-label" id="patienceLabel">100%</div>
+        </div>
+
+        <div class="dash-box">
+          <div class="dash-title">Progress</div>
           <div class="stat-row"><span>Score</span><b id="scoreLabel">0</b></div>
           <div class="stat-row"><span>Level</span><b id="levelLabel">1</b></div>
           <div class="stat-row"><span>Orders done</span><b id="ordersLabel">0</b></div>
           <div class="stat-row"><span>Best combo</span><b id="comboLabel">×0</b></div>
         </div>
       </div>
-      
-      <!-- BOARD & COMBO (Right panel on desktop, bottom anchor on mobile) -->
+
       <div class="panel-right">
         <div class="combo-bar-container">
           <div class="combo-bar-title">Combo Drop</div>
-          <div class="combo-steps" id="comboSteps">
-            <!-- Populated by JS -->
+          <div class="combo-steps">
+            <div class="combo-step" id="combo-step-3">🥢</div>
+            <div class="combo-step" id="combo-step-5">💥</div>
+            <div class="combo-step" id="combo-step-7">🌈</div>
           </div>
         </div>
         
         <div class="board-frame">
-          <div class="board-shell">
-            <div class="board" id="board" role="grid" aria-label="Sushi matching board"></div>
+          <div class="board-shell" id="boardShell">
+            <div class="board" id="board" role="grid"></div>
+            <div class="floating-text-layer" id="floatLayer"></div>
           </div>
         </div>
       </div>
     </div>
-    
-  </div>
+  </section>
 
 </div>
 
-<!-- OVERLAYS -->
-<div id="overlay-gameover" class="overlay hidden">
-  <div class="dialog">
-    <h2>Shift Over!</h2>
-    <p id="endReason">A customer left angry.</p>
-    <h3 style="color:var(--mahogany); margin-bottom:15px;">Score: <span id="endScore">0</span></h3>
-    <button class="btn" onclick="returnToTitle()">Main Menu</button>
+<div class="sr-only" id="liveRegion" aria-live="polite"></div>
+<div id="toast-container"></div>
+
+<div class="overlay-back hidden" id="howToOverlay" role="dialog" aria-modal="true">
+  <div class="overlay-card" tabindex="-1" id="howToCard">
+    <h2>How to Play</h2>
+    <div class="list-grid" style="font-size:12px; max-height:40vh;">
+      <p><b>Basics:</b> Match 3+ identical sushi. Idle for 5 seconds for a hint.</p>
+      <p><b>Customer System:</b> Each patron brings unique challenges! Check their personality traits, difficulty rating, and reward bonuses before fulfilling advanced orders.</p>
+      <p><b>Power-ups (Standard):</b><br>🟢 Wasabi Bomb (Match 4): 3x3 blast.<br>🧴 Soy Splash (Match 5): Clears Row + Col.</p>
+      <p><b>Combo Drops (Chain cascades!):</b><br>🥢 Rocket (x3): Clears 1 random row & col.<br>💥 Tempura (x5): Massive 5x5 blast.<br>🌈 Rainbow (x7): Clears all of one random type.</p>
+      <p><b>Combos:</b> Swap ANY two power-ups for huge custom board clears!</p>
+    </div>
+    <div class="overlay-buttons"><button class="btn" id="btnCloseHowTo">Got it!</button></div>
   </div>
 </div>
-<div id="overlay-level" class="overlay hidden">
-  <div class="dialog">
-    <h2>Level Up!</h2>
-    <p>Customers are getting faster and demanding more complex plates.</p>
-    <button class="btn" onclick="resumeLevel()">Continue</button>
+
+<div class="overlay-back hidden" id="skinsOverlay" role="dialog" aria-modal="true">
+  <div class="overlay-card" tabindex="-1" id="skinsCard">
+    <h2>Shop & Skins</h2>
+    <p>Spend coins earned from high scores!</p>
+    <div class="list-grid" id="skinsList"></div>
+    <div class="overlay-buttons"><button class="btn" id="btnCloseSkins">Close</button></div>
+  </div>
+</div>
+
+<div class="overlay-back hidden" id="achievementsOverlay" role="dialog" aria-modal="true">
+  <div class="overlay-card" tabindex="-1" id="achievementsCard">
+    <h2>Trophies</h2>
+    <div class="list-grid" id="achievementsList"></div>
+    <div class="overlay-buttons"><button class="btn" id="btnCloseAchievements">Close</button></div>
+  </div>
+</div>
+
+<div class="overlay-back hidden" id="gameOverOverlay" role="dialog" aria-modal="true">
+  <div class="overlay-card" tabindex="-1" id="goCard">
+    <h2 id="goTitle">⏰ Time's Up!</h2>
+    <p id="goDesc">Shift complete.</p>
+    <div class="overlay-stats">
+      <div class="stat-row"><span>Final score</span><b id="goScore">0</b></div>
+      <div class="stat-row"><span>Coins Earned</span><b id="goCoins">+0</b></div>
+      <div class="stat-row"><span>Level reached</span><b id="goLevel">1</b></div>
+      <div class="stat-row"><span>Orders done</span><b id="goOrders">0</b></div>
+      <div class="stat-row"><span>Best combo</span><b id="goCombo">×0</b></div>
+      <div class="stat-row"><span>Powerups Triggered</span><b id="goPowerups">0</b></div>
+      <div class="stat-row"><span>Max Cascade Tier</span><b id="goMaxCascade">×0</b></div>
+    </div>
+    <div class="overlay-buttons">
+      <button class="btn" id="btnPlayAgain">🔁 Restart</button>
+      <button class="btn secondary" id="btnReturnKitchenGO">🏠 Kitchen</button>
+    </div>
   </div>
 </div>
 
 <script>
-  // =====================================================================
-  // STATE & CONSTANTS
-  // =====================================================================
-  const ROWS = 8, COLS = 8;
-  const EMOJIS = ['🍣','🍙','🍤','🍱','🦑','🍥','🍵']; 
-  const THEMES = ['default', 'skin-sakura', 'skin-neon', 'skin-matcha'];
+"use strict";
 
-  const CUSTOMERS = [
-    { face:'🧑‍🍳', name:'Apprentice Chef', desc:'Patient beginner with simple tastes.', patienceMs: 45000, wants: [ {e:'🍣', c:4} ], minLevel:1, diff:'⭐', bonus:0 },
-    { face:'👴', name:'Old Master', desc:'Takes his time, but wants high quality.', patienceMs: 50000, wants: [ {e:'🍵', c:5}, {e:'🍙', c:3} ], minLevel:1, diff:'⭐⭐', bonus:10 },
-    { face:'👔', name:'Salaryman', desc:'In a rush! Serve quickly!', patienceMs: 25000, wants: [ {e:'🍱', c:3} ], minLevel:1, diff:'⭐⭐⭐', bonus:25 },
-    { face:'👧', name:'School Girl', desc:'Loves sweet and cute things.', patienceMs: 35000, wants: [ {e:'🍥', c:6} ], minLevel:2, diff:'⭐⭐', bonus:15 },
-    { face:'🤑', name:'VIP Critic', desc:'Harsh judge. Wants rare plates.', patienceMs: 30000, wants: [ {e:'🍤', c:4}, {e:'🦑', c:4} ], minLevel:3, diff:'⭐⭐⭐⭐', bonus:50 }
+const Persistence = (function(){
+  const KEY = "sushidoNostalgiaSave_v4";
+  let memoryFallback = {
+    bestArcadeScore:0, bestZenScore:0, bestDailyScore:0,
+    bestComboArcade:0, bestComboZen:0, soundOn:true,
+    coins: 0, unlockedSkins: ['classic'], equippedSkin: 'classic',
+    achievements: {}, stats: { totalOrders:0, totalCombos:0, totalPowerups:0, maxLevel:1 }
+  };
+  let storageOK = true;
+  try{ const t="__test__"; window.localStorage.setItem(t,"1"); window.localStorage.removeItem(t); }catch(e){ storageOK=false; }
+
+  function load(){
+    if(!storageOK) return { ...memoryFallback };
+    try{
+      const raw = window.localStorage.getItem(KEY);
+      if(!raw) return { ...memoryFallback };
+      const parsed = JSON.parse(raw);
+      return { ...memoryFallback, ...parsed, stats: { ...memoryFallback.stats, ...(parsed.stats||{}) } };
+    }catch(e){ return { ...memoryFallback }; }
+  }
+  function save(data){
+    memoryFallback = { ...memoryFallback, ...data };
+    if(!storageOK) return;
+    try{ window.localStorage.setItem(KEY, JSON.stringify(memoryFallback)); }catch(e){}
+  }
+  return { load, save, get:()=>memoryFallback };
+})();
+
+const AudioEngine = (function(){
+  let ctx = null, enabled = true;
+  function ensure(){ if(!ctx) try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ ctx=null; } }
+  document.addEventListener("pointerdown", function firstTouch(){ ensure(); if(ctx && ctx.state==="suspended") ctx.resume().catch(()=>{}); document.removeEventListener("pointerdown", firstTouch); }, { once:true });
+  function setEnabled(v){ enabled = v; }
+  
+  function tone(freq, t0offset, dur, type, vol){
+    if(!enabled || !ctx) return;
+    try{
+      const t0 = ctx.currentTime + t0offset, osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.type = type || "sine"; osc.frequency.setValueAtTime(freq, t0);
+      gain.gain.setValueAtTime(0, t0); gain.gain.linearRampToValueAtTime(vol!=null?vol:0.15, t0+0.008); gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+      osc.connect(gain).connect(ctx.destination); osc.start(t0); osc.stop(t0+dur+0.02);
+    }catch(e){}
+  }
+  function noiseBurst(t0offset, dur, filterFreq, vol){
+    if(!enabled || !ctx) return;
+    try{
+      const t0 = ctx.currentTime + t0offset, bufferSize = Math.floor(ctx.sampleRate * dur), buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate), data = buffer.getChannelData(0);
+      for(let i=0;i<bufferSize;i++) data[i] = (Math.random()*2-1) * (1 - i/bufferSize);
+      const src = ctx.createBufferSource(), filter = ctx.createBiquadFilter(), gain = ctx.createGain();
+      src.buffer = buffer; filter.type = "bandpass"; filter.frequency.value = filterFreq||1200;
+      gain.gain.setValueAtTime(vol!=null?vol:0.22, t0); gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+      src.connect(filter).connect(gain).connect(ctx.destination); src.start(t0);
+    }catch(e){}
+  }
+  return {
+    ensure, setEnabled, isEnabled: ()=>enabled,
+    matchPop: (tier)=> tone(760 + Math.min(tier,8)*70, 0, 0.14, "square", 0.13),
+    powerupBlast: ()=> { noiseBurst(0, 0.3, 800, 0.25); tone(100, 0.02, 0.3, "sine", 0.2); },
+    orderComplete: ()=> [523.25,659.25,783.99,1046.5].forEach((f,i)=> tone(f, i*0.09, 0.22, "triangle", 0.15)),
+    levelUp: ()=> [440,554,659,880].forEach((f,i)=> tone(f, i*0.07, 0.18, "square", 0.12)),
+    gameOver: ()=> [392,330,262].forEach((f,i)=> tone(f, i*0.18, 0.3, "sine", 0.15)),
+    invalidSwap: ()=> tone(160, 0, 0.12, "square", 0.08),
+    achievement: ()=> [600, 800, 1200].forEach((f,i)=> tone(f, i*0.1, 0.3, "sine", 0.1))
+  };
+})();
+
+const MetaSystem = (function(){
+  const SKINS = [
+    { id: 'classic', name: 'Classic Wood', cost: 0, icon: '🪵', desc: 'The nostalgic sushi bar.' },
+    { id: 'sakura', name: 'Sakura Petal', cost: 15, icon: '🌸', desc: 'Pink cherry blossom vibes.' },
+    { id: 'matcha', name: 'Matcha Tea', cost: 25, icon: '🍵', desc: 'Calming green aesthetic.' },
+    { id: 'neon', name: 'Cyber Neon', cost: 50, icon: '🌃', desc: 'Late night Tokyo drift.' }
   ];
-  const ZEN_CUSTOMER = { face:'🧘', name:'Zen Master', desc:'Endless patience. Just vibe.', patienceMs: 9999999, wants: [ {e:'🍣', c:5} ], diff:'N/A', bonus:0 };
+  const ACHIEVEMENTS = [
+    { id: 'first_shift', name: 'First Shift', icon: '🔰', desc: 'Complete 1 order.', check: (s) => s.stats.totalOrders >= 1 },
+    { id: 'sushi_master', name: 'Sushi Master', icon: '🍣', desc: 'Reach Level 10.', check: (s) => s.stats.maxLevel >= 10 },
+    { id: 'cascade_king', name: 'Cascade King', icon: '🌊', desc: 'Reach a Combo x7.', check: (s) => s.stats.totalCombos >= 7 },
+    { id: 'boom', name: 'Explosive Taste', icon: '💥', desc: 'Trigger 50 Powerups.', check: (s) => s.stats.totalPowerups >= 50 },
+    { id: 'collector', name: 'Decorator', icon: '🎨', desc: 'Unlock a new skin.', check: (s) => s.unlockedSkins.length > 1 }
+  ];
 
-  const MAX_COMBO_STEPS = 5;
+  function showToast(icon, title, subtitle) {
+    const cont = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = `<span style="font-size:24px">${icon}</span><div><div style="font-size:12px;opacity:0.8">${subtitle}</div><div>${title}</div></div>`;
+    cont.appendChild(t);
+    setTimeout(() => t.remove(), 4000);
+    AudioEngine.achievement();
+  }
 
-  let board = [], mode = '', activeThemeIdx = 0;
-  let score=0, level=1, ordersDone=0, bestCombo=0, comboCount=0;
-  let currentCustomer = null, activeWants = [];
-  let patienceTimer = null, patienceLeft = 1, lastTime = 0;
-  let isSwapping=false, selectedTile=null;
+  function checkAchievements() {
+    const save = Persistence.get();
+    let updated = false;
+    ACHIEVEMENTS.forEach(ach => {
+      if (!save.achievements[ach.id] && ach.check(save)) {
+        save.achievements[ach.id] = true;
+        updated = true;
+        showToast(ach.icon, ach.name, "Achievement Unlocked!");
+      }
+    });
+    if(updated) Persistence.save(save);
+    updateMetaUI();
+  }
 
-  let metaCoins = parseInt(localStorage.getItem('sushido_coins') || '0');
-  let bestShift = parseInt(localStorage.getItem('sushido_best_shift') || '0');
-  let bestZen = parseInt(localStorage.getItem('sushido_best_zen') || '0');
+  function applySkin(id) {
+    document.body.className = id === 'classic' ? '' : `skin-${id}`;
+  }
 
-  // DOM Elements
-  const elTitle = document.getElementById('screen-title'), elGame = document.getElementById('screen-game');
-  const elBoard = document.getElementById('board');
-  const elScore = document.getElementById('scoreLabel'), elLevel = document.getElementById('levelLabel'), elOrders = document.getElementById('ordersLabel'), elCombo = document.getElementById('comboLabel');
-  const elMetaCoins = document.getElementById('metaCoins');
-  const elBestShift = document.getElementById('bestShift'), elBestZen = document.getElementById('bestZen');
-  
-  const elCFace = document.getElementById('customerFace'), elCName = document.getElementById('customerName'), elCDesc = document.getElementById('customerDesc');
-  const elCDiff = document.getElementById('customerDiff'), elCBonus = document.getElementById('customerBonus');
-  const elCOrderText = document.getElementById('customerOrderText'), elCProgressText = document.getElementById('customerProgressText');
-  const elPatienceBox = document.getElementById('patienceBox'), elPatienceFill = document.getElementById('patienceFill'), elPatienceLabel = document.getElementById('patienceLabel');
-  const comboStepsContainer = document.getElementById('comboSteps');
+  function updateMetaUI() {
+    const save = Persistence.get();
+    const metaCoinsEl = document.getElementById('metaCoins');
+    if(metaCoinsEl) metaCoinsEl.textContent = save.coins;
+    const unlockedCount = Object.keys(save.achievements).length;
+    const metaTrophiesEl = document.getElementById('metaTrophies');
+    if(metaTrophiesEl) metaTrophiesEl.textContent = `${unlockedCount}/${ACHIEVEMENTS.length}`;
+    
+    const achList = document.getElementById('achievementsList');
+    if(achList) {
+      achList.innerHTML = ACHIEVEMENTS.map(ach => `
+        <div class="list-item ${save.achievements[ach.id] ? '' : 'locked'}">
+          <div class="item-icon">${ach.icon}</div>
+          <div class="item-details"><h4>${ach.name}</h4><p>${ach.desc}</p></div>
+        </div>
+      `).join('');
+    }
 
-  // Initialization
-  document.addEventListener('DOMContentLoaded', () => {
-    elMetaCoins.innerText = metaCoins;
-    elBestShift.innerText = `Best Score: ${bestShift}`;
-    elBestZen.innerText = `Best Score: ${bestZen}`;
-    initComboUI();
-  });
-
-  function initComboUI() {
-    comboStepsContainer.innerHTML = '';
-    for(let i=1; i<=MAX_COMBO_STEPS; i++) {
-      let step = document.createElement('div');
-      step.className = 'combo-step';
-      step.innerText = '×' + (i+1);
-      step.id = 'comboStep' + i;
-      comboStepsContainer.appendChild(step);
+    const skinsList = document.getElementById('skinsList');
+    if(skinsList) {
+      skinsList.innerHTML = SKINS.map(s => {
+        const isUnlocked = save.unlockedSkins.includes(s.id);
+        const isEquipped = save.equippedSkin === s.id;
+        return `
+          <div class="list-item ${isEquipped ? 'active' : ''}">
+            <div class="item-icon">${s.icon}</div>
+            <div class="item-details" style="flex:1"><h4>${s.name}</h4><p>${s.desc}</p></div>
+            <div>
+              ${isEquipped ? '<b>Equipped</b>' : 
+                isUnlocked ? `<button class="btn small" onclick="MetaSystem.equipSkin('${s.id}')">Equip</button>` :
+                `<button class="btn small secondary" onclick="MetaSystem.buySkin('${s.id}', ${s.cost})" ${save.coins >= s.cost ? '' : 'disabled'}>🪙 ${s.cost}</button>`
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
     }
   }
 
-  function toggleTheme() {
-    document.body.classList.remove(THEMES[activeThemeIdx]);
-    activeThemeIdx = (activeThemeIdx + 1) % THEMES.length;
-    if(THEMES[activeThemeIdx] !== 'default') document.body.classList.add(THEMES[activeThemeIdx]);
-  }
-
-  // =====================================================================
-  // GAME FLOW
-  // =====================================================================
-  window.startGame = function(m) {
-    mode = m;
-    score=0; level=1; ordersDone=0; bestCombo=0; comboCount=0;
-    elTitle.classList.add('hidden'); elGame.classList.remove('hidden');
-    elPatienceBox.classList.toggle('hidden', mode==='zen');
-    
-    // Lock body for app experience
-    document.body.classList.add('playing');
-    
-    updateStatsUI();
-    updateComboUI();
-    createBoard();
-    if(mode==='shift') generateCustomer(); else spawnZenCustomer();
-    if(mode==='shift') lastTime = performance.now();
-    requestAnimationFrame(gameLoop);
-  }
-
-  window.endGame = function(reason="Quit manually.") {
-    cancelAnimationFrame(patienceTimer);
-    document.body.classList.remove('playing');
-    if(mode==='shift' && score > bestShift){ bestShift = score; localStorage.setItem('sushido_best_shift', bestShift); }
-    if(mode==='zen' && score > bestZen){ bestZen = score; localStorage.setItem('sushido_best_zen', bestZen); }
-    metaCoins += Math.floor(score/10); localStorage.setItem('sushido_coins', metaCoins);
-    elBestShift.innerText = `Best Score: ${bestShift}`; elBestZen.innerText = `Best Score: ${bestZen}`; elMetaCoins.innerText = metaCoins;
-    
-    document.getElementById('endReason').innerText = reason;
-    document.getElementById('endScore').innerText = score;
-    document.getElementById('overlay-gameover').classList.remove('hidden');
-  }
-  window.returnToTitle = function() {
-    document.getElementById('overlay-gameover').classList.add('hidden');
-    elGame.classList.add('hidden'); elTitle.classList.remove('hidden');
-  }
-
-  function gameLoop(time) {
-    if(mode==='shift' && currentCustomer && !document.getElementById('overlay-gameover').classList.contains('hidden')===false && !document.getElementById('overlay-level').classList.contains('hidden')===false){
-      let dt = time - lastTime;
-      let decay = dt / (currentCustomer.patienceMs * Math.pow(0.9, level-1));
-      patienceLeft -= decay;
-      if(patienceLeft <= 0) { elPatienceFill.style.width = '0%'; endGame("Customer stormed out!"); return; }
-      updatePatienceUI();
+  return { 
+    checkAchievements, updateMetaUI, applySkin, 
+    equipSkin: (id) => { const s = Persistence.get(); s.equippedSkin = id; Persistence.save(s); applySkin(id); updateMetaUI(); },
+    buySkin: (id, cost) => { 
+      const s = Persistence.get(); 
+      if(s.coins >= cost) { 
+        s.coins -= cost; s.unlockedSkins.push(id); s.equippedSkin = id; 
+        Persistence.save(s); applySkin(id); updateMetaUI(); checkAchievements();
+      } 
     }
-    lastTime = time;
-    if(mode!=='') patienceTimer = requestAnimationFrame(gameLoop);
-  }
+  };
+})();
 
-  // =====================================================================
-  // CUSTOMER LOGIC
-  // =====================================================================
-  function generateCustomer() {
-    let pool = CUSTOMERS.filter(c => c.minLevel <= level);
-    let tmpl = pool[Math.floor(Math.random() * pool.length)];
-    currentCustomer = JSON.parse(JSON.stringify(tmpl)); // Deep copy
-    patienceLeft = 1.0;
-    
-    activeWants = currentCustomer.wants.map(w => ({ e: w.e, target: w.c + Math.floor(level/2), current: 0 }));
-    applyCustomerUI();
-    animateFace('pop-in');
-  }
+const SIZE = 8;
+const BASE_TYPES = ["sushi","shrimp","rice","avocado","fish"];
+const EMOJI = { sushi:"🍣", shrimp:"🍤", rice:"🍙", avocado:"🥑", fish:"🐟", dumpling:"🥟", tea:"🍵", wasabi:"🟢", soy:"🧴", rocket:"🥢", tempura:"💥", rainbow:"🌈" };
+const LABEL = { sushi:"Sushi", shrimp:"Shrimp", rice:"Rice", avocado:"Avocado", fish:"Fish", dumpling:"Dumpling", tea:"Tea", wasabi:"Wasabi", soy:"Soy Splash", rocket:"Rocket", tempura:"Tempura Bomb", rainbow:"Rainbow" };
+
+class BoardEngine {
+  constructor(){ this.cells = []; this.idCounter = 1; this.activeTypes = [...BASE_TYPES]; }
   
-  function spawnZenCustomer() {
-    currentCustomer = JSON.parse(JSON.stringify(ZEN_CUSTOMER));
-    let randomEmoji = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
-    activeWants = [ { e: randomEmoji, target: 5 + level, current: 0 } ];
-    applyCustomerUI();
+  updateActiveTypes(level) {
+    this.activeTypes = [...BASE_TYPES];
+    if(level >= 4) this.activeTypes.push("dumpling");
+    if(level >= 8) this.activeTypes.push("tea");
   }
 
-  function applyCustomerUI() {
-    elCFace.innerText = currentCustomer.face;
-    elCName.innerText = currentCustomer.name;
-    elCDesc.innerText = currentCustomer.desc;
-    elCDiff.innerText = `Diff: ${currentCustomer.diff}`;
-    elCBonus.innerText = `Bonus: +${currentCustomer.bonus}%`;
-    updateOrderUI();
-  }
+  newTile(type){ return { type, id: this.idCounter++ }; }
+  isStandard(type){ return this.activeTypes.includes(type); }
+  inBounds(r,c){ return r>=0 && r<SIZE && c>=0 && c<SIZE; }
+  get(r,c){ return this.cells[r][c]; }
+  set(r,c,tile){ this.cells[r][c] = tile; }
+  isPowerUp(r, c) { const t = this.get(r, c); return t && !this.isStandard(t.type); }
 
-  function updateOrderUI() {
-    if(!activeWants.length) return;
-    let w = activeWants[0]; // Simple prototype: 1 want at a time
-    elCOrderText.innerText = `Wants ${w.target} ${w.e}`;
-    elCProgressText.innerText = `${w.current} / ${w.target}`;
-  }
-
-  function updatePatienceUI() {
-    let pct = Math.max(0, Math.floor(patienceLeft * 100));
-    elPatienceFill.style.width = pct + '%';
-    elPatienceLabel.innerText = pct + '%';
-    if(pct < 25) elPatienceFill.style.background = 'linear-gradient(90deg, #c0392b, #e74c3c)';
-    else if(pct < 50) elPatienceFill.style.background = 'linear-gradient(90deg, #d35400, #f39c12)';
-    else elPatienceFill.style.background = 'linear-gradient(90deg, #37c76b, #8fe673)';
-  }
-
-  function checkOrderFulfillment(emoji, count) {
-    if(!activeWants.length) return;
-    let w = activeWants[0];
-    if(w.e === emoji) {
-      w.current += count;
-      if(w.current >= w.target) {
-        // Order Complete!
-        animateFace('happy');
-        score += 100 * (1 + (currentCustomer.bonus/100));
-        ordersDone++;
-        updateStatsUI();
-        if(ordersDone % 5 === 0) triggerLevelUp();
-        else {
-          setTimeout(() => { if(mode==='shift') generateCustomer(); else spawnZenCustomer(); }, 500);
+  generateInitialBoard(){
+    let attempt = 0;
+    do{
+      this.cells = Array.from({length:SIZE}, () => Array(SIZE).fill(null));
+      for(let r=0;r<SIZE;r++){
+        for(let c=0;c<SIZE;c++){
+          let t, tries = 0;
+          do{
+            t = this.activeTypes[Math.floor(Math.random()*this.activeTypes.length)];
+            tries++;
+          } while(this._wouldMatch(this.cells, r, c, t) && tries < 30);
+          this.cells[r][c] = this.newTile(t);
         }
       }
-      updateOrderUI();
-    }
+      attempt++;
+    } while(!this.getValidMove() && attempt < 60);
   }
 
-  function triggerLevelUp() {
-    level++;
-    document.getElementById('overlay-level').classList.remove('hidden');
-  }
-  window.resumeLevel = function() {
-    document.getElementById('overlay-level').classList.add('hidden');
-    if(mode==='shift') generateCustomer(); else spawnZenCustomer();
-    lastTime = performance.now(); // prevent huge dt drop
-  }
-
-  function animateFace(type) {
-    elCFace.classList.add(type);
-    setTimeout(() => elCFace.classList.remove(type), 600);
-  }
-
-  // =====================================================================
-  // BOARD & MATCH LOGIC (Unchanged functionality)
-  // =====================================================================
-  function createBoard() {
-    elBoard.innerHTML = '';
-    board = [];
-    for(let r=0; r<ROWS; r++){
-      board[r] = [];
-      for(let c=0; c<COLS; c++){
-        let v;
-        do { v = EMOJIS[Math.floor(Math.random()*EMOJIS.length)]; } while (causesPreMatch(r, c, v));
-        board[r][c] = { v:v, type:'normal' };
-        renderTile(r, c);
-      }
-    }
-  }
-
-  function causesPreMatch(r, c, v) {
-    if(r>=2 && board[r-1][c]?.v===v && board[r-2][c]?.v===v) return true;
-    if(c>=2 && board[r][c-1]?.v===v && board[r][c-2]?.v===v) return true;
+  _wouldMatch(grid, r, c, t){
+    if(c>=2 && grid[r][c-1] && grid[r][c-2] && grid[r][c-1].type===t && grid[r][c-2].type===t) return true;
+    if(r>=2 && grid[r-1][c] && grid[r-2][c] && grid[r-1][c].type===t && grid[r-2][c].type===t) return true;
     return false;
   }
 
-  function renderTile(r, c) {
-    let id = `t_${r}_${c}`;
-    let el = document.getElementById(id);
-    if(!el) {
-      el = document.createElement('div');
-      el.className = 'tile pop-in'; el.id = id; el.tabIndex = 0; el.role = 'gridcell';
-      el.dataset.r = r; el.dataset.c = c;
-      el.addEventListener('click', handleTileClick);
-      el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' ') handleTileClick(e); });
-      elBoard.appendChild(el);
+  swap(r1,c1,r2,c2){ const tmp = this.cells[r1][c1]; this.cells[r1][c1] = this.cells[r2][c2]; this.cells[r2][c2] = tmp; }
+
+  findLines(cellsGrid){
+    const grid = cellsGrid || this.cells;
+    const lines = [];
+    for(let r=0;r<SIZE;r++){
+      let c=0;
+      while(c<SIZE){
+        const t = grid[r][c] ? grid[r][c].type : null;
+        if(t && this.isStandard(t)){
+          let c2=c; while(c2+1<SIZE && grid[r][c2+1] && grid[r][c2+1].type===t) c2++;
+          if(c2-c+1 >= 3) lines.push({cells: Array.from({length:c2-c+1}, (_,i)=>({r, c:c+i})), type:t, length:c2-c+1});
+          c = c2+1;
+        } else c++;
+      }
     }
-    let cell = board[r][c];
-    el.innerText = cell.v;
-    el.className = 'tile ' + (cell.type!=='normal' ? `special-${cell.type}` : '');
-    // Reset selection visually
-    if(selectedTile && selectedTile.r===r && selectedTile.c===c) el.classList.add('selected');
+    for(let c=0;c<SIZE;c++){
+      let r=0;
+      while(r<SIZE){
+        const t = grid[r][c] ? grid[r][c].type : null;
+        if(t && this.isStandard(t)){
+          let r2=r; while(r2+1<SIZE && grid[r2+1][c] && grid[r2+1][c].type===t) r2++;
+          if(r2-r+1 >= 3) lines.push({cells: Array.from({length:r2-r+1}, (_,i)=>({r:r+i, c})), type:t, length:r2-r+1});
+          r = r2+1;
+        } else r++;
+      }
+    }
+    return lines;
   }
 
-  function handleTileClick(e) {
-    if(isSwapping) return;
-    let tgt = e.currentTarget;
-    let r = parseInt(tgt.dataset.r), c = parseInt(tgt.dataset.c);
-    
-    if(!selectedTile) {
-      selectedTile = {r,c};
-      tgt.classList.add('selected');
-    } else {
-      let sr = selectedTile.r, sc = selectedTile.c;
-      document.getElementById(`t_${sr}_${sc}`).classList.remove('selected');
-      if(sr===r && sc===c) { selectedTile = null; return; } // deselect
-      if(Math.abs(sr-r)+Math.abs(sc-c) === 1) attemptSwap(sr,sc,r,c);
-      else { selectedTile = {r,c}; tgt.classList.add('selected'); } // new selection
-    }
-  }
-
-  async function attemptSwap(r1, c1, r2, c2) {
-    isSwapping = true; selectedTile = null;
-    
-    // Swap data
-    let temp = board[r1][c1]; board[r1][c1] = board[r2][c2]; board[r2][c2] = temp;
-    renderTile(r1,c1); renderTile(r2,c2);
-    
-    let matches = findMatches();
-    if(matches.length > 0) {
-      comboCount = 0;
-      await processMatches(matches);
-    } else {
-      // Invalid swap, revert
-      let t1 = document.getElementById(`t_${r1}_${c1}`), t2 = document.getElementById(`t_${r2}_${c2}`);
-      t1.classList.add('shake-invalid'); t2.classList.add('shake-invalid');
-      await sleep(300);
-      t1.classList.remove('shake-invalid'); t2.classList.remove('shake-invalid');
-      let tmp = board[r1][c1]; board[r1][c1] = board[r2][c2]; board[r2][c2] = tmp;
-      renderTile(r1,c1); renderTile(r2,c2);
-      isSwapping = false;
-    }
-  }
-
-  function findMatches() {
-    let matched = new Set();
-    // Horiz
-    for(let r=0; r<ROWS; r++){
-      for(let c=0; c<COLS-2; c++){
-        let v = board[r][c].v;
-        if(!v) continue;
-        if(board[r][c+1].v===v && board[r][c+2].v===v){
-          matched.add(`${r},${c}`); matched.add(`${r},${c+1}`); matched.add(`${r},${c+2}`);
-          // Check for >3
-          let nc = c+3; while(nc<COLS && board[r][nc].v===v){ matched.add(`${r},${nc}`); nc++; }
+  getValidMove(){
+    for(let r=0;r<SIZE;r++){
+      for(let c=0;c<SIZE;c++){
+        if(c+1<SIZE) {
+          if (this.isPowerUp(r,c) || this.isPowerUp(r,c+1)) return [{r,c}, {r,c:c+1}];
+          this.swap(r,c,r,c+1); if(this.findLines().length > 0){ this.swap(r,c,r,c+1); return [{r,c}, {r,c:c+1}]; } this.swap(r,c,r,c+1);
+        }
+        if(r+1<SIZE) {
+          if (this.isPowerUp(r,c) || this.isPowerUp(r+1,c)) return [{r,c}, {r:r+1,c}];
+          this.swap(r,c,r+1,c); if(this.findLines().length > 0){ this.swap(r,c,r+1,c); return [{r,c}, {r:r+1,c}]; } this.swap(r,c,r+1,c);
         }
       }
     }
-    // Vert
-    for(let c=0; c<COLS; c++){
-      for(let r=0; r<ROWS-2; r++){
-        let v = board[r][c].v;
-        if(!v) continue;
-        if(board[r+1][c].v===v && board[r+2][c].v===v){
-          matched.add(`${r},${c}`); matched.add(`${r+1},${c}`); matched.add(`${r+2},${c}`);
-          let nr = r+3; while(nr<ROWS && board[nr][c].v===v){ matched.add(`${nr},${c}`); nr++; }
-        }
-      }
-    }
-    return Array.from(matched).map(s => { let p=s.split(','); return {r:parseInt(p[0]), c:parseInt(p[1])}; });
+    return null;
   }
 
-  async function processMatches(matches) {
-    if(matches.length===0) { isSwapping=false; return; }
-    
-    comboCount++;
-    if(comboCount > bestCombo) bestCombo = comboCount;
-    updateComboUI();
-    
-    let basePts = matches.length * 10 * comboCount;
-    score += basePts;
-    updateStatsUI();
+  applyGravityAndRefill(){
+    const spawned = []; 
+    for(let c=0;c<SIZE;c++){
+      let writeR = SIZE-1;
+      for(let r=SIZE-1;r>=0;r--){
+        if(this.cells[r][c]){
+          this.cells[writeR][c] = this.cells[r][c];
+          if(writeR!==r) this.cells[r][c] = null;
+          writeR--;
+        }
+      }
+      for(let r=writeR;r>=0;r--){
+        const tile = this.newTile(this.activeTypes[Math.floor(Math.random()*this.activeTypes.length)]);
+        this.cells[r][c] = tile;
+        spawned.push({r,c,tile});
+      }
+    }
+    return spawned;
+  }
+}
 
-    // Map matched items by emoji to update orders
-    let matchCounts = {};
-    matches.forEach(m => {
-      let v = board[m.r][m.c].v;
-      matchCounts[v] = (matchCounts[v]||0) + 1;
-      let el = document.getElementById(`t_${m.r}_${m.c}`);
-      el.classList.add('clearing');
-      spawnFloatText(el, `+${10*comboCount}`);
+const FLIP = {
+  positions: new Map(),
+  record(container) {
+    this.positions.clear();
+    for (const child of container.children) if (child.dataset.id) this.positions.set(child.dataset.id, child.getBoundingClientRect());
+  },
+  play(container, duration = 200) {
+    const active = [];
+    for (const child of container.children) {
+      const id = child.dataset.id;
+      if (id && this.positions.has(id)) {
+        const oldPos = this.positions.get(id), newPos = child.getBoundingClientRect();
+        const dx = oldPos.left - newPos.left, dy = oldPos.top - newPos.top;
+        if (dx !== 0 || dy !== 0) { child.style.transition = 'none'; child.style.transform = `translate(${dx}px, ${dy}px)`; active.push(child); }
+      }
+    }
+    if(active.length === 0) return Promise.resolve();
+    container.offsetHeight;
+    for (const child of active) { child.style.transition = `transform ${duration}ms ease`; child.style.transform = 'translate(0, 0)'; }
+    return new Promise(resolve => setTimeout(resolve, duration));
+  }
+};
+
+/* ============================== MODULE: CustomerSystem ============================== */
+const CustomerSystem = (function(){
+  const ARCHETYPES = [
+    { id: 'apprentice', name: 'Apprentice Chef', emoji: '🧑‍🍳', desc: 'Patient beginner with simple tastes.', diff: '⭐', patienceMod: 1.5, countMod: 0.8, ptsMod: 0.9, minLevel: 1, weight: 30 },
+    { id: 'regular', name: 'Regular Ryu', emoji: '👨', desc: 'Loyal customer looking for standard fare.', diff: '⭐⭐', patienceMod: 1.0, countMod: 1.0, ptsMod: 1.0, minLevel: 1, weight: 25 },
+    { id: 'child', name: 'Little Kenji', emoji: '👦', desc: 'Smaller orders, loves sweet treats.', diff: '⭐', patienceMod: 1.3, countMod: 0.7, ptsMod: 0.8, minLevel: 1, weight: 20 },
+    { id: 'tourist', name: 'Snapshot Sarah', emoji: '📸', desc: 'Wants colorful mixed platters.', diff: '⭐⭐', patienceMod: 1.1, countMod: 1.2, ptsMod: 1.2, minLevel: 2, weight: 15 },
+    { id: 'salaryman', name: 'Tired Salaryman', emoji: '🧑‍💼', desc: 'Patience drains fast, high tips.', diff: '⭐⭐⭐', patienceMod: 0.6, countMod: 1.1, ptsMod: 1.4, minLevel: 2, weight: 15 },
+    { id: 'healthnut', name: 'Health Nut Hana', emoji: '🥗', desc: 'Prefers greens and lighter dishes.', diff: '⭐⭐⭐', patienceMod: 0.9, countMod: 1.3, ptsMod: 1.3, minLevel: 3, weight: 12 },
+    { id: 'critic', name: 'Food Critic Ken', emoji: '🧐', desc: 'Demands combo mastery for high praise.', diff: '⭐⭐⭐⭐', patienceMod: 0.8, countMod: 1.4, ptsMod: 1.8, minLevel: 4, weight: 10 },
+    { id: 'teen', name: 'Impulsive Yuto', emoji: '🧑', desc: 'Impatient and unpredictable orders.', diff: '⭐⭐⭐', patienceMod: 0.7, countMod: 1.2, ptsMod: 1.5, minLevel: 4, weight: 10 },
+    { id: 'master', name: 'Sushi Master Shifu', emoji: '🥋', desc: 'Strict standards requiring power-ups.', diff: '⭐⭐⭐⭐⭐', patienceMod: 0.5, countMod: 1.5, ptsMod: 2.2, minLevel: 6, weight: 6 },
+    { id: 'vip', name: 'VIP Ambassador', emoji: '🤵', desc: 'Massive multi-objective luxury orders.', diff: '⭐⭐⭐⭐⭐', patienceMod: 0.6, countMod: 1.8, ptsMod: 2.5, minLevel: 7, weight: 4 }
+  ];
+
+  let activeCustomer = null;
+  let lastCustomerId = null;
+  let lastFace = "";
+
+  const el = (id)=>document.getElementById(id);
+
+  function selectCustomer(level) {
+    const available = ARCHETYPES.filter(c => level >= c.minLevel && c.id !== lastCustomerId);
+    const totalWeight = available.reduce((sum, c) => sum + c.weight, 0);
+    let rnd = Math.random() * totalWeight;
+    let chosen = available[0];
+    for(const c of available) {
+      if(rnd < c.weight) { chosen = c; break; }
+      rnd -= c.weight;
+    }
+    lastCustomerId = chosen.id;
+    activeCustomer = chosen;
+
+    el("customerName").textContent = activeCustomer.name;
+    el("customerDesc").textContent = activeCustomer.desc;
+    el("customerDiff").textContent = "Diff: " + activeCustomer.diff;
+    el("customerBonus").textContent = `Bonus: +${Math.round((activeCustomer.ptsMod - 1)*100)}%`;
+    setFace(activeCustomer.emoji);
+    return activeCustomer;
+  }
+
+  function setFace(f) {
+    if(lastFace !== f) {
+      el("customerFace").textContent = f;
+      lastFace = f;
+    }
+  }
+
+  function react(eventType, patience, mode, shakeCallback) {
+    if (mode === "zen" || mode === "daily") return;
+    if (el("customerFace").textContent === "😍") return;
+    
+    if (eventType === 'bigCombo') {
+      setFace("🤩");
+      setTimeout(() => { if(activeCustomer) setFace(activeCustomer.emoji); }, 1200);
+    } else if (eventType === 'mistake') {
+      setFace("😔");
+      setTimeout(() => { if(activeCustomer) setFace(activeCustomer.emoji); }, 1000);
+    } else if (eventType === 'powerup') {
+      setFace("😆");
+      setTimeout(() => { if(activeCustomer) setFace(activeCustomer.emoji); }, 1000);
+    } else {
+      if (patience <= 15) { setFace("🤬"); if(shakeCallback) shakeCallback(0.3); }
+      else if (patience <= 35) { setFace("😠"); if(shakeCallback) shakeCallback(0.2); }
+      else if (patience <= 60) setFace("😟"); 
+      else if (activeCustomer) setFace(activeCustomer.emoji);
+    }
+  }
+
+  return { selectCustomer, setFace, react, getActive: () => activeCustomer };
+})();
+
+/* ============================== MODULE: OrderSystem ============================== */
+const OrderSystem = (function(){
+  let currentOrder = null;
+  let lastOrderTypes = [];
+
+  const el = (id)=>document.getElementById(id);
+
+  function pickOrderType(boardActiveTypes){
+    let candidate, guard=0;
+    do{ candidate = boardActiveTypes[Math.floor(Math.random()*boardActiveTypes.length)]; guard++; } 
+    while(lastOrderTypes.length>=2 && lastOrderTypes[0]===candidate && lastOrderTypes[1]===candidate && guard<20);
+    lastOrderTypes.push(candidate); if(lastOrderTypes.length>2) lastOrderTypes.shift();
+    return candidate;
+  }
+
+  function generateOrder(level, customer, boardActiveTypes){
+    const categories = ['basic'];
+    if(level >= 3) categories.push('mixed');
+    if(level >= 5) categories.push('combo');
+    if(level >= 7) categories.push('powerup');
+    if(level >= 8) categories.push('speed');
+    if(level >= 9) categories.push('vip');
+
+    let cat = categories[Math.floor(Math.random() * categories.length)];
+    if(customer.id === 'critic') cat = Math.random() < 0.7 ? 'combo' : (Math.random() < 0.9 ? 'mixed' : 'basic');
+    if(customer.id === 'healthnut') cat = 'basic';
+    if(customer.id === 'tourist') cat = 'mixed';
+    if(customer.id === 'master') cat = 'powerup';
+    if(customer.id === 'vip') cat = 'vip';
+
+    const growth = Math.min(level-1, 6);
+
+    if(cat === 'basic') {
+      let type = pickOrderType(boardActiveTypes);
+      if(customer.id === 'healthnut' && boardActiveTypes.includes('avocado')) type = 'avocado';
+      let need = Math.max(2, Math.floor((4 + Math.floor(Math.random()*3) + growth) * customer.countMod));
+      currentOrder = { category: 'basic', type, need, have:0, desc: `Wants ${need} ${EMOJI[type]}` };
+    } 
+    else if(cat === 'mixed') {
+      const t1 = pickOrderType(boardActiveTypes);
+      let t2; do{ t2 = pickOrderType(boardActiveTypes); } while(t2 === t1);
+      const need1 = Math.max(2, Math.floor((3 + Math.floor(Math.random()*2)) * customer.countMod));
+      const need2 = Math.max(2, Math.floor((3 + Math.floor(Math.random()*2)) * customer.countMod));
+      currentOrder = { category: 'mixed', type: t1, secondaryType: t2, need: need1, secondaryNeed: need2, have: 0, secondaryHave: 0, desc: `${need1} ${EMOJI[t1]} & ${need2} ${EMOJI[t2]}` };
+    }
+    else if(cat === 'combo') {
+      const targetCombo = Math.min(6, 3 + Math.floor(Math.random() * 2));
+      currentOrder = { category: 'combo', targetCombo, have: 0, need: targetCombo, desc: `Reach Combo ×${targetCombo}` };
+    }
+    else if(cat === 'powerup') {
+      const pTypes = ['wasabi', 'soy', 'rocket'];
+      const pt = pTypes[Math.floor(Math.random() * pTypes.length)];
+      const count = 1 + (level > 6 ? 1 : 0);
+      currentOrder = { category: 'powerup', powerupType: pt, need: count, have: 0, desc: `Trigger ${count} ${EMOJI[pt] || '⚡'} Powerup${count>1?'s':''}` };
+    }
+    else if(cat === 'speed') {
+      const type = pickOrderType(boardActiveTypes);
+      const need = 4;
+      currentOrder = { category: 'speed', type, need, have: 0, timeLeft: 35, desc: `Fast! ${need} ${EMOJI[type]} in 35s` };
+    }
+    else {
+      const t1 = pickOrderType(boardActiveTypes);
+      const need1 = 4;
+      currentOrder = { category: 'vip', type: t1, need: need1, have: 0, targetCombo: 4, comboAchieved: false, desc: `VIP: ${need1} ${EMOJI[t1]} + Combo ×4` };
+    }
+
+    el("customerOrderText").textContent = currentOrder.desc;
+    el("customerProgressText").textContent = currentOrder.category === 'mixed' ? `0/${currentOrder.need} | 0/${currentOrder.secondaryNeed}` : `0 / ${currentOrder.need}`;
+    return currentOrder;
+  }
+
+  return { generateOrder, getOrder: () => currentOrder };
+})();
+
+/* ============================== MODULE: ProgressionSystem ============================== */
+const ProgressionSystem = (function(){
+  let level = 1;
+  let ordersDone = 0;
+
+  function reset() {
+    level = 1;
+    ordersDone = 0;
+  }
+
+  function registerOrderCompletion(mode) {
+    ordersDone++;
+    const save = Persistence.get();
+    save.stats.totalOrders++;
+    Persistence.save(save);
+
+    let leveledUp = false;
+    if (ordersDone > 0 && ordersDone % (3 + Math.floor(level/2)) === 0) {
+      level++;
+      save.stats.maxLevel = Math.max(save.stats.maxLevel, level);
+      Persistence.save(save);
+      leveledUp = true;
+    }
+    return { level, ordersDone, leveledUp };
+  }
+
+  return { reset, registerOrderCompletion, getLevel: () => level, getOrdersDone: () => ordersDone };
+})();
+
+/* ============================== GAME CONTROLLER ============================== */
+const GameController = (function(){
+  const board = new BoardEngine();
+  let mode = null; 
+  let score = 0, bestComboRun = 0, coinsEarned = 0;
+  let totalPowerupsThisRun = 0, maxCascadeTierThisRun = 0;
+  let locked = false, selected = null, patience = 100, patienceDecayPerSec = 1.8;
+  let lastFrameTime = null, paused = true, activeSessionToken = 0, idleTime = 0, dailyTimeLeft = 180;
+  
+  let keyboardFocus = {r: 3, c: 3};
+  const el = (id)=>document.getElementById(id);
+  const boardEl = el("board"), floatLayer = el("floatLayer"), boardShell = el("boardShell");
+
+  function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+  function announce(msg){ el("liveRegion").textContent = ""; setTimeout(() => el("liveRegion").textContent = msg, 50); }
+
+  function init() {
+    MetaSystem.applySkin(Persistence.get().equippedSkin);
+    MetaSystem.updateMetaUI();
+  }
+
+  function nextCustomerAndOrder() {
+    CustomerSystem.selectCustomer(ProgressionSystem.getLevel());
+    OrderSystem.generateOrder(ProgressionSystem.getLevel(), CustomerSystem.getActive(), board.activeTypes);
+  }
+
+  function completeOrder(){
+    const prog = ProgressionSystem.registerOrderCompletion(mode);
+    el("ordersLabel").textContent = prog.ordersDone;
+    
+    CustomerSystem.setFace("😍");
+    setTimeout(() => { const c = CustomerSystem.getActive(); if(c) CustomerSystem.setFace(c.emoji); }, 1500);
+
+    const activeCust = CustomerSystem.getActive();
+    const bonus = Math.floor((750 + prog.level * 250) * activeCust.ptsMod);
+    addScore(bonus); AudioEngine.orderComplete(); showFloatText(`+${bonus}`, 4, 4);
+    
+    if(mode==="arcade"){
+      patience = Math.min(100, patience + (35 / activeCust.patienceMod));
+      updatePatienceUI();
+    }
+    
+    if(prog.leveledUp){
+      board.updateActiveTypes(prog.level);
+      if(mode==="arcade") patienceDecayPerSec = Math.min(5.0, 1.8 + (prog.level-1)*0.35);
+      const b = document.createElement("div"); b.className = "levelup-banner"; b.textContent = "Level Up! Lv." + prog.level;
+      document.body.appendChild(b); setTimeout(()=> b.remove(), 1600); AudioEngine.levelUp();
+    }
+    el("levelLabel").textContent = prog.level;
+    
+    nextCustomerAndOrder();
+  }
+
+  function shakeBoard(intensity){ if(intensity<=0) return; boardShell.classList.remove("board-shake"); void boardShell.offsetWidth; boardShell.classList.add("board-shake"); }
+  function showFloatText(text, r, c){
+    const sz = boardEl.clientWidth / SIZE, x = (c+0.5)*sz, y = (r+0.5)*sz;
+    const t = document.createElement("div"); t.className = "float-text"; t.textContent = text;
+    t.style.left = x + "px"; t.style.top = y + "px"; t.style.transform = "translate(-50%,-50%)";
+    floatLayer.appendChild(t); setTimeout(()=> t.remove(), 1050);
+  }
+  function addScore(points){ score += points; el("scoreLabel").textContent = score; }
+  
+  function updateComboUI(tier){
+    el("comboLabel").textContent = "×" + Math.max(bestComboRun, tier);
+    [3, 5, 7].forEach(t => el(`combo-step-${t}`).classList.toggle('active', tier >= t));
+  }
+
+  function updatePatienceUI(){
+    const fill = el("patienceFill");
+    if (mode === "daily") {
+      const pct = Math.max(0, (dailyTimeLeft / 180) * 100);
+      fill.style.width = pct + "%";
+      fill.style.background = pct > 20 ? "linear-gradient(90deg,#37c76b,#8fe673)" : "linear-gradient(90deg,#c0392b,#e57368)";
+      el("patienceLabel").textContent = Math.ceil(dailyTimeLeft) + "s";
+      return;
+    }
+    fill.style.width = Math.max(0, patience) + "%";
+    let color = "linear-gradient(90deg,#37c76b,#8fe673)";
+    if(patience<=50) color = "linear-gradient(90deg,#e0a52c,#f4cf6a)";
+    if(patience<=25) color = "linear-gradient(90deg,#c0392b,#e57368)";
+    fill.style.background = color;
+    el("patienceLabel").textContent = Math.max(0, Math.round(patience)) + "%";
+  }
+
+  function tickGameLoop(ts){
+    if(paused) { lastFrameTime = null; return; }
+    if(lastFrameTime==null) lastFrameTime = ts;
+    const dt = (ts-lastFrameTime)/1000; lastFrameTime = ts;
+    
+    idleTime += dt;
+    if(idleTime > 5.0 && !locked) {
+      idleTime = -999;
+      const move = board.getValidMove();
+      if(move) {
+        getTileEl(move[0].r, move[0].c)?.classList.add("hint-pulse");
+        getTileEl(move[1].r, move[1].c)?.classList.add("hint-pulse");
+      }
+    }
+
+    if(mode==="arcade"){
+      const activeCust = CustomerSystem.getActive();
+      patience -= (patienceDecayPerSec * activeCust.patienceMod) * dt;
+      const currentOrd = OrderSystem.getOrder();
+      if(currentOrd && currentOrd.category === 'speed') {
+        currentOrd.timeLeft -= dt;
+        if(currentOrd.timeLeft <= 0) { patience = 0; }
+      }
+      if(patience<=0){ patience=0; updatePatienceUI(); CustomerSystem.react('fail', patience, mode, shakeBoard); endRun(true); return; }
+      updatePatienceUI(); CustomerSystem.react('tick', patience, mode, shakeBoard);
+    } else if(mode==="daily"){
+      dailyTimeLeft -= dt;
+      if(dailyTimeLeft<=0){ dailyTimeLeft=0; updatePatienceUI(); endRun(true); return; }
+      updatePatienceUI();
+    }
+    requestAnimationFrame(tickGameLoop);
+  }
+
+  function renderBoardState() {
+    for(let r=0; r<SIZE; r++) {
+      for(let c=0; c<SIZE; c++) {
+        const t = board.get(r,c); if(!t) continue;
+        let el = document.getElementById("tile-"+t.id);
+        if(!el) {
+          el = document.createElement("div"); el.id = "tile-"+t.id; el.className = "tile pop-in"; el.dataset.id = t.id;
+          boardEl.appendChild(el);
+        }
+        el.style.gridArea = `${r+1} / ${c+1}`; el.dataset.r = r; el.dataset.c = c;
+        el.tabIndex = (r === keyboardFocus.r && c === keyboardFocus.c) ? 0 : -1;
+        
+        let classes = "tile";
+        if(!board.isStandard(t.type)) classes += " special-" + t.type;
+        if(selected && selected.r === r && selected.c === c) classes += " selected";
+        if(el.classList.contains("clearing")) classes += " clearing";
+        if(el.classList.contains("hint-pulse")) classes += " hint-pulse";
+        
+        el.className = classes; el.textContent = EMOJI[t.type]; el.setAttribute("aria-label", LABEL[t.type]);
+      }
+    }
+  }
+  function getTileEl(r, c) { const t = board.get(r, c); return t ? document.getElementById("tile-"+t.id) : null; }
+  function clearHints() { document.querySelectorAll('.hint-pulse').forEach(e => e.classList.remove('hint-pulse')); idleTime = 0; }
+
+  async function submitSwap(r1, c1, r2, c2) {
+    if (locked || !mode) return;
+    clearHints(); locked = true; selected = null; el("btnQuitSave").disabled = true;
+    const token = activeSessionToken;
+    
+    FLIP.record(boardEl); board.swap(r1, c1, r2, c2); renderBoardState();
+    await FLIP.play(boardEl, 180); if (token !== activeSessionToken) return;
+    
+    const lines = board.findLines();
+    const createsMatch = lines.length > 0;
+    const isDirectPowerSwap = board.isPowerUp(r1, c1) && board.isPowerUp(r2, c2);
+    const hasOnePowerup = board.isPowerUp(r1,c1) || board.isPowerUp(r2,c2);
+    
+    if (!createsMatch && !isDirectPowerSwap && !hasOnePowerup) {
+      AudioEngine.invalidSwap();
+      CustomerSystem.react('mistake', patience, mode);
+      const e1 = getTileEl(r1, c1), e2 = getTileEl(r2, c2);
+      if(e1) e1.classList.add("shake-invalid"); if(e2) e2.classList.add("shake-invalid");
+      await wait(300); if (token !== activeSessionToken) return;
+      if(e1) e1.classList.remove("shake-invalid"); if(e2) e2.classList.remove("shake-invalid");
+      
+      FLIP.record(boardEl); board.swap(r1, c1, r2, c2); renderBoardState(); await FLIP.play(boardEl, 180);
+      locked = false; el("btnQuitSave").disabled = false; return;
+    }
+    await resolveBoard(token, 1, {r1, c1, r2, c2});
+  }
+
+  async function resolveBoard(token, tier, swapAction = null) {
+    if (token !== activeSessionToken) return;
+    updateComboUI(tier);
+    maxCascadeTierThisRun = Math.max(maxCascadeTierThisRun, tier);
+    const save = Persistence.get();
+    
+    const lines = board.findLines();
+    let directTriggers = [];
+    let powerComboArea = [];
+    
+    if (swapAction && tier === 1) {
+      const {r1, c1, r2, c2} = swapAction;
+      const t1 = board.get(r1,c1), t2 = board.get(r2,c2);
+      if (t1 && t2 && board.isPowerUp(r1, c1) && board.isPowerUp(r2, c2)) {
+        const combined = [t1.type, t2.type].sort().join('+');
+        let clears = [];
+        if(combined.includes('rainbow')) {
+          const counts = {}; board.cells.flat().forEach(c => { if(c && board.isStandard(c.type)) counts[c.type] = (counts[c.type]||0)+1; });
+          const target = Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0];
+          if(target) board.cells.flat().forEach(c => { if(c && c.type===target) clears.push({r: board.cells.findIndex(row=>row.includes(c)), c: board.cells.find(row=>row.includes(c)).indexOf(c)}); });
+          directTriggers.push({r:r1,c:c1}, {r:r2,c:c2});
+        } else if (combined === 'soy+soy' || combined === 'rocket+soy') {
+           for(let i=0;i<SIZE;i++){ clears.push({r:r1,c:i}, {r:r2,c:i}, {r:i,c:c1}, {r:i,c:c2}); }
+        } else if (combined === 'wasabi+wasabi' || combined === 'tempura+wasabi') {
+           for(let dr=-2;dr<=2;dr++) for(let dc=-2;dc<=2;dc++) clears.push({r:r1+dr, c:c1+dc});
+        } else {
+           for(let i=0;i<SIZE;i++){ clears.push({r:r1,c:i}, {r:i,c:c1}); }
+           for(let dr=-1;dr<=1;dr++) for(let dc=-1;dc<=1;dc++) clears.push({r:r1+dr, c:c1+dc});
+        }
+        powerComboArea = clears.filter(pos => board.inBounds(pos.r, pos.c));
+        directTriggers.push({r:r1,c:c1}, {r:r2,c:c2});
+      } else {
+        if (board.isPowerUp(r1, c1)) directTriggers.push({r: r1, c: c1});
+        if (board.isPowerUp(r2, c2)) directTriggers.push({r: r2, c: c2});
+      }
+    }
+    
+    if (lines.length === 0 && directTriggers.length === 0 && powerComboArea.length === 0) {
+      if(tier > bestComboRun) {
+        bestComboRun = tier - 1;
+        save.stats.totalCombos = Math.max(save.stats.totalCombos, bestComboRun); Persistence.save(save);
+      }
+      setTimeout(()=>updateComboUI(0), 1000); MetaSystem.checkAchievements();
+      
+      if (!board.getValidMove()) {
+        announce("No valid moves. Shuffling board.");
+        await wait(600); if (token !== activeSessionToken) return;
+        board.generateInitialBoard(); renderBoardState();
+      }
+      locked = false; el("btnQuitSave").disabled = false; renderBoardState(); return;
+    }
+    
+    const specialsToCreate = []; const claimedCells = new Set();
+    
+    lines.forEach(line => {
+      if (line.length >= 4) {
+        const type = line.length >= 5 ? "soy" : "wasabi";
+        let cell = null;
+        if (swapAction && tier === 1) {
+          const keys = line.cells.map(c => c.r+"_"+c.c);
+          if (keys.includes(swapAction.r1+"_"+swapAction.c1)) cell = {r:swapAction.r1, c:swapAction.c1};
+          else if (keys.includes(swapAction.r2+"_"+swapAction.c2)) cell = {r:swapAction.r2, c:swapAction.c2};
+        }
+        if (!cell) cell = line.cells[Math.floor(line.length / 2)];
+        if (cell && !claimedCells.has(cell.r+"_"+cell.c)) { claimedCells.add(cell.r+"_"+cell.c); specialsToCreate.push({r: cell.r, c: cell.c, type}); }
+      }
     });
-
-    // Check powers triggers here (omitted for brevity, handled implicitly by data removal)
     
-    Object.keys(matchCounts).forEach(e => checkOrderFulfillment(e, matchCounts[e]));
-
-    await sleep(280);
-
-    // Remove logic
-    matches.forEach(m => board[m.r][m.c] = null);
-
-    // Gravity
-    for(let c=0; c<COLS; c++){
-      let emptySlots = 0;
-      for(let r=ROWS-1; r>=0; r--){
-        if(board[r][c]===null) emptySlots++;
-        else if(emptySlots > 0) {
-          board[r+emptySlots][c] = board[r][c];
-          board[r][c] = null;
+    if(tier === 3 || tier === 5 || tier === 7) {
+      const rw = tier===3 ? 'rocket' : tier===5 ? 'tempura' : 'rainbow';
+      let empties = [];
+      for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(board.get(r,c) && board.isStandard(board.get(r,c).type) && !claimedCells.has(r+"_"+c)) empties.push({r,c});
+      if(empties.length > 0) {
+        const tgt = empties[Math.floor(Math.random()*empties.length)];
+        claimedCells.add(tgt.r+"_"+tgt.c); specialsToCreate.push({r:tgt.r, c:tgt.c, type:rw});
+        showFloatText("Reward Drop!", tgt.r, tgt.c);
+      }
+    }
+    
+    const clearSet = new Map();
+    lines.forEach(line => line.cells.forEach(c => { const k = c.r+"_"+c.c; if (!claimedCells.has(k)) clearSet.set(k, {r: c.r, c: c.c}); }));
+    powerComboArea.forEach(c => { const k = c.r+"_"+c.c; if (!claimedCells.has(k)) clearSet.set(k, {r: c.r, c: c.c}); });
+    
+    const triggeredPowerUps = new Set();
+    const powerUpQueue = [...directTriggers];
+    let pCount = 0;
+    
+    while(powerUpQueue.length > 0) {
+      const {r, c} = powerUpQueue.shift(); const key = r+"_"+c;
+      if (triggeredPowerUps.has(key)) continue;
+      const tile = board.get(r, c); if (!tile || !board.isPowerUp(r, c)) continue;
+      
+      triggeredPowerUps.add(key); clearSet.set(key, {r, c}); pCount++;
+      
+      const rad = tile.type === 'wasabi' ? 1 : tile.type === 'tempura' ? 2 : 0;
+      if (rad > 0) {
+        for (let dr = -rad; dr <= rad; dr++) for (let dc = -rad; dc <= rad; dc++) {
+          const nr = r + dr, nc = c + dc;
+          if (board.inBounds(nr, nc)) {
+            const nkey = nr+"_"+nc;
+            if (!claimedCells.has(nkey)) { clearSet.set(nkey, {r: nr, c: nc}); if (board.isPowerUp(nr, nc) && !triggeredPowerUps.has(nkey)) powerUpQueue.push({r: nr, c: nc}); }
+          }
         }
       }
-      // Fill new
-      for(let r=0; r<emptySlots; r++){
-        board[r][c] = { v: EMOJIS[Math.floor(Math.random()*EMOJIS.length)], type:'normal' };
-        // Powerup chance based on combo
-        if(comboCount >= 3 && Math.random()<0.3) {
-          let pTypes = ['special-wasabi', 'special-soy', 'special-rainbow', 'special-rocket', 'special-tempura'];
-          board[r][c].type = pTypes[Math.floor(Math.random()*pTypes.length)];
+      if (tile.type === "soy" || tile.type === "rocket") {
+        const doRow = tile.type === "soy" || Math.random()>0.5; const doCol = tile.type === "soy" || !doRow;
+        if(doCol) for (let rr = 0; rr < SIZE; rr++) { const nkey = rr+"_"+c; if (!claimedCells.has(nkey)) { clearSet.set(nkey, {r: rr, c}); if (board.isPowerUp(rr, c) && !triggeredPowerUps.has(nkey)) powerUpQueue.push({r: rr, c}); } }
+        if(doRow) for (let cc = 0; cc < SIZE; cc++) { const nkey = r+"_"+cc; if (!claimedCells.has(nkey)) { clearSet.set(nkey, {r, c: cc}); if (board.isPowerUp(r, cc) && !triggeredPowerUps.has(nkey)) powerUpQueue.push({r, c: cc}); } }
+      }
+      if (tile.type === "rainbow") {
+        const types = board.activeTypes; const tgt = types[Math.floor(Math.random()*types.length)];
+        for (let rr=0; rr<SIZE; rr++) for(let cc=0; cc<SIZE; cc++){
+           const t = board.get(rr,cc);
+           if(t && t.type === tgt) {
+             const nkey = rr+"_"+cc;
+             if (!claimedCells.has(nkey)) { clearSet.set(nkey, {r: rr, c:cc}); if (board.isPowerUp(rr, cc) && !triggeredPowerUps.has(nkey)) powerUpQueue.push({r: rr, c:cc}); }
+           }
         }
       }
     }
     
-    // Re-render
-    for(let r=0; r<ROWS; r++){
-      for(let c=0; c<COLS; c++){
-        let el = document.getElementById(`t_${r}_${c}`);
-        el.className = 'tile pop-in ' + (board[r][c].type!=='normal' ? `special-${board[r][c].type}` : '');
-        el.innerText = board[r][c].v;
+    if(pCount>0) { 
+      totalPowerupsThisRun += pCount;
+      save.stats.totalPowerups += pCount; Persistence.save(save); 
+      CustomerSystem.react('powerup', patience, mode);
+      const currentOrd = OrderSystem.getOrder();
+      if (currentOrd && currentOrd.category === 'powerup') {
+        currentOrd.have = Math.min(currentOrd.need, currentOrd.have + pCount);
       }
     }
 
-    await sleep(250);
+    let clearCount = 0; const typeCounts = {};
+    clearSet.forEach(({r, c}) => {
+      const tile = board.get(r, c);
+      if (tile && board.isStandard(tile.type)) { clearCount++; typeCounts[tile.type] = (typeCounts[tile.type] || 0) + 1; }
+    });
+    
+    if (clearCount > 0) addScore(clearCount * 100 * tier);
+    
+    if(tier >= 3) {
+      CustomerSystem.react('bigCombo', patience, mode);
+      const currentOrd = OrderSystem.getOrder();
+      if (currentOrd && currentOrd.category === 'combo' && tier >= currentOrd.targetCombo) {
+        currentOrd.have = currentOrd.need;
+      }
+      if (currentOrd && currentOrd.category === 'vip' && tier >= currentOrd.targetCombo) {
+        currentOrd.comboAchieved = true;
+      }
+    }
 
-    let nextMatches = findMatches();
-    if(nextMatches.length > 0) {
-      await processMatches(nextMatches);
+    const currentOrd = OrderSystem.getOrder();
+    if (currentOrd) {
+      if (currentOrd.category === 'basic') {
+        if (typeCounts[currentOrd.type]) {
+          currentOrd.have = Math.min(currentOrd.need, currentOrd.have + typeCounts[currentOrd.type]);
+        }
+      } else if (currentOrd.category === 'mixed') {
+        if (typeCounts[currentOrd.type]) currentOrd.have = Math.min(currentOrd.need, currentOrd.have + typeCounts[currentOrd.type]);
+        if (typeCounts[currentOrd.secondaryType]) currentOrd.secondaryHave = Math.min(currentOrd.secondaryNeed, currentOrd.secondaryHave + typeCounts[currentOrd.secondaryType]);
+      } else if (currentOrd.category === 'speed') {
+        if (typeCounts[currentOrd.type]) {
+          currentOrd.have = Math.min(currentOrd.need, currentOrd.have + typeCounts[currentOrd.type]);
+        }
+      } else if (currentOrd.category === 'vip') {
+        if (typeCounts[currentOrd.type]) {
+          currentOrd.have = Math.min(currentOrd.need, currentOrd.have + typeCounts[currentOrd.type]);
+        }
+      }
+
+      if (currentOrd.category === 'mixed') {
+        el("customerProgressText").textContent = `${currentOrd.have}/${currentOrd.need} | ${currentOrd.secondaryHave}/${currentOrd.secondaryNeed}`;
+        if (currentOrd.have >= currentOrd.need && currentOrd.secondaryHave >= currentOrd.secondaryNeed) {
+          completeOrder();
+        }
+      } else if (currentOrd.category === 'vip') {
+        el("customerProgressText").textContent = `${currentOrd.have}/${currentOrd.need} | Combo: ${currentOrd.comboAchieved?'✓':'×4'}`;
+        if (currentOrd.have >= currentOrd.need && currentOrd.comboAchieved) {
+          completeOrder();
+        }
+      } else {
+        el("customerProgressText").textContent = `${currentOrd.have} / ${currentOrd.need}`;
+        if (currentOrd.have >= currentOrd.need) {
+          completeOrder();
+        }
+      }
+    }
+    
+    if (clearSet.size > 0 || triggeredPowerUps.size > 0) {
+      if (clearCount > 0) AudioEngine.matchPop(tier);
+      if (triggeredPowerUps.size > 0) { AudioEngine.powerupBlast(); shakeBoard(1); }
+      
+      triggeredPowerUps.forEach(key => {
+        const [rStr, cStr] = key.split("_"); const el = getTileEl(rStr, cStr);
+        if(el) el.classList.add(board.get(rStr,cStr)?.type==='wasabi' ? "bomb-flash" : "splash-flash");
+      });
+      clearSet.forEach(({r, c}) => { const el = getTileEl(r, c); if(el) el.classList.add("clearing"); });
+      if (tier > 1) { const arr = Array.from(clearSet.values()); if(arr.length>0) showFloatText("COMBO ×" + tier + "!", arr[0].r, arr[0].c); }
+      
+      await wait(280); if (token !== activeSessionToken) return;
+    }
+    
+    clearSet.forEach(({r, c}) => { const el = getTileEl(r, c); if(el) el.remove(); board.set(r, c, null); });
+    specialsToCreate.forEach(s => board.set(s.r, s.c, board.newTile(s.type)));
+    
+    FLIP.record(boardEl); const spawned = board.applyGravityAndRefill(); renderBoardState();
+    
+    spawned.forEach(({r, c, tile}) => {
+      const el = document.getElementById("tile-"+tile.id);
+      if(el) { el.style.transition = 'none'; el.style.transform = `translateY(-${(r + 1) * 110}%)`; el.offsetHeight; }
+    });
+    
+    FLIP.play(boardEl, 220);
+    spawned.forEach(({r, c, tile}) => {
+      const el = document.getElementById("tile-"+tile.id);
+      if(el) { el.style.transition = `transform 220ms ease-in`; el.style.transform = `translateY(0)`; }
+    });
+    
+    await wait(240); if (token !== activeSessionToken) return;
+    spawned.forEach(({r, c, tile}) => { const el = document.getElementById("tile-"+tile.id); if(el) { el.style.transition = ''; el.style.transform = ''; } });
+    
+    await resolveBoard(token, tier + 1);
+  }
+
+  function onTileActivate(r, c) {
+    if (locked || !mode) return;
+    clearHints();
+    if (!selected) { selected = {r, c}; renderBoardState(); return; }
+    if (selected.r === r && selected.c === c) { selected = null; renderBoardState(); return; }
+    if (Math.abs(selected.r - r) + Math.abs(selected.c - c) === 1) { const sr = selected.r, sc = selected.c; selected = null; submitSwap(sr, sc, r, c); }
+    else { selected = {r, c}; renderBoardState(); }
+  }
+
+  let touchState = null;
+  boardEl.addEventListener("pointerdown", e => {
+    clearHints();
+    const t = e.target.closest(".tile"); if (!t || locked || !mode) return;
+    touchState = { id: e.pointerId, startX: e.clientX, startY: e.clientY, r: parseInt(t.dataset.r, 10), c: parseInt(t.dataset.c, 10) };
+    t.setPointerCapture(e.pointerId);
+  });
+  
+  boardEl.addEventListener("pointerup", e => {
+    if (!touchState || touchState.id !== e.pointerId) return;
+    const dx = e.clientX - touchState.startX, dy = e.clientY - touchState.startY, dist = Math.hypot(dx, dy);
+    const r = touchState.r, c = touchState.c; touchState = null;
+    
+    if (dist < Math.max(16, (boardEl.clientWidth/SIZE)*0.3)) { onTileActivate(r, c); } 
+    else {
+      let tr = r, tc = c;
+      if (Math.abs(dx) > Math.abs(dy)) tc += dx > 0 ? 1 : -1; else tr += dy > 0 ? 1 : -1;
+      if (!board.inBounds(tr, tc)) { AudioEngine.invalidSwap(); CustomerSystem.react('mistake', patience, mode); const el = getTileEl(r, c); if(el) { el.classList.add("shake-invalid"); setTimeout(() => el.classList.remove("shake-invalid"), 320); } return; }
+      selected = null; submitSwap(r, c, tr, tc);
+    }
+  });
+
+  boardEl.addEventListener("keydown", (e) => {
+    if (locked || !mode) return;
+    clearHints();
+    let dr = 0, dc = 0;
+    if (e.key === "ArrowUp") dr = -1; else if (e.key === "ArrowDown") dr = 1; else if (e.key === "ArrowLeft") dc = -1; else if (e.key === "ArrowRight") dc = 1;
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onTileActivate(keyboardFocus.r, keyboardFocus.c); return; }
+    
+    if (dr !== 0 || dc !== 0) {
+      e.preventDefault(); const nr = keyboardFocus.r + dr, nc = keyboardFocus.c + dc;
+      if (board.inBounds(nr, nc)) { keyboardFocus = {r: nr, c: nc}; renderBoardState(); getTileEl(nr, nc)?.focus(); }
+    }
+  });
+
+  function startRun(selectedMode){
+    AudioEngine.ensure();
+    mode = selectedMode; activeSessionToken++;
+    
+    score=0; bestComboRun=0; coinsEarned=0;
+    totalPowerupsThisRun=0; maxCascadeTierThisRun=0;
+    ProgressionSystem.reset();
+    selected=null; locked=false; patience=100; dailyTimeLeft=180; idleTime=0;
+    patienceDecayPerSec=1.8; keyboardFocus={r: 3, c: 3};
+    
+    el("scoreLabel").textContent=0; el("levelLabel").textContent=1; el("ordersLabel").textContent=0; el("comboLabel").textContent="×0";
+    board.updateActiveTypes(1); board.generateInitialBoard();
+    boardEl.innerHTML = ""; renderBoardState();
+    
+    el("patienceBox").classList.toggle("hidden", mode==="zen");
+    el("patienceTitle").textContent = mode==="daily" ? "Time Left" : "Patience";
+    
+    nextCustomerAndOrder(); updatePatienceUI(); updateComboUI(0);
+
+    el("screen-title").classList.add("hidden"); el("screen-game").classList.remove("hidden");
+    paused=false; lastFrameTime=null; requestAnimationFrame(tickGameLoop);
+  }
+
+  function endRun(isTimeout = false){
+    paused = true; locked = true; activeSessionToken++;
+    const save = Persistence.get();
+    
+    if(mode==="arcade" && score > save.bestArcadeScore) save.bestArcadeScore = score;
+    if(mode==="zen" && score > save.bestZenScore) save.bestZenScore = score;
+    if(mode==="daily" && score > save.bestDailyScore) save.bestDailyScore = score;
+    
+    coinsEarned = Math.floor(score / (mode==="zen" ? 800 : 400));
+    save.coins += coinsEarned;
+    Persistence.save(save); MetaSystem.checkAchievements();
+    
+    el("goScore").textContent = score; el("goCoins").textContent = "+" + coinsEarned;
+    el("goLevel").textContent = ProgressionSystem.getLevel(); el("goOrders").textContent = ProgressionSystem.getOrdersDone(); el("goCombo").textContent = "×"+bestComboRun;
+    el("goPowerups").textContent = totalPowerupsThisRun;
+    el("goMaxCascade").textContent = "×" + maxCascadeTierThisRun;
+    
+    if (isTimeout) {
+      AudioEngine.gameOver();
+      el("goTitle").textContent = mode==="daily" ? "⏰ Time's Up!" : "😡 Customer Walked!";
     } else {
-      setTimeout(() => { comboCount = 0; updateComboUI(); }, 1500); // combo grace period
-      isSwapping = false;
+      el("goTitle").textContent = "Shift Saved";
     }
+    
+    el("gameOverOverlay").classList.remove("hidden"); el("goCard").focus();
   }
 
-  function spawnFloatText(el, text) {
-    let f = document.createElement('div');
-    f.className = 'float-text'; f.innerText = text;
-    let rect = el.getBoundingClientRect();
-    let pRect = elBoard.getBoundingClientRect();
-    f.style.left = (rect.left - pRect.left + rect.width/4) + 'px';
-    f.style.top = (rect.top - pRect.top) + 'px';
-    elBoard.appendChild(f);
-    setTimeout(()=>f.remove(), 800);
-  }
+  function bindUI(){
+    el("cardArcade").addEventListener("click", ()=> startRun("arcade"));
+    el("cardZen").addEventListener("click", ()=> startRun("zen"));
+    el("cardDaily").addEventListener("click", ()=> startRun("daily"));
 
-  function updateStatsUI() {
-    elScore.innerText = score;
-    elLevel.innerText = level;
-    elOrders.innerText = ordersDone;
-    elCombo.innerText = '×' + bestCombo;
-  }
+    ['howTo', 'skins', 'achievements'].forEach(mod => {
+      const btn = el(`btn${mod.charAt(0).toUpperCase() + mod.slice(1)}`);
+      const over = el(`${mod}Overlay`); const card = el(`${mod}Card`);
+      if(btn) btn.addEventListener("click", ()=> { over.classList.remove("hidden"); card.focus(); });
+      el(`btnClose${mod.charAt(0).toUpperCase() + mod.slice(1)}`).addEventListener("click", ()=> over.classList.add("hidden"));
+    });
+    el("btnHowToGame").addEventListener("click", ()=> { el("howToOverlay").classList.remove("hidden"); el("howToCard").focus(); });
 
-  function updateComboUI() {
-    for(let i=1; i<=MAX_COMBO_STEPS; i++) {
-      let step = document.getElementById('comboStep'+i);
-      if(comboCount > i) step.classList.add('active');
-      else step.classList.remove('active');
+    function toggleSound(){
+      AudioEngine.ensure(); AudioEngine.setEnabled(!AudioEngine.isEnabled());
+      el("btnSoundToggleTitle").textContent = AudioEngine.isEnabled() ? "🔊 Sound On" : "🔇 Sound Off";
+      el("btnSoundToggleGame").textContent = AudioEngine.isEnabled() ? "🔊" : "🔇";
+      const s = Persistence.get(); s.soundOn = AudioEngine.isEnabled(); Persistence.save(s);
     }
+    el("btnSoundToggleTitle").addEventListener("click", toggleSound); el("btnSoundToggleGame").addEventListener("click", toggleSound);
+    
+    el("btnQuitSave").addEventListener("click", ()=> endRun(false));
+    el("btnPlayAgain").addEventListener("click", ()=> { el("gameOverOverlay").classList.add("hidden"); startRun(mode); });
+    el("btnReturnKitchenGO").addEventListener("click", ()=> {
+      el("gameOverOverlay").classList.add("hidden"); el("screen-game").classList.add("hidden"); el("screen-title").classList.remove("hidden");
+      mode = null; MetaSystem.updateMetaUI();
+      el("bestArcadeLabel").textContent = "Best score: " + Persistence.get().bestArcadeScore;
+      el("bestZenLabel").textContent = "Best score: " + Persistence.get().bestZenScore;
+      el("bestDailyLabel").textContent = "Best score: " + Persistence.get().bestDailyScore;
+    });
+    
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") { document.querySelectorAll('.overlay-back').forEach(o => o.classList.add('hidden')); }
+    });
   }
 
-  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+  return { init, bindUI };
+})();
+
+Persistence.load();
+GameController.init();
+GameController.bindUI();
+document.getElementById("bestArcadeLabel").textContent = "Best score: " + Persistence.get().bestArcadeScore;
+document.getElementById("bestZenLabel").textContent = "Best score: " + Persistence.get().bestZenScore;
+document.getElementById("bestDailyLabel").textContent = "Best score: " + (Persistence.get().bestDailyScore || 0);
+
+if(Persistence.get().soundOn === false) {
+  document.getElementById("btnSoundToggleTitle").textContent = "🔇 Sound Off";
+  document.getElementById("btnSoundToggleGame").textContent = "🔇";
+  AudioEngine.setEnabled(false);
+}
 </script>
 </body>
 </html>
