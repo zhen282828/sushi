@@ -6,7 +6,7 @@
 <title>Sushido Nostalgia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;900&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --amber:#ffeaa7;
@@ -49,13 +49,20 @@
     margin:0; height:100vh; height:100dvh; overflow:hidden;
     background: radial-gradient(circle at 20% 10%, var(--bg-grad-1) 0%, transparent 55%), var(--amber);
     font-family: var(--font-secondary);
+    font-weight: 400;
     color:var(--ink);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.1px;
     transition: background 0.5s ease, color 0.5s ease;
   }
-  h1,h2,h3{ font-family: var(--font-primary); margin:0; letter-spacing: -0.5px; }
+  
+  /* TYPOGRAPHY HIERARCHY OVERHAUL */
+  h1,h2,h3{ 
+    font-family: var(--font-primary); 
+    margin:0; 
+    letter-spacing: -0.5px; 
+  }
   button{ font-family:inherit; }
   
   button:focus-visible, [tabindex]:focus-visible{ outline:3px solid var(--focus); outline-offset:2px; }
@@ -81,15 +88,27 @@
 
   #screen-title { justify-content:center; text-align:center; padding:24px 16px; }
   .title-emoji-row{ font-size:40px; letter-spacing:8px; margin-bottom:6px; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15)); }
+  
+  /* Level 1: Hero Typography */
   #screen-title h1{
     font-family: var(--font-primary);
-    font-size:clamp(30px, 6vw, 48px);
-    font-weight: 900;
+    font-size:clamp(32px, 6vw, 46px);
+    font-weight: 700;
     color:var(--mahogany-dark);
     text-shadow:2px 2px 0 var(--bg-grad-1), 4px 4px 0 rgba(90,45,10,0.25); margin-bottom:4px;
     letter-spacing: -0.8px;
   }
-  .title-sub{ font-family: var(--font-secondary); color:var(--mahogany-dark); opacity: 0.85; font-size:14px; margin-bottom:16px; font-weight: 600; letter-spacing: 0.2px; }
+  
+  /* Level 4: Supporting Information */
+  .title-sub{ 
+    font-family: var(--font-secondary); 
+    color:var(--mahogany-dark); 
+    opacity: 0.9; 
+    font-size:14px; 
+    margin-bottom:16px; 
+    font-weight: 400; 
+    letter-spacing: 0.2px; 
+  }
   
   .mode-cards{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:16px; }
   .mode-card{
@@ -101,21 +120,46 @@
   }
   .mode-card:hover, .mode-card:focus-visible{ transform:translateY(-4px) scale(1.02); box-shadow:0 12px 22px rgba(120,60,10,0.3); }
   .mode-card .mc-emoji{ font-size:32px; margin-bottom:4px; display:block; }
-  .mode-card h2{ font-family: var(--font-primary); font-size:17px; font-weight: 700; color:var(--mahogany-dark); margin:0 0 2px; }
-  .mode-card p{ font-family: var(--font-secondary); font-size:11px; font-weight: 600; opacity:0.9; line-height:1.3; margin:0; }
-  .title-best{ font-size:11px; font-weight:bold; color:var(--mahogany-dark); margin-top:6px; display:block; background:rgba(211,84,0,0.1); padding:2px 6px; border-radius:6px; text-align:center;}
+  
+  /* Level 2: Primary Gameplay Information */
+  .mode-card h2{ 
+    font-family: var(--font-primary); 
+    font-size:18px; 
+    font-weight: 600; 
+    color:var(--mahogany-dark); 
+    margin:0 0 2px; 
+  }
+  /* Level 4: Supporting Information */
+  .mode-card p{ 
+    font-family: var(--font-secondary); 
+    font-size:11.5px; 
+    font-weight: 400; 
+    opacity:0.9; 
+    line-height:1.4; 
+    margin:0; 
+  }
+  .title-best{ font-size:11px; font-weight:700; color:var(--mahogany-dark); margin-top:6px; display:block; background:rgba(211,84,0,0.1); padding:2px 6px; border-radius:6px; text-align:center;}
   
   .title-buttons{ display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
+  
+  /* Level 3: Gameplay Support Information */
   .meta-stats { 
-    margin: 0 auto 14px auto; font-weight: bold; color: var(--mahogany-dark); font-size: 13px; 
+    margin: 0 auto 14px auto; 
+    font-family: var(--font-secondary);
+    font-weight: 700; 
+    color: var(--mahogany-dark); 
+    font-size: 13px; 
     background: rgba(255,255,255,0.7); display: inline-flex; padding: 6px 16px; border-radius: 30px;
     border: 2px solid var(--amber); box-shadow: 0 3px 8px rgba(0,0,0,0.06);
   }
   .meta-stats span { margin: 0 10px; display: inline-flex; align-items: center; gap: 4px; }
 
+  /* Button Typography Overhaul */
   .btn{
     font-family: var(--font-primary);
-    font-size:13px; font-weight:700; padding:8px 14px; border-radius:10px;
+    font-size:13px; 
+    font-weight:600; 
+    padding:8px 14px; border-radius:10px;
     border:2px solid var(--mahogany-dark); background:linear-gradient(180deg,#ffcf73,#f0a832);
     color:var(--brown-deep); cursor:pointer; box-shadow:0 3px 0 var(--mahogany-dark), 0 4px 8px rgba(0,0,0,0.1);
     letter-spacing: 0.5px; text-transform: uppercase;
@@ -123,8 +167,23 @@
   }
   .btn:hover{ filter:brightness(1.05); }
   .btn:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--mahogany-dark); }
-  .btn.secondary{ background:linear-gradient(180deg,#ffffff,#ffe9c4); }
-  .btn.small{ font-size:11px; padding:4px 8px; border-radius:7px; box-shadow:0 2px 0 var(--mahogany-dark); letter-spacing: 0.2px; text-transform: none; }
+  .btn.secondary{ 
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    background:linear-gradient(180deg,#ffffff,#ffe9c4); 
+    text-transform: none;
+    letter-spacing: 0.2px;
+  }
+  .btn.small{ 
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size:11px; 
+    padding:4px 8px; 
+    border-radius:7px; 
+    box-shadow:0 2px 0 var(--mahogany-dark); 
+    letter-spacing: 0.2px; 
+    text-transform: none; 
+  }
   .btn.small:active{ transform:translateY(2px); box-shadow:0 0 0 var(--mahogany-dark); }
   .btn:disabled{ filter: grayscale(1); opacity: 0.6; cursor: not-allowed; box-shadow:0 1px 0 var(--mahogany-dark); transform:translateY(2px); }
 
@@ -167,12 +226,48 @@
     gap: 6px;
   }
   .customer-face { font-size: 24px; line-height: 1; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.12)); }
-  .customer-name { font-family: var(--font-primary); font-size: 11.5px; font-weight: 700; color: var(--mahogany-dark); }
-  .customer-meta-line { font-family: var(--font-secondary); font-size: 9.5px; color: var(--mahogany); opacity: 0.85; font-weight: 600; display: flex; gap: 4px; align-items: center; }
+  
+  /* Level 2: Primary Gameplay Information */
+  .customer-name { 
+    font-family: var(--font-primary); 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: var(--mahogany-dark); 
+  }
+  /* Level 4: Supporting Information */
+  .customer-meta-line { 
+    font-family: var(--font-secondary); 
+    font-size: 10px; 
+    color: var(--mahogany); 
+    opacity: 0.9; 
+    font-weight: 400; 
+    display: flex; 
+    gap: 4px; 
+    align-items: center; 
+  }
   
   .ticket-order-info { text-align: right; }
-  .customer-order { font-family: var(--font-primary); font-size: 13.5px; font-weight: 900; color: var(--mahogany-dark); background: rgba(255,255,255,0.95); padding: 1px 6px; border-radius: 5px; border: 1px solid var(--amber); display: inline-block; letter-spacing: -0.3px; }
-  .customer-progress { font-family: var(--font-secondary); font-size: 10.5px; color: var(--mahogany-dark); font-weight: 700; margin-top: 1px; }
+  /* Level 1: Hero Typography */
+  .customer-order { 
+    font-family: var(--font-primary); 
+    font-size: 15px; 
+    font-weight: 700; 
+    color: var(--mahogany-dark); 
+    background: rgba(255,255,255,0.95); 
+    padding: 1px 6px; 
+    border-radius: 5px; 
+    border: 1px solid var(--amber); 
+    display: inline-block; 
+    letter-spacing: -0.3px; 
+  }
+  /* Level 4: Supporting Information */
+  .customer-progress { 
+    font-family: var(--font-secondary); 
+    font-size: 11px; 
+    color: var(--mahogany-dark); 
+    font-weight: 600; 
+    margin-top: 1px; 
+  }
   
   .ticket-patience-row {
     display: flex;
@@ -182,10 +277,28 @@
     border-top: 1px solid rgba(217,184,120,0.3);
     padding-top: 2px;
   }
-  .ticket-patience-label { font-size: 9px; font-weight: bold; color: var(--mahogany-dark); text-transform: uppercase; width: 45px; opacity: 0.85; }
+  /* Level 3: Gameplay Support Information */
+  .ticket-patience-label { 
+    font-family: var(--font-secondary);
+    font-size: 10px; 
+    font-weight: 700; 
+    color: var(--mahogany-dark); 
+    text-transform: uppercase; 
+    width: 45px; 
+    opacity: 0.9; 
+  }
   .ticket-meter-track { flex: 1; height: 6px; border-radius: 3px; margin: 0; background: var(--cream-2); border: 1px solid var(--amber); overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.08); }
   .ticket-meter-track .meter-fill { height: 100%; width: 100%; background: linear-gradient(90deg,#37c76b,#8fe673); transition: width .25s linear, background .25s linear; border-radius: 3px; }
-  .meter-label { font-size: 9px; font-weight: bold; color: var(--mahogany-dark); width: 32px; text-align: right; }
+  
+  /* Level 3: Gameplay Support Information */
+  .meter-label { 
+    font-family: var(--font-secondary);
+    font-size: 10px; 
+    font-weight: 700; 
+    color: var(--mahogany-dark); 
+    width: 32px; 
+    text-align: right; 
+  }
 
   .mobile-game-container {
     display: flex;
@@ -221,8 +334,9 @@
   .combo-energy-header {
     display: flex;
     justify-content: space-between;
-    font-size: 9px;
-    font-weight: bold;
+    font-family: var(--font-secondary);
+    font-size: 9.5px;
+    font-weight: 700;
     color: var(--mahogany-dark);
     margin-bottom: 1px;
   }
@@ -321,20 +435,22 @@
 
   .floating-text-layer{ position:absolute; inset:0; pointer-events:none; overflow:visible; z-index: 10; }
   .float-text{
-    position:absolute; font-family: var(--font-primary); font-weight:900; font-size:18px; color:var(--neon-gold);
+    position:absolute; font-family: var(--font-primary); font-weight:700; font-size:18px; color:var(--neon-gold);
     text-shadow:0 0 4px var(--neon-pink), 0 0 10px var(--neon-pink), 0 2px 0 #7a1a55;
     letter-spacing: 0.5px;
     animation:floatUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; white-space:nowrap;
   }
   @keyframes floatUp{ 0%{ transform:translate(-50%, 0) scale(0.7); opacity:0; } 15%{ opacity:1; transform:translate(-50%, -5px) scale(1.1); } 100%{ transform:translate(-50%, -40px) scale(1); opacity:0; } }
 
+  /* Level 1: Hero Typography */
   .banner{
     position:absolute; left:50%; top:6px; transform:translateX(-50%); background:linear-gradient(180deg,#fff,#ffe6b0);
-    border:2px solid var(--mahogany); border-radius:8px; padding:4px 12px; font-weight:bold; font-size:11px; color:var(--mahogany-dark);
+    border:2px solid var(--mahogany); border-radius:8px; padding:4px 12px; font-family: var(--font-primary); font-weight:700; font-size:12px; color:var(--mahogany-dark);
     box-shadow:0 4px 12px rgba(0,0,0,0.25); animation:bannerPop 1.6s ease forwards; z-index:15; pointer-events:none;
   }
   @keyframes bannerPop{ 0%{ opacity:0; transform:translate(-50%,-8px) scale(0.9); } 12%{ opacity:1; transform:translate(-50%,0) scale(1); } 82%{ opacity:1; } 100%{ opacity:0; transform:translate(-50%,-4px) scale(0.96); } }
 
+  /* Level 3: Gameplay Support Information */
   .status-ribbon {
     display: flex;
     justify-content: space-between;
@@ -345,7 +461,7 @@
     padding: 3px 8px;
     font-family: var(--font-secondary);
     font-weight: 700;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 0.2px;
     color: var(--mahogany-dark);
     box-shadow: 0 1px 3px rgba(0,0,0,0.03);
@@ -359,12 +475,46 @@
 
   .overlay-back{ position:fixed; inset:0; background:rgba(30,15,5,0.78); backdrop-filter: blur(3px); display:flex; align-items:center; justify-content:center; z-index:80; padding:16px; }
   .overlay-card{ background:linear-gradient(180deg,#fffaf0,#ffe6b8); border:3px solid var(--mahogany); border-radius:18px; padding:24px 24px; max-width:400px; width:100%; text-align:center; box-shadow:0 25px 50px rgba(0,0,0,0.45), inset 0 2px 6px rgba(255,255,255,0.8); outline:none; max-height: 85vh; overflow-y: auto;}
-  .overlay-card h2{ font-family: var(--font-primary); color:var(--mahogany-dark); font-size:22px; font-weight: 900; margin-bottom:8px; }
-  .overlay-card p{ font-family: var(--font-secondary); font-size: 12.5px; font-weight: 600; margin: 0 0 12px 0; color: #5c2e0e; line-height: 1.4; }
-  .overlay-stats{ font-family: var(--font-secondary); text-align:left; margin:12px 0; font-size:12px; font-weight: 600; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 10px; border: 1px solid var(--amber);}
+  
+  /* Level 1: Hero Typography */
+  .overlay-card h2{ 
+    font-family: var(--font-primary); 
+    color:var(--mahogany-dark); 
+    font-size:24px; 
+    font-weight: 700; 
+    margin-bottom:8px; 
+    letter-spacing: -0.5px;
+  }
+  /* Level 4: Supporting Information */
+  .overlay-card p{ 
+    font-family: var(--font-secondary); 
+    font-size: 13px; 
+    font-weight: 400; 
+    margin: 0 0 12px 0; 
+    color: #5c2e0e; 
+    line-height: 1.4; 
+  }
+  /* Level 4: Supporting Information */
+  .overlay-stats{ 
+    font-family: var(--font-secondary); 
+    font-weight: 400;
+    text-align:left; 
+    margin:12px 0; 
+    font-size:12px; 
+    background: rgba(255,255,255,0.6); 
+    padding: 10px; 
+    border-radius: 10px; 
+    border: 1px solid var(--amber);
+  }
   .overlay-stats .stat-row{ border-bottom:1px dashed #d9b878; padding:5px 0; display:flex; justify-content:space-between; }
   .overlay-stats .stat-row:last-child{ border-bottom: none; }
-  .overlay-stats .stat-row b{ color: var(--mahogany-dark); font-weight: 900; }
+  
+  /* Level 3: Gameplay Support Information */
+  .overlay-stats .stat-row b{ 
+    font-family: var(--font-secondary);
+    color: var(--mahogany-dark); 
+    font-weight: 700; 
+  }
   .overlay-buttons{ display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
 
   .list-grid { display: grid; grid-template-columns: 1fr; gap: 8px; text-align: left; margin-bottom: 12px;}
@@ -372,11 +522,26 @@
   .list-item.locked { opacity: 0.6; filter: grayscale(0.8); }
   .list-item.active { border-color: var(--neon-gold); box-shadow: 0 0 10px rgba(255,210,63,0.5); background: #fffbe8; }
   .item-icon { font-size: 26px; }
-  .item-details h4 { font-family: var(--font-primary); margin: 0 0 2px 0; font-size: 13.5px; font-weight: 700; color: var(--mahogany-dark); }
-  .item-details p { font-family: var(--font-secondary); margin: 0; font-size: 11px; font-weight: 600; opacity: 0.85; }
+  
+  /* Level 2: Primary Gameplay Information */
+  .item-details h4 { 
+    font-family: var(--font-primary); 
+    margin: 0 0 2px 0; 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: var(--mahogany-dark); 
+  }
+  /* Level 4: Supporting Information */
+  .item-details p { 
+    font-family: var(--font-secondary); 
+    margin: 0; 
+    font-size: 11.5px; 
+    font-weight: 400; 
+    opacity: 0.9; 
+  }
 
   #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 8px; pointer-events: none;}
-  .toast { background: linear-gradient(180deg,#fff,#ffe6b0); border: 2px solid var(--mahogany); border-radius: 10px; padding: 10px 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.35); display: flex; align-items: center; gap: 10px; animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, fadeOut 0.5s ease-in 3.5s forwards; font-weight: bold; color: var(--mahogany-dark);}
+  .toast { background: linear-gradient(180deg,#fff,#ffe6b0); border: 2px solid var(--mahogany); border-radius: 10px; padding: 10px 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.35); display: flex; align-items: center; gap: 10px; animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, fadeOut 0.5s ease-in 3.5s forwards; font-family: var(--font-secondary); font-weight: 700; color: var(--mahogany-dark);}
   @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
   @keyframes fadeOut { to { opacity: 0; transform: translateY(-16px); } }
 
