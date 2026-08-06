@@ -489,7 +489,7 @@
       <p><b>Basics:</b> Match 3+ identical sushi. Idle for 5 seconds for a hint.</p>
       <p><b>Customer System:</b> Each patron brings unique challenges! Check personality traits, difficulty ratings, and reward bonuses before fulfilling advanced orders.</p>
       <p><b>Power-ups (Standard):</b><br>🟢 Wasabi Bomb (Match 4): 3x3 blast.<br>🧴 Soy Splash (Match 5): Clears Row + Col.</p>
-      <p><b>Combo Drops (Chain cascades!):</b><br>🥢 Rocket (x3): Clears 1 random row & col.<br>💥 Tempura (x5): Massive 5x5 blast.<br>🌈 Rainbow (x7): Clears all of one random type.</p>
+      <p><b>Combo Drops (Chain cascades!):</b><br>🥢 Rocket (x3): Clears an entire row and column.<br>💥 Tempura (x5): Massive 5x5 blast.<br>🌈 Rainbow (x7): Clears all of one random type.</p>
       <p><b>Combos:</b> Swap ANY two power-ups for huge custom board clears!</p>
     </div>
     <div class="overlay-buttons"><button class="btn" id="btnCloseHowTo">Got it!</button></div>
@@ -690,7 +690,7 @@ const MetaSystem = (function(){
     buySkin: (id, cost) => { 
       const s = Persistence.get(); 
       if(s.coins >= cost) { 
-        s.coins -= cost; s.unlockedSkins.push(id); s.equippedSkin = id; 
+        s.coins -= cost; if(!s.unlockedSkins.includes(id)) s.unlockedSkins.push(id); s.equippedSkin = id; 
         Persistence.save(s); applySkin(id); updateMetaUI(); checkAchievements();
       } 
     }
@@ -854,6 +854,7 @@ const CustomerSystem = (function(){
 
   function selectCustomer(level) {
     const available = ARCHETYPES.filter(c => level >= c.minLevel && c.id !== lastCustomerId);
+    if (!available.length) available.push(...ARCHETYPES.filter(c => level >= c.minLevel));
     const totalWeight = available.reduce((sum, c) => sum + c.weight, 0);
     let rnd = Math.random() * totalWeight;
     let chosen = available[0];
@@ -922,7 +923,7 @@ const OrderSystem = (function(){
     return candidate;
   }
 
-  function generateOrder(level, customer, boardActiveTypes){
+  function generateOrder(level, customer, boardActiveTypes, mode=null){
     const categories = ['basic'];
     if(level >= 3) categories.push('mixed');
     if(level >= 5) categories.push('combo');
@@ -936,6 +937,7 @@ const OrderSystem = (function(){
     if(customer.id === 'tourist') cat = 'mixed';
     if(customer.id === 'master') cat = 'powerup';
     if(customer.id === 'vip') cat = 'vip';
+    if(mode === 'daily' && cat === 'speed') cat = 'basic';
 
     const growth = Math.min(level-1, 6);
 
@@ -1031,7 +1033,7 @@ const GameController = (function(){
 
   function nextCustomerAndOrder() {
     CustomerSystem.selectCustomer(ProgressionSystem.getLevel());
-    OrderSystem.generateOrder(ProgressionSystem.getLevel(), CustomerSystem.getActive(), board.activeTypes);
+    OrderSystem.generateOrder(ProgressionSystem.getLevel(), CustomerSystem.getActive(), board.activeTypes, mode);
   }
 
   function completeOrder(){
@@ -1158,7 +1160,7 @@ const GameController = (function(){
     
     idleTime += dt;
     if(idleTime > 5.0 && !locked) {
-      idleTime = -999;
+      idleTime = 0;
       const move = board.getValidMove();
       if(move) {
         getTileEl(move[0].r, move[0].c)?.classList.add("hint-pulse");
@@ -1252,7 +1254,10 @@ const GameController = (function(){
       if (t1 && t2 && board.isPowerUp(r1, c1) && board.isPowerUp(r2, c2)) {
         const combined = [t1.type, t2.type].sort().join('+');
         let clears = [];
-        if(combined.includes('rainbow')) {
+        if (combined === 'rainbow+rainbow') {
+          for(let rr=0; rr<SIZE; rr++) for(let cc=0; cc<SIZE; cc++) clears.push({r:rr,c:cc});
+          directTriggers.push({r:r1,c:c1}, {r:r2,c:c2});
+        } else if(combined.includes('rainbow')) {
           const counts = {}; board.cells.flat().forEach(c => { if(c && board.isStandard(c.type)) counts[c.type] = (counts[c.type]||0)+1; });
           const target = Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0];
           if(target) board.cells.flat().forEach(c => { if(c && c.type===target) clears.push({r: board.cells.findIndex(row=>row.includes(c)), c: board.cells.find(row=>row.includes(c)).indexOf(c)}); });
@@ -1322,13 +1327,14 @@ const GameController = (function(){
     const triggeredPowerUps = new Set();
     const powerUpQueue = [...directTriggers];
     let pCount = 0;
+    const triggeredTypes = {};
     
     while(powerUpQueue.length > 0) {
       const {r, c} = powerUpQueue.shift(); const key = r+"_"+c;
       if (triggeredPowerUps.has(key)) continue;
       const tile = board.get(r, c); if (!tile || !board.isPowerUp(r, c)) continue;
       
-      triggeredPowerUps.add(key); clearSet.set(key, {r, c}); pCount++;
+      triggeredPowerUps.add(key); clearSet.set(key, {r, c}); pCount++; triggeredTypes[tile.type]=(triggeredTypes[tile.type]||0)+1;
       
       const rad = tile.type === 'wasabi' ? 1 : tile.type === 'tempura' ? 2 : 0;
       if (rad > 0) {
@@ -1341,7 +1347,7 @@ const GameController = (function(){
         }
       }
       if (tile.type === "soy" || tile.type === "rocket") {
-        const doRow = tile.type === "soy" || Math.random()>0.5; const doCol = tile.type === "soy" || !doRow;
+        const doRow = true; const doCol = true;
         if(doCol) for (let rr = 0; rr < SIZE; rr++) { const nkey = rr+"_"+c; if (!claimedCells.has(nkey)) { clearSet.set(nkey, {r: rr, c}); if (board.isPowerUp(rr, c) && !triggeredPowerUps.has(nkey)) powerUpQueue.push({r: rr, c}); } }
         if(doRow) for (let cc = 0; cc < SIZE; cc++) { const nkey = r+"_"+cc; if (!claimedCells.has(nkey)) { clearSet.set(nkey, {r, c: cc}); if (board.isPowerUp(r, cc) && !triggeredPowerUps.has(nkey)) powerUpQueue.push({r, c: cc}); } }
       }
@@ -1363,7 +1369,7 @@ const GameController = (function(){
       CustomerSystem.react('powerup', patience, mode);
       const currentOrd = OrderSystem.getOrder();
       if (currentOrd && currentOrd.category === 'powerup') {
-        currentOrd.have = Math.min(currentOrd.need, currentOrd.have + pCount);
+        const matched=(triggeredTypes[currentOrd.powerupType]||0); currentOrd.have = Math.min(currentOrd.need, currentOrd.have + matched);
       }
     }
 
@@ -1428,7 +1434,7 @@ const GameController = (function(){
       if (triggeredPowerUps.size > 0) { AudioEngine.powerupBlast(); shakeBoard(tier >= 5 ? 1.5 : 1); }
       
       triggeredPowerUps.forEach(key => {
-        const [rStr, cStr] = key.split("_"); const tEl = document.getElementById("tile-"+rStr+"-"+cStr) || getTileEl(rStr, cStr);
+        const [rStr, cStr] = key.split("_"); const tEl = getTileEl(Number(rStr), Number(cStr));
         if(tEl) tEl.classList.add(board.get(rStr,cStr)?.type==='wasabi' ? "bomb-flash" : "splash-flash");
       });
       clearSet.forEach(({r, c}) => { const tEl = getTileEl(r, c); if(tEl) tEl.classList.add("clearing"); });
@@ -1597,7 +1603,7 @@ const GameController = (function(){
     });
     
     document.addEventListener("keydown", e => {
-      if (e.key === "Escape") { document.querySelectorAll('.overlay-back').forEach(o => o.classList.add('hidden')); }
+      if (e.key === "Escape") { document.querySelectorAll('.overlay-back:not(#gameOverOverlay)').forEach(o => o.classList.add('hidden')); }
     });
   }
 
