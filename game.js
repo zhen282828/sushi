@@ -68,7 +68,7 @@ const AudioEngine = (function(){
 
 const MetaSystem = (function(){
   const SKINS = [
-    { id: 'classic', name: 'Classic Wood', cost: 0, icon: '🪵', desc: 'The nostalgic sushi bar.' },
+    { id: 'classic', name: 'Edomae Indigo', cost: 0, icon: '🏮', desc: 'Indigo noren and vermillion accents.' },
     { id: 'sakura', name: 'Sakura Petal', cost: 15, icon: '🌸', desc: 'Pink cherry blossom vibes.' },
     { id: 'matcha', name: 'Matcha Tea', cost: 25, icon: '🍵', desc: 'Calming green aesthetic.' },
     { id: 'neon', name: 'Cyber Neon', cost: 50, icon: '🌃', desc: 'Late night Tokyo drift.' }
@@ -672,14 +672,14 @@ const GameController = (function(){
     if (mode === "daily") {
       const pct = Math.max(0, (dailyTimeLeft / CONFIG.daily.durationSec) * 100);
       fill.style.width = pct + "%";
-      fill.style.background = pct > 20 ? "linear-gradient(90deg,#37c76b,#8fe673)" : "linear-gradient(90deg,#c0392b,#e57368)";
+      fill.style.background = pct > 20 ? "linear-gradient(90deg,#37c76b,#8fe673)" : "linear-gradient(90deg,#8f1a1f,#c1272d)";
       el("patienceLabel").textContent = Math.ceil(dailyTimeLeft) + "s";
       return;
     }
     fill.style.width = Math.max(0, patience) + "%";
     let color = "linear-gradient(90deg,#37c76b,#8fe673)";
-    if(patience<=CONFIG.patience.lowWarnThreshold) color = "linear-gradient(90deg,#e0a52c,#f4cf6a)";
-    if(patience<=CONFIG.patience.criticalThreshold) color = "linear-gradient(90deg,#c0392b,#e57368)";
+    if(patience<=CONFIG.patience.lowWarnThreshold) color = "linear-gradient(90deg,#a3782f,#c9a15c)";
+    if(patience<=CONFIG.patience.criticalThreshold) color = "linear-gradient(90deg,#8f1a1f,#c1272d)";
     fill.style.background = color;
     el("patienceLabel").textContent = Math.max(0, Math.round(patience)) + "%";
   }
