@@ -164,6 +164,12 @@ const MetaSystem = (function(){
 const SIZE = 8;
 const BASE_TYPES = ["sushi","shrimp","rice","avocado","fish"];
 const EMOJI = { sushi:"🍣", shrimp:"🍤", rice:"🍙", avocado:"🥑", fish:"🐟", dumpling:"🥟", tea:"🍵", wasabi:"🟢", soy:"🧴", rocket:"🥢", tempura:"💥", rainbow:"🌈" };
+const TILE_ASSET = {
+  sushi:"assets/sushi.png", shrimp:"assets/shrimp.png", rice:"assets/rice.png",
+  avocado:"assets/avocado.png", fish:"assets/fish.png", dumpling:"assets/dumpling.png",
+  tea:"assets/tea.png", wasabi:"assets/wasabi.png", soy:"assets/soy.png",
+  rocket:"assets/rocket.png", tempura:"assets/tempura.png", rainbow:"assets/rainbow.png"
+};
 const LABEL = { sushi:"Sushi", shrimp:"Shrimp", rice:"Rice", avocado:"Avocado", fish:"Fish", dumpling:"Dumpling", tea:"Tea", wasabi:"Wasabi", soy:"Soy Splash", rocket:"Rocket", tempura:"Tempura Bomb", rainbow:"Rainbow" };
 
 // Central tuning knobs. Anything that shapes game feel/balance lives here instead of
@@ -735,7 +741,19 @@ const GameController = (function(){
         if(tileEl.classList.contains("clearing")) classes += " clearing";
         if(tileEl.classList.contains("hint-pulse")) classes += " hint-pulse";
         
-        tileEl.className = classes; tileEl.textContent = EMOJI[t.type]; tileEl.setAttribute("aria-label", LABEL[t.type]);
+        tileEl.className = classes;
+        let icon = tileEl.querySelector("img.tile-icon");
+        if (!icon) {
+          tileEl.textContent = "";
+          icon = document.createElement("img");
+          icon.className = "tile-icon";
+          icon.draggable = false;
+          icon.setAttribute("aria-hidden", "true");
+          tileEl.appendChild(icon);
+        }
+        if (icon.getAttribute("src") !== TILE_ASSET[t.type]) icon.src = TILE_ASSET[t.type];
+        icon.alt = "";
+        tileEl.setAttribute("aria-label", LABEL[t.type]);
       }
     }
   }

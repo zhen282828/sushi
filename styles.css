@@ -199,10 +199,21 @@
   .tile{
     display:flex; align-items:center; justify-content:center; font-size:min(5.2vw, 24px);
     background:linear-gradient(160deg, var(--tile-bg-1), var(--tile-bg-2));
-    border-radius:8px; border:1px solid rgba(255,255,255,0.6); cursor:pointer; user-select:none;
+    border-radius:50%; border:1px solid rgba(255,255,255,0.72); cursor:pointer; user-select:none; overflow:visible;
     box-shadow:0 2px 5px rgba(0,0,0,0.2), inset 0 2px 3px rgba(255,255,255,0.8), inset 0 -2px 2px rgba(0,0,0,0.06);
     will-change:transform, background; width: 100%; height: 100%; transition: background 0.5s ease, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
+  .tile-icon{
+    width:92%; height:92%; display:block; object-fit:contain; border-radius:50%; pointer-events:none;
+    user-select:none; -webkit-user-drag:none;
+    filter:drop-shadow(0 2px 2px rgba(15,30,48,0.22));
+    transform:translateZ(0);
+  }
+  .tile.special-wasabi .tile-icon,
+  .tile.special-soy .tile-icon,
+  .tile.special-rocket .tile-icon,
+  .tile.special-tempura .tile-icon,
+  .tile.special-rainbow .tile-icon{ width:96%; height:96%; }
   .tile:hover{ filter:brightness(1.08); transform: scale(1.03); }
   .tile.selected{ box-shadow:0 0 0 3px var(--neon-cyan), 0 0 10px var(--neon-cyan), inset 0 2px 4px rgba(255,255,255,0.9); transform:scale(1.06); z-index:2; }
   
@@ -363,3 +374,12 @@
   @media (min-width: 821px){
     .wood-frame { max-width: 480px; }
   }
+
+/* Clean token pass: artwork-only PNGs over solid circular game pieces. */
+.tile{
+  background:linear-gradient(145deg, rgba(255,255,255,.98), var(--tile-bg-2));
+  border:2px solid rgba(255,255,255,.82);
+  overflow:hidden;
+}
+.tile-icon{width:86%;height:86%;border-radius:0;filter:drop-shadow(0 2px 2px rgba(15,30,48,.28));}
+.tile.special-wasabi .tile-icon,.tile.special-soy .tile-icon,.tile.special-rocket .tile-icon,.tile.special-tempura .tile-icon,.tile.special-rainbow .tile-icon{width:88%;height:88%;}
